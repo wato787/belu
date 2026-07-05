@@ -215,8 +215,23 @@ export class NotFoundException extends HTTPException {
 
 ---
 
+## Logging
+
+- 専用のloggerを利用する。
+- Routeからconsole.logやconsole.errorを直接呼ばない。
+- 初期実装では外部Loggerライブラリは利用しない。
+- Worker上で扱いやすいJSON形式で標準出力へ出力する。
+- すべてのログにtimestamp、level、messageを含める。
+- request loggingではrequest_id、method、path、status、durationを記録する。
+- request_idはUUIDv7を利用する。
+- Password、Authorization Header、Cookie、Session Token、Invite Token、Signed URL、個人情報、Request Body全体はログへ出力しない。
+
+---
+
 ## Error Handling
 
+- app.use()でRequest IDを発行し、request loggingを行う。
+- Request IDはx-request-idヘッダーがあれば引き継ぎ、なければUUIDv7で生成する。
 - app.notFound()で未定義RouteをNotFoundException相当の404として扱う。
 - app.onError()で共通エラーハンドリングを行う。
 - HTTPExceptionはstatus codeとmessageをJSONとして返す。

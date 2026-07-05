@@ -7,7 +7,8 @@
     "typecheck": "tsgo --project tsconfig.json"
   },
   "dependencies": {
-    "hono": "4.12.27"
+    "hono": "4.12.27",
+    "uuid": "14.0.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20260705.1"
