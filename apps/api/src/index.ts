@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { v7 as uuidv7 } from "uuid";
+import { getConfig, type AppHonoEnv } from "./config";
 import { InternalServerException, NotFoundException } from "./exceptions";
 import { logger } from "./logger";
 
-const app = new Hono();
+const app = new Hono<AppHonoEnv>();
 
 app.use(async (c, next) => {
   const startedAt = performance.now();
@@ -23,7 +24,11 @@ app.use(async (c, next) => {
   });
 });
 
-app.get("/health", (c) => c.json({ status: "ok" }));
+app.get("/health", (c) => {
+  const config = getConfig(c.env);
+
+  return c.json({ environment: config.app.env, status: "ok" });
+});
 
 app.notFound((c) => {
   const error = new NotFoundException();
