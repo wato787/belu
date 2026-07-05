@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { v7 as uuidv7 } from "uuid";
-import { createAuth } from "./auth";
-import { authMiddleware } from "./auth-middleware";
+import { createAuth } from "./lib/better-auth";
+import { authMiddleware } from "./middleware/auth";
 import { getConfig, type AppHonoEnv } from "./config";
 import { InternalServerException, NotFoundException } from "./exceptions";
 import { logger } from "./logger";

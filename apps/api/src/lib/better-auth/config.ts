@@ -1,10 +1,10 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { authBasePath, createAuthPlugins } from "./auth-options";
-import * as schema from "./db/schema";
+import * as schema from "../../db/schema";
+import { authBasePath, createAuthPlugins } from ".";
 
 // Better Auth CLI は Drizzle schema 生成のために auth instance の export を要求する。
-// runtime の認証は Workers bindings を使うため、auth.ts で request ごとに作成する。
+// runtime の認証は Workers bindings を使うため、index.ts で request ごとに作成する。
 export const auth = betterAuth({
   basePath: authBasePath,
   baseURL: "http://localhost:8787",

@@ -32,8 +32,8 @@ Cloudflare WorkersではBindingsがリクエストコンテキストから提供
 そのため、runtime用のBetter Authインスタンスはモジュールトップレベルのsingletonとして作成しない。
 リクエストごとに `createAuth(c.env)` を呼び出し、D1 bindingと設定値を渡す。
 
-Better Auth CLIのschema生成だけは `src/auth.config.ts` を利用する。
-このファイルは生成用の設定であり、runtimeの認証処理では利用しない。
+Better Auth CLIのschema生成だけは `src/lib/better-auth/config.ts` を利用する。
+このファイルは生成用の設定であり、runtimeの認証処理では利用しない。runtime factoryは `src/lib/better-auth/index.ts` に配置する。
 
 ---
 

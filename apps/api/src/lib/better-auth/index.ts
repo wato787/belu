@@ -1,9 +1,13 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { authBasePath, createAuthPlugins } from "./auth-options";
-import { getConfig, type AppBindings } from "./config";
-import { createDb } from "./db/client";
-import * as schema from "./db/schema";
+import { organization } from "better-auth/plugins";
+import { getConfig, type AppBindings } from "../../config";
+import { createDb } from "../../db/client";
+import * as schema from "../../db/schema";
+
+export const authBasePath = "/api/auth";
+
+export const createAuthPlugins = () => [organization()];
 
 export const createAuth = (bindings: AppBindings) => {
   const config = getConfig(bindings);

@@ -1,4 +1,4 @@
-import type { AuthSessionData, AuthUser } from "./auth";
+import type { AuthSessionData, AuthUser } from "./lib/better-auth";
 
 export type AppEnvironment = "development" | "staging" | "production";
 
