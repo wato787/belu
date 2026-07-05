@@ -20,3 +20,6 @@ export const photosRelations = relations(photos, ({ one }) => ({
     references: [posts.id],
   }),
 }));
+
+export type Photo = typeof photos.$inferSelect;
+export type NewPhoto = typeof photos.$inferInsert;

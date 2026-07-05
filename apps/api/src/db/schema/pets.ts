@@ -18,3 +18,6 @@ export const pets = sqliteTable("pets", {
 export const petsRelations = relations(pets, ({ many }) => ({
   postPets: many(postPets),
 }));
+
+export type Pet = typeof pets.$inferSelect;
+export type NewPet = typeof pets.$inferInsert;

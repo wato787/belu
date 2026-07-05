@@ -38,3 +38,6 @@ export const reactionsRelations = relations(reactions, ({ one }) => ({
     references: [posts.id],
   }),
 }));
+
+export type Reaction = typeof reactions.$inferSelect;
+export type NewReaction = typeof reactions.$inferInsert;
