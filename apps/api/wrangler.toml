@@ -1,0 +1,3 @@
+name = "belu-api"
+main = "src/index.ts"
+compatibility_date = "2025-07-05"
