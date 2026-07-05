@@ -6,14 +6,17 @@
     "dev": "wrangler dev --port 8787",
     "typecheck": "tsgo --project tsconfig.json",
     "db:generate": "drizzle-kit generate",
-    "db:migrate:local": "wrangler d1 migrations apply belu-local --local"
+    "db:migrate:local": "wrangler d1 migrations apply belu-local --local",
+    "auth:generate-schema": "better-auth generate --config src/auth.config.ts --output src/db/schema/auth.ts --yes"
   },
   "dependencies": {
+    "better-auth": "1.6.23",
     "drizzle-orm": "0.45.2",
     "hono": "4.12.27",
     "uuid": "14.0.1"
   },
   "devDependencies": {
+    "@better-auth/cli": "1.4.21",
     "@cloudflare/workers-types": "5.20260705.1",
     "drizzle-kit": "0.31.10"
   }

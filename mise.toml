@@ -34,3 +34,15 @@ run = "bunx oxfmt --check ."
 [tasks.typecheck]
 description = "Typecheck all apps"
 run = 'bun --filter "*" typecheck'
+
+[tasks.auth-generate-schema-api]
+description = "Generate Better Auth schema for the API"
+run = "bun --filter @belu/api auth:generate-schema"
+
+[tasks.db-generate-api]
+description = "Generate API database migrations"
+run = "bun --filter @belu/api db:generate"
+
+[tasks.db-migrate-local-api]
+description = "Apply API database migrations to local D1"
+run = "bun --filter @belu/api db:migrate:local"
