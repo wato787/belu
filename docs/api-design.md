@@ -2,79 +2,61 @@
 
 ## Framework
 
-* Hono
-* Hono RPC
+- Hono
+- Hono RPC
 
 ---
 
 ## API Style
 
-* RESTful API
-* Hono RPCを利用してクライアントと型を共有する
+- Hono RPCを前提にAPIを定義する。
+- HTTPとしてはRESTfulなリソース設計を意識する。
+- API側でAppTypeをexportし、将来的にクライアント側からhc<AppType>()で型を共有する。
+- まずはAPI側の型安全なルーティングを優先し、Web側のRPCクライアント導入は後続で行う。
 
 ---
 
 ## Validation
 
-* Zod
-* `@hono/zod-validator`
+- Zod
+- @hono/zod-validator
 
-すべてのリクエストはバリデーションを行う。
+リクエストボディ、パスパラメータ、クエリパラメータを受け取るRouteではバリデーションを行う。
 
 ---
 
-## Directory Structure
+## Initial Directory Structure
+
+初期段階では分割しすぎず、src/index.tsにHonoアプリケーションとRoute定義を集約する。
+
+```text
+src/
+└── index.ts
+```
+
+---
+
+## Future Directory Structure
+
+Routeが増えてsrc/index.tsが読みづらくなったタイミングで、Feature単位の分割を検討する。
 
 ```text
 src/
 ├── index.ts
-├── app.ts
-│
 ├── routes/
 │   ├── auth/
-│   │   ├── index.ts
-│   │   ├── login.ts
-│   │   ├── logout.ts
-│   │   └── callback.ts
-│   │
 │   ├── spaces/
-│   │   ├── index.ts
-│   │   ├── list-spaces.ts
-│   │   ├── get-space.ts
-│   │   ├── create-space.ts
-│   │   ├── update-space.ts
-│   │   └── delete-space.ts
-│   │
 │   ├── pets/
-│   │   ├── index.ts
-│   │   ├── list-pets.ts
-│   │   ├── get-pet.ts
-│   │   ├── create-pet.ts
-│   │   ├── update-pet.ts
-│   │   └── delete-pet.ts
-│   │
 │   ├── posts/
-│   │   ├── index.ts
-│   │   ├── list-posts.ts
-│   │   ├── get-post.ts
-│   │   ├── create-post.ts
-│   │   ├── update-post.ts
-│   │   └── delete-post.ts
-│   │
 │   ├── invites/
-│   │   ├── index.ts
-│   │   ├── create-invite.ts
-│   │   ├── accept-invite.ts
-│   │   └── revoke-invite.ts
-│   │
 │   └── health/
-│       └── index.ts
-│
 ├── middleware/
 ├── lib/
 ├── db/
 └── types/
 ```
+
+app.tsは必須にしない。必要になった場合のみ、Honoアプリケーション構築をsrc/app.tsへ切り出す。
 
 ---
 
@@ -82,113 +64,127 @@ src/
 
 ### index.ts
 
-* エントリーポイント
-
-### app.ts
-
-* Honoアプリケーションの構築
-* Middleware登録
-* Route登録
+- Cloudflare Workersのエントリーポイント
+- Honoアプリケーションの作成
+- Middleware登録
+- Route登録
+- AppTypeのexport
+- Hono appのdefault export
 
 ### routes/
 
-* Feature単位でRouteを管理する
-* Featureごとにディレクトリを分割する
-* `index.ts`はFeature内のRouteを集約する責務のみを持つ
-* 各ファイルは1ユースケースのみを実装する
+- Routeが増えた場合のみ導入する。
+- Feature単位でRouteを管理する。
+- Featureごとのindex.tsはRoute集約のみを責務にする。
+- 各ファイルは1ユースケースのみを実装する。
 
 ### middleware/
 
-* 認証
-* 認可
-* 共通Middleware
+- 認証
+- 認可
+- 共通Middleware
 
 ### lib/
 
-* 共通ユーティリティ
-* Cloudflare関連
-* Logger
-* Helper
+- 共通ユーティリティ
+- Cloudflare関連
+- Logger
+- Helper
 
 ### db/
 
-* Drizzle
-* Schema
-* Migration
-* Database Client
+- Drizzle
+- Schema
+- Migration
+- Database Client
 
 ### types/
 
-* 共通型
+- 共通型
 
 ---
 
 ## Routing
 
-* Feature単位でRouteを分割する。
-* Featureごとに`index.ts`を持つ。
-* `index.ts`はRouteを集約する責務のみを持つ。
-* Routeは`app.route()`で登録する。
+Hono RPCの型推論を活かすため、Routeはチェーンして定義する。
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono().get("/health", (c) => c.json({ status: "ok" }));
+
+export type AppType = typeof app;
+
+export default app;
+```
+
+Routeが増えた後も、最終的にAppTypeがアプリケーション全体のRoute型を表すようにする。
 
 ---
 
 ## File Naming
 
-* ファイル名はユースケースを表す。
-* `{action}-{resource}.ts` の形式で命名する。
-* 1ファイル1ユースケースとする。
+Route分割後のファイル名はユースケースを表す。
+
+- {action}-{resource}.ts の形式で命名する。
+- 1ファイル1ユースケースとする。
 
 例
 
-* `list-posts.ts`
-* `get-post.ts`
-* `create-post.ts`
-* `update-post.ts`
-* `delete-post.ts`
-* `accept-invite.ts`
-* `create-space.ts`
+- list-posts.ts
+- get-post.ts
+- create-post.ts
+- update-post.ts
+- delete-post.ts
+- accept-invite.ts
+- create-space.ts
 
 ---
 
 ## RPC
 
-* Routeをチェーンして定義する。
-* `AppType`をexportする。
-* クライアントは`hc<AppType>()`を利用する。
+- Routeをチェーンして定義する。
+- API側からAppTypeをexportする。
+- Web側は後続でhc<AppType>()を利用する。
+- RPCの型共有を壊さないため、Route定義の戻り値型が失われる抽象化は避ける。
 
 ---
 
 ## Request Validation
 
-* `zValidator`を利用する。
-* バリデーション済みデータは`c.req.valid()`から取得する。
+- zValidatorを利用する。
+- バリデーション済みデータはc.req.valid()から取得する。
 
 ---
 
 ## Response
 
-* JSONを返却する。
-* HTTP Status Codeを適切に返却する。
+- JSONを返却する。
+- HTTP Status Codeを適切に返却する。
+- RPCクライアントから扱いやすいよう、レスポンス形状はRouteごとに一貫させる。
 
 ---
 
 ## Error Handling
 
-* `app.onError()`で共通処理を行う。
+- app.onError()で共通処理を行う。
+- 初期段階では必要最低限に留め、ドメイン固有エラーが増えたタイミングで整理する。
 
 ---
 
 ## Middleware
 
-* 共通Middlewareは`app.use()`で登録する。
-* 認証が必要なRouteのみ認証Middlewareを適用する。
+- 共通Middlewareはapp.use()で登録する。
+- 認証が必要なRouteのみ認証Middlewareを適用する。
+- 初期段階では未使用のMiddlewareディレクトリを先に作らない。
 
 ---
 
 ## Design Principles
 
-* Featureを中心に構成する。
-* ファイルはユースケース単位で分割する。
-* 不要な抽象化は行わない。
-* 共通化は必要になるまで行わない（YAGNI）。
-* Honoの設計思想を優先する。
+- Hono RPCの型推論を優先する。
+- 初期段階ではsrc/index.tsに集約する。
+- Routeが増えたらFeature単位で分割する。
+- 不要な抽象化は行わない。
+- 共通化は必要になるまで行わない（YAGNI）。
+- Honoの設計思想を優先する。

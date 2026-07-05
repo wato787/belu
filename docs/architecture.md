@@ -28,78 +28,78 @@ Cloudflare D1     Cloudflare R2
 
 ## Frontend
 
-* React
-* TanStack Router
-* TanStack Query
+- React
+- TanStack Router
+- TanStack Query
 
 ### Responsibilities
 
-* UI Rendering
-* Routing
-* API Communication
-* Client State Management
+- UI Rendering
+- Routing
+- API Communication
+- Client State Management
 
 ---
 
 ## Backend
 
-* Hono
-* Hono RPC
+- Hono
+- Hono RPC
 
 ### Responsibilities
 
-* API
-* Authentication
-* Authorization
-* Domain Logic
-* Data Access
+- API
+- Authentication
+- Authorization
+- Domain Logic
+- Data Access
 
 ---
 
 ## Database
 
-* Cloudflare D1
-* Drizzle ORM
+- Cloudflare D1
+- Drizzle ORM
 
 ### Responsibilities
 
-* Data Persistence
+- Data Persistence
 
 ---
 
 ## Object Storage
 
-* Cloudflare R2
+- Cloudflare R2
 
 ### Responsibilities
 
-* Image Storage
+- Image Storage
 
 ---
 
 ## Authentication
 
-* Better Auth
+- Better Auth
 
 ### Responsibilities
 
-* Authentication
-* Session Management
+- Authentication
+- Session Management
 
 ---
 
 ## Infrastructure
 
-* Terraform
-* Wrangler
+- Terraform
+- Wrangler
 
 ### Responsibilities
 
 Terraform
 
-* Infrastructure Management
+- Infrastructure Management
 
 Wrangler
 
-* Local Development
-* Worker Deployment
+- Local Development
+- Worker Deployment

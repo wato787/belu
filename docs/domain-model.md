@@ -14,9 +14,9 @@ Beluを利用するユーザー。
 
 ### Responsibilities
 
-* ログインする
-* Spaceへ参加する
-* Postを作成する
+- ログインする
+- Spaceへ参加する
+- Postを作成する
 
 ---
 
@@ -28,9 +28,9 @@ BeluのすべてのデータはSpaceに属する。
 
 ### Responsibilities
 
-* Memberを管理する
-* Petを管理する
-* Postを管理する
+- Memberを管理する
+- Petを管理する
+- Postを管理する
 
 ---
 
@@ -42,8 +42,8 @@ UserとSpaceの関係を表す。
 
 ### Responsibilities
 
-* Spaceへ参加する
-* Space内で操作を行う
+- Spaceへ参加する
+- Space内で操作を行う
 
 ---
 
@@ -53,8 +53,8 @@ Spaceで管理されるペット。
 
 ### Responsibilities
 
-* プロフィールを持つ
-* Postへ関連付けられる
+- プロフィールを持つ
+- Postへ関連付けられる
 
 ---
 
@@ -66,9 +66,9 @@ Beluにおける中心となるドメイン。
 
 ### Responsibilities
 
-* Photoを持つ
-* Petへ関連付けられる
-* Memberによって作成される
+- Photoを持つ
+- Petへ関連付けられる
+- Memberによって作成される
 
 ---
 
@@ -80,7 +80,7 @@ Photo単体では存在せず、必ずPostに属する。
 
 ### Responsibilities
 
-* Postを構成する
+- Postを構成する
 
 ---
 
@@ -90,7 +90,7 @@ Spaceへ参加するための招待。
 
 ### Responsibilities
 
-* UserをSpaceへ招待する
+- UserをSpaceへ招待する
 
 ---
 
@@ -100,7 +100,7 @@ Postに対するリアクション。
 
 ### Responsibilities
 
-* Postへリアクションする
+- Postへリアクションする
 
 ---
 
