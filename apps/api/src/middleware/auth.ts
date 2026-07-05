@@ -1,6 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import type { AppHonoEnv } from "../config";
-import { UnauthorizedException } from "../exceptions";
+import { UnauthorizedException } from "../helpers/exceptions";
 import { createAuth } from "../lib/better-auth";
 
 export const authMiddleware = createMiddleware<AppHonoEnv>(async (c, next) => {
