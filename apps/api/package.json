@@ -7,9 +7,9 @@
     "typecheck": "tsgo --project tsconfig.json"
   },
   "dependencies": {
-    "hono": "4.8.5"
+    "hono": "4.12.27"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20250705.0"
+    "@cloudflare/workers-types": "5.20260705.1"
   }
 }

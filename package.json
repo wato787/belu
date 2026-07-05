@@ -5,15 +5,18 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "bun --filter '*' dev",
-    "check": "bun run lint && bun run typecheck",
-    "lint": "oxlint --ignore-pattern node_modules .",
-    "format": "oxfmt .",
-    "typecheck": "bun --filter '*' typecheck"
+    "dev": "mise run dev",
+    "dev:web": "mise run dev-web",
+    "dev:api": "mise run dev-api",
+    "check": "mise run check",
+    "lint": "mise run lint",
+    "format": "mise run format",
+    "format:check": "mise run format-check",
+    "typecheck": "mise run typecheck"
   },
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260704.1",
-    "oxfmt": "0.13.0",
-    "oxlint": "1.6.0"
+    "oxfmt": "0.57.0",
+    "oxlint": "1.72.0"
   }
 }

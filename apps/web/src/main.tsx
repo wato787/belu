@@ -1,9 +1,4 @@
-import {
-  RouterProvider,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from "@tanstack/react-router";
+import { RouterProvider, createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";

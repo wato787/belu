@@ -13,9 +13,9 @@ bun install
 ## Scripts
 
 ```bash
-bun run dev
-bun run check
-bun run format
+mise run dev
+mise run check
+mise run format
 ```
 
 ## Apps
