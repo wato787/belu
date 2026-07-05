@@ -4,8 +4,9 @@ import { v7 as uuidv7 } from "uuid";
 import { createAuth } from "./lib/better-auth";
 import { authMiddleware } from "./middleware/auth";
 import { getConfig, type AppHonoEnv } from "./config";
-import { InternalServerException, NotFoundException } from "./exceptions";
+import { InternalServerException, NotFoundException } from "./helpers/exceptions";
 import { logger } from "./logger";
+import { routes } from "./routes";
 
 const app = new Hono<AppHonoEnv>();
 
@@ -33,6 +34,8 @@ app.on(["GET", "POST"], "/api/auth/*", (c) => {
 });
 
 app.use(authMiddleware);
+
+app.route("/", routes);
 
 app.get("/health", (c) => {
   const config = getConfig(c.env);
