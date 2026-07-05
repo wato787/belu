@@ -1,0 +1,19 @@
+{
+  "name": "belu",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "bun --filter '*' dev",
+    "check": "bun run lint && bun run typecheck",
+    "lint": "oxlint --ignore-pattern node_modules .",
+    "format": "oxfmt .",
+    "typecheck": "bun --filter '*' typecheck"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "7.0.0-dev.20260704.1",
+    "oxfmt": "0.13.0",
+    "oxlint": "1.6.0"
+  }
+}

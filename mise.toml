@@ -1,0 +1,4 @@
+[tools]
+bun = "1.2.21"
+node = "24.4.1"
+wrangler = "4.24.0"
