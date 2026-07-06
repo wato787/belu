@@ -1,0 +1,16 @@
+import type { PostWithPets } from "../../../db/repositories";
+
+export const toPostResponse = (post: PostWithPets) => ({
+  id: post.id,
+  body: post.body,
+  createdAt: post.createdAt,
+  updatedAt: post.updatedAt,
+  pets: post.pets.map((pet) => ({
+    id: pet.id,
+    name: pet.name,
+    createdAt: pet.createdAt,
+    updatedAt: pet.updatedAt,
+  })),
+});
+
+export const uniqueIds = (ids: string[]) => [...new Set(ids)];
