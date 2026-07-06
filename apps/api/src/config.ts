@@ -1,4 +1,4 @@
-import type { AuthSessionData, AuthUser } from "./lib/better-auth";
+import type { AuthSessionData, AuthSpace, AuthSpaceMember, AuthUser } from "./lib/better-auth";
 
 export type AppEnvironment = "development" | "staging" | "production";
 
@@ -28,6 +28,8 @@ export type AppHonoEnv = {
   Bindings: AppBindings;
   Variables: {
     session: AuthSessionData | null;
+    space: AuthSpace;
+    spaceMember: AuthSpaceMember;
     user: AuthUser | null;
   };
 };

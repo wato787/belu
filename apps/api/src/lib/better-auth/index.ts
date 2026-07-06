@@ -30,3 +30,5 @@ export type Auth = ReturnType<typeof createAuth>;
 export type AuthSession = Awaited<ReturnType<Auth["api"]["getSession"]>>;
 export type AuthUser = NonNullable<AuthSession>["user"];
 export type AuthSessionData = NonNullable<AuthSession>["session"];
+export type AuthSpace = NonNullable<Awaited<ReturnType<Auth["api"]["getFullOrganization"]>>>;
+export type AuthSpaceMember = AuthSpace["members"][number];
