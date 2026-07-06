@@ -8,6 +8,8 @@ export const toPostResponse = (post: PostWithPets) => ({
   photos: post.photos.map((photo) => ({
     id: photo.id,
     objectKey: photo.objectKey,
+    sortOrder: photo.sortOrder,
+    uploadId: photo.uploadId,
     createdAt: photo.createdAt,
     updatedAt: photo.updatedAt,
   })),

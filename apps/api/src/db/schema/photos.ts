@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { timestamp } from "../helpers/timestamp";
 import { v7 as uuidv7 } from "uuid";
 import { posts } from "./posts";
@@ -9,7 +9,9 @@ export const photos = sqliteTable("photos", {
   postId: text("post_id")
     .notNull()
     .references(() => posts.id, { onDelete: "cascade" }),
+  uploadId: text("upload_id").notNull(),
   objectKey: text("object_key").notNull(),
+  sortOrder: integer("sort_order").notNull(),
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
 });

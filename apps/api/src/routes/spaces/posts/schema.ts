@@ -8,6 +8,17 @@ export const POST_PHOTO_UPLOAD_URL_EXPIRES_IN_SECONDS = 5 * 60;
 export const createPostSchema = z.object({
   body: z.string().trim().min(1),
   petIds: z.array(z.string().trim().min(1)).optional().default([]),
+  photos: z
+    .array(
+      z.object({
+        objectKey: z.string().trim().min(1),
+        sortOrder: z.number().int().nonnegative(),
+        uploadId: z.string().trim().min(1),
+      }),
+    )
+    .max(MAX_POST_PHOTO_UPLOADS)
+    .optional()
+    .default([]),
 });
 
 export const updatePostSchema = z

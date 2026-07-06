@@ -8,6 +8,13 @@
       "when": 1783257008217,
       "tag": "0000_military_kang",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1783350467430,
+      "tag": "0001_giant_slayback",
+      "breakpoints": true
     }
   ]
 }

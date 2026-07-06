@@ -135,7 +135,9 @@ updated_at
 - `post_pets(post_id, pet_id)`
 - `reactions(post_id, member_id, type)`
 
+Photoの `upload_id` はUpload URL発行時にAPIが生成したUUIDv7を保存する。
 Photoの `object_key` はR2 Object Keyを保存する。
+Photoの `sort_order` はPost内での表示順を保存する。
 MVPでは `object_key` のunique constraintは必須としないが、同一Objectを複数Photoへ紐付けないようAPIで検証する。
 
 ---

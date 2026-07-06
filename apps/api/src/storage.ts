@@ -44,6 +44,10 @@ type GetPublicUrlInput = {
   key: string;
 };
 
+type HasPhotoInput = {
+  key: string;
+};
+
 type GetPhotoUploadObjectKeyInput = {
   contentType: PhotoContentType;
   spaceId: string;
@@ -69,6 +73,7 @@ export type Storage = {
   deletePhoto: (input: DeletePhotoInput) => Promise<void>;
   getPhotoUploadObjectKey: (input: GetPhotoUploadObjectKeyInput) => string;
   getPublicUrl: (input: GetPublicUrlInput) => string | null;
+  hasPhoto: (input: HasPhotoInput) => Promise<boolean>;
   uploadPhoto: (input: UploadPhotoInput) => Promise<{ key: string }>;
 };
 
@@ -108,6 +113,16 @@ const createR2S3Client = ({
 export const getPhotoContentTypeExtension = (contentType: PhotoContentType) =>
   photoContentTypeExtensions[contentType];
 
+export const getPhotoUploadObjectKey = ({
+  contentType,
+  spaceId,
+  uploadId,
+}: GetPhotoUploadObjectKeyInput) => {
+  const extension = getPhotoContentTypeExtension(contentType);
+
+  return `spaces/${spaceId}/posts/uploads/${uploadId}.${extension}`;
+};
+
 export const createStorage = (config: StorageConfig): Storage => ({
   createSignedPhotoUploadUrl: async ({ contentType, expiresInSeconds, key, now = new Date() }) => {
     const signingConfig = getRequiredR2SigningConfig(config);
@@ -131,9 +146,7 @@ export const createStorage = (config: StorageConfig): Storage => ({
   },
 
   getPhotoUploadObjectKey: ({ contentType, spaceId, uploadId }) => {
-    const extension = getPhotoContentTypeExtension(contentType);
-
-    return `spaces/${spaceId}/posts/uploads/${uploadId}.${extension}`;
+    return getPhotoUploadObjectKey({ contentType, spaceId, uploadId });
   },
 
   getPublicUrl: ({ key }) => {
@@ -142,6 +155,12 @@ export const createStorage = (config: StorageConfig): Storage => ({
     }
 
     return `${config.photosPublicBaseUrl.replace(/\/$/, "")}/${key}`;
+  },
+
+  hasPhoto: async ({ key }) => {
+    const object = await config.photosBucket.head(key);
+
+    return object !== null;
   },
 
   uploadPhoto: async ({ body, contentType, key }) => {

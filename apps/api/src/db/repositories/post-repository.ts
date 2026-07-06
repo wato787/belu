@@ -5,6 +5,7 @@ import {
   photos,
   postPets,
   posts,
+  type NewPhoto,
   type NewPost,
   type Pet,
   type Photo,
@@ -13,8 +14,10 @@ import {
 
 type PostSpaceKey = Pick<Post, "organizationId">;
 type PostIdentity = Pick<Post, "id" | "organizationId">;
+type CreatePostPhotoInput = Pick<NewPhoto, "objectKey" | "sortOrder" | "uploadId">;
 type CreatePostInput = Pick<NewPost, "body" | "memberId" | "organizationId"> & {
   petIds: Pet["id"][];
+  photos: CreatePostPhotoInput[];
 };
 type UpdatePostInput = Pick<Post, "id" | "organizationId"> & {
   body?: Post["body"];
@@ -56,7 +59,9 @@ const attachRelations = async (db: Db, spacePosts: Post[]): Promise<PostWithPets
 
   return spacePosts.map((post) => ({
     ...post,
-    photos: photoRows.filter((photo) => photo.postId === post.id),
+    photos: photoRows
+      .filter((photo) => photo.postId === post.id)
+      .sort((left, right) => left.sortOrder - right.sortOrder),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
   }));
 };
@@ -90,6 +95,17 @@ export const createPostRepository = (db: Db): PostRepository => ({
         input.petIds.map((petId) => ({
           petId,
           postId: post.id,
+        })),
+      );
+    }
+
+    if (input.photos.length > 0) {
+      await db.insert(photos).values(
+        input.photos.map((photo) => ({
+          objectKey: photo.objectKey,
+          postId: post.id,
+          sortOrder: photo.sortOrder,
+          uploadId: photo.uploadId,
         })),
       );
     }
