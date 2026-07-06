@@ -8,6 +8,7 @@ export type AppBindings = {
   AUTH_SECRET?: string;
   AUTH_TRUSTED_ORIGINS?: string;
   DB: D1Database;
+  PHOTOS_BUCKET: R2Bucket;
 };
 
 export type AppConfig = {
@@ -21,6 +22,9 @@ export type AppConfig = {
   };
   database: {
     binding: D1Database;
+  };
+  storage: {
+    photosBucket: R2Bucket;
   };
 };
 
@@ -56,6 +60,9 @@ export const getConfig = (bindings: AppBindings): AppConfig => {
     },
     database: {
       binding: bindings.DB,
+    },
+    storage: {
+      photosBucket: bindings.PHOTOS_BUCKET,
     },
   };
 };

@@ -8,3 +8,7 @@ binding = "DB"
 database_name = "belu-local"
 database_id = "local"
 migrations_dir = "drizzle/migrations"
+
+[[r2_buckets]]
+binding = "PHOTOS_BUCKET"
+bucket_name = "belu-photos-local"
