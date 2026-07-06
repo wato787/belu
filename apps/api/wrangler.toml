@@ -3,6 +3,12 @@ main = "src/index.ts"
 compatibility_date = "2026-07-05"
 compatibility_flags = ["nodejs_compat"]
 
+[vars]
+APP_ENV = "development"
+AUTH_BASE_URL = "http://localhost:8787"
+AUTH_TRUSTED_ORIGINS = "http://localhost:5173"
+R2_BUCKET_NAME = "belu-photos-local"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "belu-local"

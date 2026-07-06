@@ -10,6 +10,10 @@ export type AppBindings = {
   DB: D1Database;
   PHOTOS_PUBLIC_BASE_URL?: string;
   PHOTOS_BUCKET: R2Bucket;
+  R2_ACCOUNT_ID?: string;
+  R2_ACCESS_KEY_ID?: string;
+  R2_BUCKET_NAME?: string;
+  R2_SECRET_ACCESS_KEY?: string;
 };
 
 export type AppConfig = {
@@ -27,6 +31,10 @@ export type AppConfig = {
   storage: {
     photosBucket: R2Bucket;
     photosPublicBaseUrl: string | undefined;
+    r2AccountId: string | undefined;
+    r2AccessKeyId: string | undefined;
+    r2BucketName: string | undefined;
+    r2SecretAccessKey: string | undefined;
   };
 };
 
@@ -66,6 +74,10 @@ export const getConfig = (bindings: AppBindings): AppConfig => {
     storage: {
       photosBucket: bindings.PHOTOS_BUCKET,
       photosPublicBaseUrl: bindings.PHOTOS_PUBLIC_BASE_URL,
+      r2AccountId: bindings.R2_ACCOUNT_ID,
+      r2AccessKeyId: bindings.R2_ACCESS_KEY_ID,
+      r2BucketName: bindings.R2_BUCKET_NAME,
+      r2SecretAccessKey: bindings.R2_SECRET_ACCESS_KEY,
     },
   };
 };

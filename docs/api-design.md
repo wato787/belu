@@ -237,6 +237,25 @@ R2_ACCESS_KEY_ID
 R2_SECRET_ACCESS_KEY
 ```
 
+`wrangler.toml` に置く設定:
+
+```text
+APP_ENV
+AUTH_BASE_URL
+AUTH_TRUSTED_ORIGINS
+PHOTOS_PUBLIC_BASE_URL
+R2_ACCOUNT_ID
+R2_BUCKET_NAME
+```
+
+Worker secretまたはローカル開発用の `.dev.vars` に置く設定:
+
+```text
+AUTH_SECRET
+R2_ACCESS_KEY_ID
+R2_SECRET_ACCESS_KEY
+```
+
 Cloudflare Account IDやR2 S3 Credentialは署名付きURL生成にのみ利用し、Cloudflare REST APIはWorker Runtimeから呼び出さない。
 
 ### Secret Management
