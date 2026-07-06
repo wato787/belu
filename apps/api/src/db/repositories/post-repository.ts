@@ -1,6 +1,15 @@
 import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "../client";
-import { pets, postPets, posts, type NewPost, type Pet, type Post } from "../schema";
+import {
+  pets,
+  photos,
+  postPets,
+  posts,
+  type NewPost,
+  type Pet,
+  type Photo,
+  type Post,
+} from "../schema";
 
 type PostSpaceKey = Pick<Post, "organizationId">;
 type PostIdentity = Pick<Post, "id" | "organizationId">;
@@ -16,6 +25,7 @@ type PostPetInput = Pick<Post, "organizationId"> & {
 };
 
 export type PostWithPets = Post & {
+  photos: Photo[];
   pets: Pet[];
 };
 
@@ -28,7 +38,7 @@ export type PostRepository = {
   countPetsBySpaceId: (input: PostPetInput) => Promise<number>;
 };
 
-const attachPets = async (db: Db, spacePosts: Post[]): Promise<PostWithPets[]> => {
+const attachRelations = async (db: Db, spacePosts: Post[]): Promise<PostWithPets[]> => {
   if (spacePosts.length === 0) {
     return [];
   }
@@ -42,9 +52,11 @@ const attachPets = async (db: Db, spacePosts: Post[]): Promise<PostWithPets[]> =
     .from(postPets)
     .innerJoin(pets, eq(pets.id, postPets.petId))
     .where(inArray(postPets.postId, postIds));
+  const photoRows = await db.select().from(photos).where(inArray(photos.postId, postIds));
 
   return spacePosts.map((post) => ({
     ...post,
+    photos: photoRows.filter((photo) => photo.postId === post.id),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
   }));
 };
@@ -56,7 +68,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
       .from(posts)
       .where(eq(posts.organizationId, input.organizationId));
 
-    return attachPets(db, spacePosts);
+    return attachRelations(db, spacePosts);
   },
 
   create: async (input) => {
@@ -99,7 +111,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
       return undefined;
     }
 
-    const [postWithPets] = await attachPets(db, [post]);
+    const [postWithPets] = await attachRelations(db, [post]);
 
     return postWithPets;
   },

@@ -5,6 +5,12 @@ export const toPostResponse = (post: PostWithPets) => ({
   body: post.body,
   createdAt: post.createdAt,
   updatedAt: post.updatedAt,
+  photos: post.photos.map((photo) => ({
+    id: photo.id,
+    objectKey: photo.objectKey,
+    createdAt: photo.createdAt,
+    updatedAt: photo.updatedAt,
+  })),
   pets: post.pets.map((pet) => ({
     id: pet.id,
     name: pet.name,

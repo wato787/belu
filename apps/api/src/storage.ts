@@ -2,7 +2,7 @@ type StorageObjectBody = Parameters<R2Bucket["put"]>[1];
 
 type StorageConfig = {
   photosBucket: R2Bucket;
-  photosPublicBaseUrl?: string;
+  photosPublicBaseUrl: string | undefined;
 };
 
 type UploadPhotoInput = {
