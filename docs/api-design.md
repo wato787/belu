@@ -141,6 +141,7 @@ DELETE /spaces/:spaceId/pets/:petId
 
 GET    /spaces/:spaceId/posts
 POST   /spaces/:spaceId/posts
+POST   /spaces/:spaceId/posts/upload-url
 GET    /spaces/:spaceId/posts/:postId
 PATCH  /spaces/:spaceId/posts/:postId
 DELETE /spaces/:spaceId/posts/:postId
@@ -149,6 +150,138 @@ DELETE /spaces/:spaceId/posts/:postId
 - URL構造とroutes構造を一致させる。
 - Space配下のリソースは必ずspaceIdを持つ。
 - Space配下のAPIでは、対象ユーザーがそのSpaceのMemberであることを確認する。
+
+---
+
+## Photo Upload URL
+
+Postに紐付ける写真は、ClientからR2へ直接アップロードする。
+
+APIは写真データを受け取らず、署名付きUpload URLの発行のみを行う。
+
+```text
+POST /spaces/:spaceId/posts/upload-url
+```
+
+### Request
+
+```json
+{
+  "files": [
+    {
+      "contentType": "image/jpeg",
+      "fileSize": 1234567
+    }
+  ]
+}
+```
+
+### Response
+
+```json
+{
+  "uploads": [
+    {
+      "uploadId": "0198...",
+      "objectKey": "spaces/{spaceId}/posts/uploads/0198....jpg",
+      "uploadUrl": "https://...",
+      "expiresAt": "2026-07-06T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+### Rules
+
+- 認証済みUserのみ利用できる。
+- 対象UserがSpace Memberであることを確認する。
+- `files` は1〜20件とする。
+- `contentType` は許可された画像形式のみ受け付ける。
+- `fileSize` は上限以内のみ受け付ける。
+- `objectKey` はAPI側で生成する。
+- Clientから `objectKey` を指定させない。
+- `uploadId` はUUIDv7を利用する。
+- 署名付きURLの有効期限は短くする。
+- APIは写真データを中継しない。
+- MVPでは未使用Objectのcleanupは後回しにする。
+
+Allowed Content Types:
+
+```text
+image/jpeg
+image/png
+image/webp
+image/heic
+```
+
+Object Key:
+
+```text
+spaces/{spaceId}/posts/uploads/{uploadId}.{ext}
+```
+
+### R2 Credentials
+
+R2 Bucket BindingはR2 Objectの確認・削除などWorker内のObject操作に利用する。
+
+署名付きURL生成にはR2のS3互換Credentialを利用する。
+これはCloudflare REST API Tokenではなく、対象Bucketへの最小権限を持つR2用Credentialとして管理する。
+
+Worker Runtimeに必要な設定:
+
+```text
+PHOTOS_BUCKET
+R2_ACCOUNT_ID
+R2_BUCKET_NAME
+R2_ACCESS_KEY_ID
+R2_SECRET_ACCESS_KEY
+```
+
+Cloudflare Account IDやR2 S3 Credentialは署名付きURL生成にのみ利用し、Cloudflare REST APIはWorker Runtimeから呼び出さない。
+
+### Secret Management
+
+R2 Bucket、CORS、LifecycleはTerraformで管理する。
+
+R2 S3 Credentialの生値はTerraform stateに入れない。
+Terraform Providerのtoken resourceでCredentialを作成することは可能だが、token valueがstateに残るため採用しない。
+
+MVPではR2 S3 CredentialをCloudflareで発行し、Worker secretとして登録する。
+環境が増えて手動登録が負担になった場合は、CI/CDまたはSecret ManagerからWorker secretへ同期する。
+
+Worker Runtimeでは、Cloudflare REST API Tokenを保持しない。
+
+---
+
+## Create Post with Photos
+
+`POST /spaces/:spaceId/posts` では、アップロード済みの写真情報を受け取る。
+PhotoはPostの一部として作成し、独立したPhoto APIは作らない。
+
+```json
+{
+  "body": "今日はドッグラン",
+  "petIds": ["pet1", "pet2"],
+  "photos": [
+    {
+      "uploadId": "0198...",
+      "objectKey": "spaces/{spaceId}/posts/uploads/0198....jpg",
+      "sortOrder": 0
+    }
+  ]
+}
+```
+
+Rules:
+
+- `photos` は任意とする。
+- `photos` を指定する場合は1〜20件とする。
+- `objectKey` は `spaces/{spaceId}/posts/uploads/{uploadId}.{ext}` 形式のみ受け付ける。
+- `uploadId` と `objectKey` のUUIDv7部分が一致することを確認する。
+- `sortOrder` は0以上の整数とする。
+- Post作成前に `PHOTOS_BUCKET.head(objectKey)` でObject存在確認を行う。
+- Objectが存在しない場合は400を返す。
+- Photo recordはPost作成と同じDB処理の中で作成する。
 
 ---
 

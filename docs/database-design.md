@@ -63,6 +63,10 @@ reactions
 BeluはPet、Post、Photo、Reactionなどのドメインモデルに集中する。
 Space、Member、InvitationはBetter Auth Organization Pluginのテーブルを利用する。
 
+PhotoはPost作成時にPostの一部として作成する。
+アップロードURL発行時点ではDB recordを作成しない。
+MVPでは未使用のR2 Object cleanupは行わない。
+
 ---
 
 ## Naming
@@ -130,6 +134,9 @@ updated_at
 
 - `post_pets(post_id, pet_id)`
 - `reactions(post_id, member_id, type)`
+
+Photoの `object_key` はR2 Object Keyを保存する。
+MVPでは `object_key` のunique constraintは必須としないが、同一Objectを複数Photoへ紐付けないようAPIで検証する。
 
 ---
 

@@ -77,10 +77,12 @@ Beluにおける中心となるドメイン。
 Postに紐付く写真。
 
 Photo単体では存在せず、必ずPostに属する。
+ClientはPost作成前にR2へ写真を直接アップロードできるが、Beluのドメイン上でPhotoになるのはPost作成時とする。
 
 ### Responsibilities
 
 - Postを構成する
+- R2 Object Keyを保持する
 
 ---
 
