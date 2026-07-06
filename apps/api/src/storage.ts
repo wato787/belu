@@ -1,35 +1,50 @@
 type StorageObjectBody = Parameters<R2Bucket["put"]>[1];
 
-type UploadStorageObjectInput = {
+type StorageConfig = {
+  photosBucket: R2Bucket;
+  photosPublicBaseUrl?: string;
+};
+
+type UploadPhotoInput = {
   body: StorageObjectBody;
   contentType: string;
   key: string;
 };
 
-type CreatePhotoObjectKeyInput = {
-  extension: string;
-  photoId: string;
-  postId: string;
-  spaceId: string;
+type DeletePhotoInput = {
+  key: string;
 };
 
-export const createPhotoObjectKey = ({
-  extension,
-  photoId,
-  postId,
-  spaceId,
-}: CreatePhotoObjectKeyInput) => {
-  const normalizedExtension = extension.replace(/^\./, "").toLowerCase();
-
-  return `spaces/${spaceId}/posts/${postId}/photos/${photoId}.${normalizedExtension}`;
+type GetPublicUrlInput = {
+  key: string;
 };
 
-export const uploadStorageObject = async (
-  bucket: R2Bucket,
-  { body, contentType, key }: UploadStorageObjectInput,
-) =>
-  bucket.put(key, body, {
-    httpMetadata: {
-      contentType,
-    },
-  });
+export type Storage = {
+  deletePhoto: (input: DeletePhotoInput) => Promise<void>;
+  getPublicUrl: (input: GetPublicUrlInput) => string | null;
+  uploadPhoto: (input: UploadPhotoInput) => Promise<{ key: string }>;
+};
+
+export const createStorage = ({ photosBucket, photosPublicBaseUrl }: StorageConfig): Storage => ({
+  deletePhoto: async ({ key }) => {
+    await photosBucket.delete(key);
+  },
+
+  getPublicUrl: ({ key }) => {
+    if (!photosPublicBaseUrl) {
+      return null;
+    }
+
+    return `${photosPublicBaseUrl.replace(/\/$/, "")}/${key}`;
+  },
+
+  uploadPhoto: async ({ body, contentType, key }) => {
+    await photosBucket.put(key, body, {
+      httpMetadata: {
+        contentType,
+      },
+    });
+
+    return { key };
+  },
+});
