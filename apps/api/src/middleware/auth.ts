@@ -1,4 +1,5 @@
 import { createMiddleware } from "hono/factory";
+import type { Context } from "hono";
 import type { AppHonoEnv } from "../config";
 import { UnauthorizedException } from "../helpers/exceptions";
 import { createAuth } from "../lib/better-auth";
@@ -16,11 +17,17 @@ export const authMiddleware = createMiddleware<AppHonoEnv>(async (c, next) => {
 });
 
 export const requireUser = createMiddleware<AppHonoEnv>(async (c, next) => {
+  getRequiredUser(c);
+
+  await next();
+});
+
+export const getRequiredUser = (c: Context<AppHonoEnv>) => {
   const user = c.get("user");
 
   if (!user) {
     throw new UnauthorizedException();
   }
 
-  await next();
-});
+  return user;
+};
