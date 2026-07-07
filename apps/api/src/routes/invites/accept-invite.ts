@@ -5,9 +5,7 @@ import { requireUser } from "../../middleware/auth";
 import { formatInvite, formatInviteMember } from "./helpers";
 import { inviteIdParamSchema } from "./schema";
 
-const acceptInviteRoute = createRoute();
-
-acceptInviteRoute.post(
+const acceptInviteRoute = createRoute().post(
   "/:inviteId/accept",
   requireUser,
   zValidator("param", inviteIdParamSchema),

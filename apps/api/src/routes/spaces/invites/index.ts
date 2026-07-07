@@ -3,10 +3,9 @@ import { createInviteRoute } from "./create-invite";
 import { deleteInviteRoute } from "./delete-invite";
 import { listInvitesRoute } from "./list-invites";
 
-const spaceInvitesRoute = createRoute();
-
-spaceInvitesRoute.route("/", listInvitesRoute);
-spaceInvitesRoute.route("/", createInviteRoute);
-spaceInvitesRoute.route("/", deleteInviteRoute);
+const spaceInvitesRoute = createRoute()
+  .route("/", listInvitesRoute)
+  .route("/", createInviteRoute)
+  .route("/", deleteInviteRoute);
 
 export { spaceInvitesRoute };

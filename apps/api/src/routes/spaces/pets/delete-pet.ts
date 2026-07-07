@@ -8,9 +8,7 @@ import { requireSpaceMember } from "../../../middleware/space";
 import { spaceIdParamSchema } from "../schema";
 import { petIdParamSchema } from "./schema";
 
-const deletePetRoute = createRoute();
-
-deletePetRoute.delete(
+const deletePetRoute = createRoute().delete(
   "/:petId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(petIdParamSchema)),

@@ -7,9 +7,7 @@ import { requireSpaceMember } from "../../../middleware/space";
 import { spaceIdParamSchema } from "../schema";
 import { toPostResponse } from "./helpers";
 
-const listPostsRoute = createRoute();
-
-listPostsRoute.get(
+const listPostsRoute = createRoute().get(
   "/",
   requireUser,
   zValidator("param", spaceIdParamSchema),

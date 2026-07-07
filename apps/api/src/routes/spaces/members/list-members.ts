@@ -4,9 +4,7 @@ import { requireUser } from "../../../middleware/auth";
 import { requireSpaceOwner } from "../../../middleware/space";
 import { formatSpaceMember } from "./helpers";
 
-const listMembersRoute = createRoute();
-
-listMembersRoute.get("/", requireUser, requireSpaceOwner, async (c) => {
+const listMembersRoute = createRoute().get("/", requireUser, requireSpaceOwner, async (c) => {
   const spaceId = c.req.param("spaceId");
   const auth = createAuth(c.env);
 

@@ -1,11 +1,9 @@
-import { createRoute } from "../../helpers/create-route";
 import { createAuth } from "../../lib/better-auth";
 import { getRequiredUser, requireUser } from "../../middleware/auth";
+import { createRoute } from "../../helpers/create-route";
 import { formatMeSpace, formatMeUser } from "./helpers";
 
-const getMeRoute = createRoute();
-
-getMeRoute.get("/", requireUser, async (c) => {
+const getMeRoute = createRoute().get("/", requireUser, async (c) => {
   const user = getRequiredUser(c);
   const auth = createAuth(c.env);
 

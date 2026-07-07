@@ -6,9 +6,7 @@ import { requireSpaceOwner } from "../../../middleware/space";
 import { formatInvite } from "../../invites/helpers";
 import { createInviteSchema } from "./schema";
 
-const createInviteRoute = createRoute();
-
-createInviteRoute.post(
+const createInviteRoute = createRoute().post(
   "/",
   requireUser,
   requireSpaceOwner,

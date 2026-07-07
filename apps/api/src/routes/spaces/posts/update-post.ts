@@ -9,9 +9,7 @@ import { spaceIdParamSchema } from "../schema";
 import { toPostResponse, uniqueIds } from "./helpers";
 import { postIdParamSchema, updatePostSchema } from "./schema";
 
-const updatePostRoute = createRoute();
-
-updatePostRoute.patch(
+const updatePostRoute = createRoute().patch(
   "/:postId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(postIdParamSchema)),

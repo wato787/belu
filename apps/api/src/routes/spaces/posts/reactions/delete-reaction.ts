@@ -8,9 +8,7 @@ import { requireSpaceMember } from "../../../../middleware/space";
 import { spaceIdParamSchema } from "../../schema";
 import { postIdParamSchema, reactionTypeParamSchema } from "../schema";
 
-const deleteReactionRoute = createRoute();
-
-deleteReactionRoute.delete(
+const deleteReactionRoute = createRoute().delete(
   "/:type",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(postIdParamSchema).merge(reactionTypeParamSchema)),

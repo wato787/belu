@@ -9,16 +9,15 @@ import { petsRoute } from "./pets";
 import { postsRoute } from "./posts";
 import { updateSpaceRoute } from "./update-space";
 
-const spacesRoute = createRoute();
-
-spacesRoute.route("/", createSpaceRoute);
-spacesRoute.route("/", listSpacesRoute);
-spacesRoute.route("/", getSpaceRoute);
-spacesRoute.route("/", updateSpaceRoute);
-spacesRoute.route("/", deleteSpaceRoute);
-spacesRoute.route("/:spaceId/invites", spaceInvitesRoute);
-spacesRoute.route("/:spaceId/members", membersRoute);
-spacesRoute.route("/:spaceId/pets", petsRoute);
-spacesRoute.route("/:spaceId/posts", postsRoute);
+const spacesRoute = createRoute()
+  .route("/", createSpaceRoute)
+  .route("/", listSpacesRoute)
+  .route("/", getSpaceRoute)
+  .route("/", updateSpaceRoute)
+  .route("/", deleteSpaceRoute)
+  .route("/:spaceId/invites", spaceInvitesRoute)
+  .route("/:spaceId/members", membersRoute)
+  .route("/:spaceId/pets", petsRoute)
+  .route("/:spaceId/posts", postsRoute);
 
 export { spacesRoute };

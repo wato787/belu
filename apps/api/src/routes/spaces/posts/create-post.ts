@@ -16,8 +16,6 @@ import { spaceIdParamSchema } from "../schema";
 import { toPostResponse, uniqueIds } from "./helpers";
 import { createPostSchema, type CreatePostInput } from "./schema";
 
-const createPostRoute = createRoute();
-
 type CreatePostPhotoInput = CreatePostInput["photos"][number];
 
 const hasDuplicate = (values: (number | string)[]) => new Set(values).size !== values.length;
@@ -57,7 +55,7 @@ const validatePhotos = (photos: CreatePostPhotoInput[], spaceId: string) => {
   }
 };
 
-createPostRoute.post(
+const createPostRoute = createRoute().post(
   "/",
   requireUser,
   zValidator("param", spaceIdParamSchema),

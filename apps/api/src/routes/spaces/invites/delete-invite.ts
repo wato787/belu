@@ -7,9 +7,7 @@ import { requireSpaceOwner } from "../../../middleware/space";
 import { formatInvite } from "../../invites/helpers";
 import { inviteIdParamSchema } from "./schema";
 
-const deleteInviteRoute = createRoute();
-
-deleteInviteRoute.delete(
+const deleteInviteRoute = createRoute().delete(
   "/:inviteId",
   requireUser,
   requireSpaceOwner,

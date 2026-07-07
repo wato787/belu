@@ -8,9 +8,7 @@ import { requireSpaceMember } from "../../../middleware/space";
 import { spaceIdParamSchema } from "../schema";
 import { petIdParamSchema } from "./schema";
 
-const getPetRoute = createRoute();
-
-getPetRoute.get(
+const getPetRoute = createRoute().get(
   "/:petId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(petIdParamSchema)),

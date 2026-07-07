@@ -8,9 +8,7 @@ import { requireSpaceMember } from "../../../../middleware/space";
 import { spaceIdParamSchema } from "../../schema";
 import { postIdParamSchema, reactionTypeParamSchema } from "../schema";
 
-const putReactionRoute = createRoute();
-
-putReactionRoute.put(
+const putReactionRoute = createRoute().put(
   "/:type",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(postIdParamSchema).merge(reactionTypeParamSchema)),

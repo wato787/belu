@@ -4,9 +4,7 @@ import { requireUser } from "../../../middleware/auth";
 import { requireSpaceOwner } from "../../../middleware/space";
 import { formatInvite } from "../../invites/helpers";
 
-const listInvitesRoute = createRoute();
-
-listInvitesRoute.get("/", requireUser, requireSpaceOwner, async (c) => {
+const listInvitesRoute = createRoute().get("/", requireUser, requireSpaceOwner, async (c) => {
   const spaceId = c.req.param("spaceId");
   const auth = createAuth(c.env);
 

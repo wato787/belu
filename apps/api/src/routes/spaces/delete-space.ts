@@ -9,9 +9,7 @@ import { requireSpaceOwner } from "../../middleware/space";
 import { createStorage } from "../../storage";
 import { spaceIdParamSchema } from "./schema";
 
-const deleteSpaceRoute = createRoute();
-
-deleteSpaceRoute.delete(
+const deleteSpaceRoute = createRoute().delete(
   "/:spaceId",
   requireUser,
   zValidator("param", spaceIdParamSchema),

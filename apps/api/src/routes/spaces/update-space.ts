@@ -6,9 +6,7 @@ import { requireUser } from "../../middleware/auth";
 import { requireSpaceOwner } from "../../middleware/space";
 import { spaceIdParamSchema, updateSpaceSchema } from "./schema";
 
-const updateSpaceRoute = createRoute();
-
-updateSpaceRoute.patch(
+const updateSpaceRoute = createRoute().patch(
   "/:spaceId",
   requireUser,
   zValidator("param", spaceIdParamSchema),

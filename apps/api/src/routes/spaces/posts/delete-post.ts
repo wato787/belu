@@ -10,9 +10,7 @@ import { createStorage } from "../../../storage";
 import { spaceIdParamSchema } from "../schema";
 import { postIdParamSchema } from "./schema";
 
-const deletePostRoute = createRoute();
-
-deletePostRoute.delete(
+const deletePostRoute = createRoute().delete(
   "/:postId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(postIdParamSchema)),

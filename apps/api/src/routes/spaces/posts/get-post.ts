@@ -9,9 +9,7 @@ import { spaceIdParamSchema } from "../schema";
 import { toPostResponse } from "./helpers";
 import { postIdParamSchema } from "./schema";
 
-const getPostRoute = createRoute();
-
-getPostRoute.get(
+const getPostRoute = createRoute().get(
   "/:postId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(postIdParamSchema)),

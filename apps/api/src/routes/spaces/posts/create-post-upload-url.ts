@@ -8,9 +8,7 @@ import { createStorage } from "../../../storage";
 import { spaceIdParamSchema } from "../schema";
 import { createPostUploadUrlSchema, POST_PHOTO_UPLOAD_URL_EXPIRES_IN_SECONDS } from "./schema";
 
-const createPostUploadUrlRoute = createRoute();
-
-createPostUploadUrlRoute.post(
+const createPostUploadUrlRoute = createRoute().post(
   "/upload-url",
   requireUser,
   zValidator("param", spaceIdParamSchema),

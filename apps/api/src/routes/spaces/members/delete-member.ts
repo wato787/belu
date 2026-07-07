@@ -7,9 +7,7 @@ import { requireSpaceOwner } from "../../../middleware/space";
 import { formatSpaceMember } from "./helpers";
 import { memberIdParamSchema } from "./schema";
 
-const deleteMemberRoute = createRoute();
-
-deleteMemberRoute.delete(
+const deleteMemberRoute = createRoute().delete(
   "/:memberId",
   requireUser,
   requireSpaceOwner,

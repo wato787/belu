@@ -3,10 +3,9 @@ import { invitesRoute } from "./invites";
 import { meRoute } from "./me";
 import { spacesRoute } from "./spaces";
 
-const routes = createRoute();
-
-routes.route("/me", meRoute);
-routes.route("/invites", invitesRoute);
-routes.route("/spaces", spacesRoute);
+const routes = createRoute()
+  .route("/me", meRoute)
+  .route("/invites", invitesRoute)
+  .route("/spaces", spacesRoute);
 
 export { routes };

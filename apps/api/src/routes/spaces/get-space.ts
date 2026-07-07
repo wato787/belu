@@ -4,9 +4,7 @@ import { requireUser } from "../../middleware/auth";
 import { requireSpaceMember } from "../../middleware/space";
 import { spaceIdParamSchema } from "./schema";
 
-const getSpaceRoute = createRoute();
-
-getSpaceRoute.get(
+const getSpaceRoute = createRoute().get(
   "/:spaceId",
   requireUser,
   zValidator("param", spaceIdParamSchema),

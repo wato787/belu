@@ -8,9 +8,7 @@ import { requireSpaceMember } from "../../../middleware/space";
 import { spaceIdParamSchema } from "../schema";
 import { petIdParamSchema, updatePetSchema } from "./schema";
 
-const updatePetRoute = createRoute();
-
-updatePetRoute.patch(
+const updatePetRoute = createRoute().patch(
   "/:petId",
   requireUser,
   zValidator("param", spaceIdParamSchema.merge(petIdParamSchema)),
