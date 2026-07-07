@@ -16,9 +16,13 @@ listPostsRoute.get(
   requireSpaceMember,
   async (c) => {
     const { spaceId } = c.req.valid("param");
+    const spaceMember = c.get("spaceMember");
     const db = createDb(c.env.DB);
     const postRepository = createPostRepository(db);
-    const spacePosts = await postRepository.listBySpaceId({ organizationId: spaceId });
+    const spacePosts = await postRepository.listBySpaceId({
+      organizationId: spaceId,
+      viewerMemberId: spaceMember.id,
+    });
 
     return c.json({
       posts: spacePosts.map(toPostResponse),

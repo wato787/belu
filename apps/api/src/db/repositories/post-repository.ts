@@ -5,24 +5,31 @@ import {
   photos,
   postPets,
   posts,
+  reactions,
   type NewPhoto,
   type NewPost,
   type Pet,
   type Photo,
   type Post,
+  type Reaction,
 } from "../schema";
+import { REACTION_TYPES, type ReactionType } from "../../constants";
 
-type PostSpaceKey = Pick<Post, "organizationId">;
-type PostIdentity = Pick<Post, "id" | "organizationId">;
+type ViewerKey = {
+  viewerMemberId?: Reaction["memberId"];
+};
+type PostSpaceKey = Pick<Post, "organizationId"> & ViewerKey;
+type PostIdentity = Pick<Post, "id" | "organizationId"> & ViewerKey;
 type CreatePostPhotoInput = Pick<NewPhoto, "objectKey" | "sortOrder" | "uploadId">;
 type CreatePostInput = Pick<NewPost, "body" | "memberId" | "organizationId"> & {
   petIds: Pet["id"][];
   photos: CreatePostPhotoInput[];
 };
-type UpdatePostInput = Pick<Post, "id" | "organizationId"> & {
-  body?: Post["body"];
-  petIds?: Pet["id"][];
-};
+type UpdatePostInput = Pick<Post, "id" | "organizationId"> &
+  ViewerKey & {
+    body?: Post["body"];
+    petIds?: Pet["id"][];
+  };
 type PostPetInput = Pick<Post, "organizationId"> & {
   petIds: Pet["id"][];
 };
@@ -30,6 +37,8 @@ type PostPetInput = Pick<Post, "organizationId"> & {
 export type PostWithPets = Post & {
   photos: Photo[];
   pets: Pet[];
+  reactionCounts: Record<ReactionType, number>;
+  viewerReactions: ReactionType[];
 };
 
 export type PostRepository = {
@@ -41,7 +50,11 @@ export type PostRepository = {
   countPetsBySpaceId: (input: PostPetInput) => Promise<number>;
 };
 
-const attachRelations = async (db: Db, spacePosts: Post[]): Promise<PostWithPets[]> => {
+const attachRelations = async (
+  db: Db,
+  spacePosts: Post[],
+  viewerMemberId?: Reaction["memberId"],
+): Promise<PostWithPets[]> => {
   if (spacePosts.length === 0) {
     return [];
   }
@@ -56,6 +69,7 @@ const attachRelations = async (db: Db, spacePosts: Post[]): Promise<PostWithPets
     .innerJoin(pets, eq(pets.id, postPets.petId))
     .where(inArray(postPets.postId, postIds));
   const photoRows = await db.select().from(photos).where(inArray(photos.postId, postIds));
+  const reactionRows = await db.select().from(reactions).where(inArray(reactions.postId, postIds));
 
   return spacePosts.map((post) => ({
     ...post,
@@ -63,6 +77,23 @@ const attachRelations = async (db: Db, spacePosts: Post[]): Promise<PostWithPets
       .filter((photo) => photo.postId === post.id)
       .sort((left, right) => left.sortOrder - right.sortOrder),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
+    reactionCounts: reactionRows
+      .filter((reaction) => reaction.postId === post.id)
+      .reduce<Record<ReactionType, number>>(
+        (counts, reaction) => {
+          const reactionType = reaction.type as ReactionType;
+
+          counts[reactionType] = counts[reactionType] + 1;
+
+          return counts;
+        },
+        Object.fromEntries(REACTION_TYPES.map((type) => [type, 0])) as Record<ReactionType, number>,
+      ),
+    viewerReactions: viewerMemberId
+      ? reactionRows
+          .filter((reaction) => reaction.postId === post.id && reaction.memberId === viewerMemberId)
+          .map((reaction) => reaction.type as ReactionType)
+      : [],
   }));
 };
 
@@ -73,7 +104,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
       .from(posts)
       .where(eq(posts.organizationId, input.organizationId));
 
-    return attachRelations(db, spacePosts);
+    return attachRelations(db, spacePosts, input.viewerMemberId);
   },
 
   create: async (input) => {
@@ -113,6 +144,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
     return createPostRepository(db).findByIdAndSpaceId({
       id: post.id,
       organizationId: input.organizationId,
+      viewerMemberId: input.memberId,
     });
   },
 
@@ -127,7 +159,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
       return undefined;
     }
 
-    const [postWithPets] = await attachRelations(db, [post]);
+    const [postWithPets] = await attachRelations(db, [post], input.viewerMemberId);
 
     return postWithPets;
   },
@@ -162,6 +194,7 @@ export const createPostRepository = (db: Db): PostRepository => ({
     return createPostRepository(db).findByIdAndSpaceId({
       id: post.id,
       organizationId: input.organizationId,
+      ...(input.viewerMemberId === undefined ? {} : { viewerMemberId: input.viewerMemberId }),
     });
   },
 

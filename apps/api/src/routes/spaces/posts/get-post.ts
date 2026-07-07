@@ -18,11 +18,13 @@ getPostRoute.get(
   requireSpaceMember,
   async (c) => {
     const { postId, spaceId } = c.req.valid("param");
+    const spaceMember = c.get("spaceMember");
     const db = createDb(c.env.DB);
     const postRepository = createPostRepository(db);
     const post = await postRepository.findByIdAndSpaceId({
       id: postId,
       organizationId: spaceId,
+      viewerMemberId: spaceMember.id,
     });
 
     if (!post) {

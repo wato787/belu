@@ -20,6 +20,7 @@ updatePostRoute.patch(
   async (c) => {
     const { postId, spaceId } = c.req.valid("param");
     const body = c.req.valid("json");
+    const spaceMember = c.get("spaceMember");
     const petIds = body.petIds === undefined ? undefined : uniqueIds(body.petIds);
     const db = createDb(c.env.DB);
     const postRepository = createPostRepository(db);
@@ -38,6 +39,7 @@ updatePostRoute.patch(
     const post = await postRepository.updateByIdAndSpaceId({
       id: postId,
       organizationId: spaceId,
+      viewerMemberId: spaceMember.id,
       ...(body.body === undefined ? {} : { body: body.body }),
       ...(petIds === undefined ? {} : { petIds }),
     });

@@ -19,6 +19,8 @@ export const toPostResponse = (post: PostWithPets) => ({
     createdAt: pet.createdAt,
     updatedAt: pet.updatedAt,
   })),
+  reactionCounts: post.reactionCounts,
+  viewerReactions: post.viewerReactions,
 });
 
 export const uniqueIds = (ids: string[]) => [...new Set(ids)];

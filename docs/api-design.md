@@ -145,6 +145,8 @@ POST   /spaces/:spaceId/posts/upload-url
 GET    /spaces/:spaceId/posts/:postId
 PATCH  /spaces/:spaceId/posts/:postId
 DELETE /spaces/:spaceId/posts/:postId
+PUT    /spaces/:spaceId/posts/:postId/reactions/:type
+DELETE /spaces/:spaceId/posts/:postId/reactions/:type
 ```
 
 - URL構造とroutes構造を一致させる。
@@ -301,6 +303,65 @@ Rules:
 - Post作成前に `PHOTOS_BUCKET.head(objectKey)` でObject存在確認を行う。
 - Objectが存在しない場合は400を返す。
 - Photo recordはPost作成と同じDB処理の中で作成する。
+
+---
+
+## Post Reactions
+
+ReactionはPost配下のリソースとして扱う。
+独立したReaction APIは作らない。
+
+MVPではReaction Typeは以下とする。
+
+```text
+like
+love
+laugh
+surprise
+sad
+```
+
+```text
+PUT    /spaces/:spaceId/posts/:postId/reactions/:type
+DELETE /spaces/:spaceId/posts/:postId/reactions/:type
+```
+
+### Rules
+
+- 認証済みUserのみ利用できる。
+- 対象UserがSpace Memberであることを確認する。
+- 対象PostがSpaceに属していることを確認する。
+- `PUT` は指定Reactionを付けた状態にする。
+- `DELETE` は指定Reactionを外した状態にする。
+- どちらも冪等に扱う。
+- 同一Memberが同一Postに同一TypeのReactionを複数持たない。
+
+### Response
+
+```json
+{
+  "reaction": {
+    "postId": "post1",
+    "type": "like",
+    "reacted": true
+  }
+}
+```
+
+Post responseにはReaction集計とviewerのReactionを含める。
+
+```json
+{
+  "reactionCounts": {
+    "like": 3,
+    "love": 1,
+    "laugh": 0,
+    "surprise": 0,
+    "sad": 0
+  },
+  "viewerReactions": ["like", "love"]
+}
+```
 
 ---
 
