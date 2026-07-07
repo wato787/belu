@@ -44,6 +44,7 @@ apps/web/src/views/{domain}/queries.ts
 `views/` はRouteを定義しない。URLを持つものは `routes/` に置き、`views/` にはRouteから呼ばれる画面単位の部品とserver-state定義を置く。
 
 Key factoryは `keys.ts` に置き、queryOptions factoryは `queries.ts` に置く。
+mutationOptions factoryは `mutations.ts` に置く。
 
 ```ts
 export const meKeys = {
@@ -67,6 +68,32 @@ export const meQueries = {
 ComponentやRoute loaderではcustom hookを経由せず、`useQuery(meQueries.current())` や `queryClient.ensureQueryData(meQueries.current())` のようにoptionsを直接利用する。
 
 Mutationのinvalidateでは `keys.ts` のkey factoryを直接参照する。
+
+```text
+apps/web/src/views/{domain}/mutations.ts
+```
+
+Mutationはcustom hookにせず、`mutationOptions` helperで定義する。
+
+```ts
+export const postsMutations = {
+  create: (queryClient: QueryClient) =>
+    mutationOptions({
+      mutationFn: async ({ input, spaceId }) => {
+        const response = await apiClient.spaces[":spaceId"].posts.$post({
+          json: input,
+          param: { spaceId },
+        });
+        return parseApiResponse(response);
+      },
+      onSuccess: async (_data, variables) => {
+        await queryClient.invalidateQueries({
+          queryKey: postsKeys.lists(variables.spaceId),
+        });
+      },
+    }),
+};
+```
 
 Space配下のdomainでは `spaceId` をquery keyへ含め、Space単位でinvalidateできる階層にする。
 
