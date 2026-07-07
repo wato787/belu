@@ -16,6 +16,14 @@ Cookie sessionを利用するため、client fetchでは `credentials: "include"
 
 API呼び出しは `apiClient` と `parseApiResponse` を利用し、HTTP 4xx系の `ApiRequestError` はQuery retry対象外とする。
 
+Better Auth clientはログイン判定や認証操作に利用する。
+
+```text
+apps/web/src/lib/authClient.ts
+```
+
+ログイン判定はキャッシュしない。Route guardではTanStack Queryに乗せず、`authClient.getSession()` を直接呼ぶ。共通化は複数Routeで重複したタイミングで検討する。
+
 ---
 
 ## Router And Query
