@@ -69,6 +69,7 @@ src/
 ├── routes/
 │   ├── index.ts
 │   ├── auth/
+│   ├── me/
 │   ├── spaces/
 │   ├── invites/
 │   ├── pets/
@@ -106,6 +107,11 @@ src/routes/
 │   ├── update-space.ts
 │   ├── delete-space.ts
 │   │
+│   ├── members/
+│   │   ├── index.ts
+│   │   ├── list-members.ts
+│   │   └── delete-member.ts
+│   │
 │   ├── pets/
 │   │   ├── index.ts
 │   │   ├── list-pets.ts
@@ -134,6 +140,10 @@ src/routes/
 │   ├── accept-invite.ts
 │   └── reject-invite.ts
 │
+├── me/
+│   ├── index.ts
+│   └── get-me.ts
+│
 └── health/
     └── index.ts
 ```
@@ -144,6 +154,11 @@ POST   /spaces
 GET    /spaces/:spaceId
 PATCH  /spaces/:spaceId
 DELETE /spaces/:spaceId
+
+GET    /me
+
+GET    /spaces/:spaceId/members
+DELETE /spaces/:spaceId/members/:memberId
 
 GET    /spaces/:spaceId/pets
 POST   /spaces/:spaceId/pets
@@ -172,6 +187,39 @@ POST   /invites/:inviteId/reject
 - URL構造とroutes構造を一致させる。
 - Space配下のリソースは必ずspaceIdを持つ。
 - Space配下のAPIでは、対象ユーザーがそのSpaceのMemberであることを確認する。
+
+---
+
+## Me API
+
+ログイン中Userと、そのUserが所属するSpace一覧を返す。
+
+```text
+GET /me
+```
+
+Better AuthのsessionとOrganization Pluginを利用する。
+
+Responseには認証済みUserと所属Space一覧を含める。
+
+---
+
+## Member API
+
+SpaceのMemberはBetter Auth Organization PluginのMemberを利用する。
+
+Belu APIでは独自のMember Repositoryを作らず、Better Auth APIを薄くラップする。
+
+```text
+GET    /spaces/:spaceId/members
+DELETE /spaces/:spaceId/members/:memberId
+```
+
+Member APIはSpace ownerのみ実行できる。
+
+MVPではMember roleの変更APIは作らない。
+
+Owner自身の削除は許可しない。
 
 ---
 
