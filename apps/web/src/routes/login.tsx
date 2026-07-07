@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
 import { authClient } from "../lib/authClient";
@@ -6,7 +6,8 @@ import { authClient } from "../lib/authClient";
 type AuthMode = "sign-in" | "sign-up";
 
 function Login() {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const search = Route.useSearch();
   const [mode, setMode] = useState<AuthMode>("sign-in");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -37,7 +38,7 @@ function Login() {
         return;
       }
 
-      await navigate({ to: "/" });
+      router.history.push(search.redirect ?? "/spaces");
     } finally {
       setIsSubmitting(false);
     }
@@ -113,12 +114,15 @@ function Login() {
 }
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search) => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
   beforeLoad: async () => {
     const session = await authClient.getSession();
 
     if (session.data?.session) {
       throw redirect({
-        to: "/",
+        to: "/spaces",
       });
     }
   },

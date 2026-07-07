@@ -30,7 +30,7 @@ apps/web/src/lib/authClient.ts
 apps/web/src/routes/_authenticated.tsx
 ```
 
-`_authenticated` routeの `beforeLoad` では `authClient.getSession()` を直接呼び、未ログインの場合は `/login` へredirectする。
+`_authenticated` routeの `beforeLoad` では `authClient.getSession()` を直接呼び、未ログインの場合は `/login` へredirectする。redirect searchには `location.href` を入れ、login成功後に元のURLへ戻す。
 
 ---
 
