@@ -34,20 +34,28 @@ QueryClientは `apps/web/src/lib/queryClient.ts` で作成し、`QueryClientProv
 
 Queryの再利用単位は `queryOptions` helperで定義する。
 
-Query keyとqueryOptionsは、UI feature単位ではなくAPI resource単位で定義する。
+Query keyとqueryOptionsは、Route単位ではなくView domain単位で定義する。
 
 ```text
-apps/web/src/queries/{resource}.ts
+apps/web/src/views/{domain}/keys.ts
+apps/web/src/views/{domain}/queries.ts
 ```
 
-各resourceではkey factoryとoptions factoryを同居させる。
+`views/` はRouteを定義しない。URLを持つものは `routes/` に置き、`views/` にはRouteから呼ばれる画面単位の部品とserver-state定義を置く。
+
+Key factoryは `keys.ts` に置き、queryOptions factoryは `queries.ts` に置く。
+
+```ts
+export const meKeys = {
+  all: ["me"] as const,
+};
+```
 
 ```ts
 export const meQueries = {
-  all: ["me"] as const,
   current: () =>
     queryOptions({
-      queryKey: meQueries.all,
+      queryKey: meKeys.all,
       queryFn: async () => {
         const response = await apiClient.me.$get();
         return parseApiResponse(response);
@@ -58,16 +66,25 @@ export const meQueries = {
 
 ComponentやRoute loaderではcustom hookを経由せず、`useQuery(meQueries.current())` や `queryClient.ensureQueryData(meQueries.current())` のようにoptionsを直接利用する。
 
-Space配下のresourceでは `spaceId` をquery keyへ含め、Space単位でinvalidateできる階層にする。
+Mutationのinvalidateでは `keys.ts` のkey factoryを直接参照する。
+
+Space配下のdomainでは `spaceId` をquery keyへ含め、Space単位でinvalidateできる階層にする。
+
+```ts
+export const postsKeys = {
+  all: ["posts"] as const,
+  bySpace: (spaceId: string) => [...postsKeys.all, "space", spaceId] as const,
+  lists: (spaceId: string) => [...postsKeys.bySpace(spaceId), "list"] as const,
+  detail: (spaceId: string, postId: string) =>
+    [...postsKeys.bySpace(spaceId), "detail", postId] as const,
+};
+```
 
 ```ts
 export const postsQueries = {
-  all: ["posts"] as const,
-  bySpace: (spaceId: string) => [...postsQueries.all, "space", spaceId] as const,
-  lists: (spaceId: string) => [...postsQueries.bySpace(spaceId), "list"] as const,
   list: (spaceId: string) =>
     queryOptions({
-      queryKey: postsQueries.lists(spaceId),
+      queryKey: postsKeys.lists(spaceId),
       queryFn: async () => {
         const response = await apiClient.spaces[":spaceId"].posts.$get({
           param: { spaceId },

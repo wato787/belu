@@ -1,12 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { apiClient, parseApiResponse } from "../lib/apiClient";
+import { apiClient, parseApiResponse } from "../../lib/apiClient";
+import { meKeys } from "./keys";
 
 export const meQueries = {
-  all: ["me"] as const,
   current: () =>
     queryOptions({
-      queryKey: meQueries.all,
+      queryKey: meKeys.all,
       queryFn: async () => {
         const response = await apiClient.me.$get();
         return parseApiResponse(response);

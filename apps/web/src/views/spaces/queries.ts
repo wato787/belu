@@ -1,22 +1,20 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { apiClient, parseApiResponse } from "../lib/apiClient";
+import { apiClient, parseApiResponse } from "../../lib/apiClient";
+import { spacesKeys } from "./keys";
 
 export const spacesQueries = {
-  all: ["spaces"] as const,
-  lists: () => [...spacesQueries.all, "list"] as const,
   list: () =>
     queryOptions({
-      queryKey: spacesQueries.lists(),
+      queryKey: spacesKeys.lists(),
       queryFn: async () => {
         const response = await apiClient.spaces.$get();
         return parseApiResponse(response);
       },
     }),
-  details: () => [...spacesQueries.all, "detail"] as const,
   detail: (spaceId: string) =>
     queryOptions({
-      queryKey: [...spacesQueries.details(), spaceId] as const,
+      queryKey: spacesKeys.detail(spaceId),
       queryFn: async () => {
         const response = await apiClient.spaces[":spaceId"].$get({
           param: { spaceId },

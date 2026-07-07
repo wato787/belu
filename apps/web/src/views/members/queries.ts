@@ -1,13 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { apiClient, parseApiResponse } from "../lib/apiClient";
+import { apiClient, parseApiResponse } from "../../lib/apiClient";
+import { membersKeys } from "./keys";
 
 export const membersQueries = {
-  all: ["members"] as const,
-  bySpace: (spaceId: string) => [...membersQueries.all, "space", spaceId] as const,
   list: (spaceId: string) =>
     queryOptions({
-      queryKey: [...membersQueries.bySpace(spaceId), "list"] as const,
+      queryKey: membersKeys.list(spaceId),
       queryFn: async () => {
         const response = await apiClient.spaces[":spaceId"].members.$get({
           param: { spaceId },
