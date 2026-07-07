@@ -52,6 +52,30 @@ Queryの再利用単位は `queryOptions` helperで定義する。
 
 API呼び出しは `apiClient` と `parseApiResponse` を利用し、HTTP 4xx系の `ApiRequestError` はQuery retry対象外とする。
 
+Query keyとqueryOptionsは、UI feature単位ではなくAPI resource単位で定義する。
+
+```text
+apps/web/src/queries/{resource}.ts
+```
+
+各resourceではkey factoryとoptions factoryを同居させる。
+
+```ts
+export const meQueries = {
+  all: () => ["me"] as const,
+  current: () =>
+    queryOptions({
+      queryKey: meQueries.all(),
+      queryFn: async () => {
+        const response = await apiClient.me.$get();
+        return parseApiResponse(response);
+      },
+    }),
+};
+```
+
+ComponentやRoute loaderではcustom hookを経由せず、`useQuery(meQueries.current())` や `queryClient.ensureQueryData(meQueries.current())` のようにoptionsを直接利用する。
+
 ---
 
 ## Validation

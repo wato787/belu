@@ -1,4 +1,5 @@
 import { hc } from "hono/client";
+import type { ClientResponse } from "hono/client";
 import type { AppType } from "../../../api/src";
 import { HTTP_STATUS } from "../constants";
 
@@ -20,7 +21,7 @@ export const apiClient = hc<AppType>("/api", {
     }),
 });
 
-export const parseApiResponse = async <T>(response: Response): Promise<T> => {
+export const parseApiResponse = async <T>(response: ClientResponse<T> | Response): Promise<T> => {
   if (!response.ok) {
     let message = response.statusText || "API request failed";
 
