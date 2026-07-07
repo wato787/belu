@@ -9,8 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as AuthenticatedRouteImport } from "./routes/_authenticated";
 import { Route as IndexRouteImport } from "./routes/index";
 
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: "/_authenticated",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
@@ -25,6 +30,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
+  "/_authenticated": typeof AuthenticatedRoute;
   "/": typeof IndexRoute;
 }
 export interface FileRouteTypes {
@@ -32,15 +38,23 @@ export interface FileRouteTypes {
   fullPaths: "/";
   fileRoutesByTo: FileRoutesByTo;
   to: "/";
-  id: "__root__" | "/";
+  id: "__root__" | "/_authenticated" | "/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
+  AuthenticatedRoute: typeof AuthenticatedRoute;
   IndexRoute: typeof IndexRoute;
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/_authenticated": {
+      id: "/_authenticated";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AuthenticatedRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/": {
       id: "/";
       path: "/";
@@ -52,6 +66,7 @@ declare module "@tanstack/react-router" {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthenticatedRoute: AuthenticatedRoute,
   IndexRoute: IndexRoute,
 };
 export const routeTree = rootRouteImport

@@ -24,6 +24,14 @@ apps/web/src/lib/authClient.ts
 
 ログイン判定はキャッシュしない。Route guardではTanStack Queryに乗せず、`authClient.getSession()` を直接呼ぶ。共通化は複数Routeで重複したタイミングで検討する。
 
+ログイン必須RouteはTanStack Routerのpathless layout routeで表現する。
+
+```text
+apps/web/src/routes/_authenticated.tsx
+```
+
+`_authenticated` routeの `beforeLoad` では `authClient.getSession()` を直接呼び、未ログインの場合はlogin routeへredirectする。login routeが未実装の間は `/` へredirectする。
+
 ---
 
 ## Router And Query
