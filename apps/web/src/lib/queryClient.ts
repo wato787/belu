@@ -20,16 +20,15 @@ const shouldRetryQuery = (failureCount: number, error: unknown) => {
   return true;
 };
 
-export const createAppQueryClient = () =>
-  new QueryClient({
-    defaultOptions: {
-      queries: {
-        gcTime: 5 * 60_000,
-        retry: shouldRetryQuery,
-        staleTime: 60_000,
-      },
-      mutations: {
-        retry: false,
-      },
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 5 * 60_000,
+      retry: shouldRetryQuery,
+      staleTime: 60_000,
     },
-  });
+    mutations: {
+      retry: false,
+    },
+  },
+});
