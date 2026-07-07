@@ -76,6 +76,26 @@ export const meQueries = {
 
 ComponentやRoute loaderではcustom hookを経由せず、`useQuery(meQueries.current())` や `queryClient.ensureQueryData(meQueries.current())` のようにoptionsを直接利用する。
 
+Space配下のresourceでは `spaceId` をquery keyへ含め、Space単位でinvalidateできる階層にする。
+
+```ts
+export const postsQueries = {
+  all: ["posts"] as const,
+  bySpace: (spaceId: string) => [...postsQueries.all, "space", spaceId] as const,
+  lists: (spaceId: string) => [...postsQueries.bySpace(spaceId), "list"] as const,
+  list: (spaceId: string) =>
+    queryOptions({
+      queryKey: postsQueries.lists(spaceId),
+      queryFn: async () => {
+        const response = await apiClient.spaces[":spaceId"].posts.$get({
+          param: { spaceId },
+        });
+        return parseApiResponse(response);
+      },
+    }),
+};
+```
+
 ---
 
 ## Validation
