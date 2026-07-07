@@ -12,6 +12,9 @@ export const auth = betterAuth({
     provider: "sqlite",
     schema,
   }),
+  emailAndPassword: {
+    enabled: true,
+  },
   plugins: createAuthPlugins(),
   secret: "schema-generation-only-secret-for-belu-api",
 });

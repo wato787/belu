@@ -20,6 +20,9 @@ export const createAuth = (bindings: AppBindings) => {
       provider: "sqlite",
       schema,
     }),
+    emailAndPassword: {
+      enabled: true,
+    },
     plugins: createAuthPlugins(),
     secret: config.auth.secret,
     trustedOrigins: config.auth.trustedOrigins,
