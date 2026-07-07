@@ -70,9 +70,9 @@ src/
 │   ├── index.ts
 │   ├── auth/
 │   ├── spaces/
+│   ├── invites/
 │   ├── pets/
 │   ├── posts/
-│   ├── invites/
 │   └── health/
 ├── middleware/
 │   └── auth.ts
@@ -114,6 +114,12 @@ src/routes/
 │   │   ├── update-pet.ts
 │   │   └── delete-pet.ts
 │   │
+│   ├── invites/
+│   │   ├── index.ts
+│   │   ├── list-invites.ts
+│   │   ├── create-invite.ts
+│   │   └── delete-invite.ts
+│   │
 │   └── posts/
 │       ├── index.ts
 │       ├── list-posts.ts
@@ -121,6 +127,12 @@ src/routes/
 │       ├── create-post.ts
 │       ├── update-post.ts
 │       └── delete-post.ts
+│
+├── invites/
+│   ├── index.ts
+│   ├── get-invite.ts
+│   ├── accept-invite.ts
+│   └── reject-invite.ts
 │
 └── health/
     └── index.ts
@@ -147,11 +159,43 @@ PATCH  /spaces/:spaceId/posts/:postId
 DELETE /spaces/:spaceId/posts/:postId
 PUT    /spaces/:spaceId/posts/:postId/reactions/:type
 DELETE /spaces/:spaceId/posts/:postId/reactions/:type
+
+GET    /spaces/:spaceId/invites
+POST   /spaces/:spaceId/invites
+DELETE /spaces/:spaceId/invites/:inviteId
+
+GET    /invites/:inviteId
+POST   /invites/:inviteId/accept
+POST   /invites/:inviteId/reject
 ```
 
 - URL構造とroutes構造を一致させる。
 - Space配下のリソースは必ずspaceIdを持つ。
 - Space配下のAPIでは、対象ユーザーがそのSpaceのMemberであることを確認する。
+
+---
+
+## Invite API
+
+Spaceへの招待はBetter Auth Organization PluginのInvitationを利用する。
+
+Belu APIでは独自のInvitationテーブルやRepositoryを作らず、Better Auth APIを薄くラップする。
+
+```text
+POST   /spaces/:spaceId/invites
+GET    /spaces/:spaceId/invites
+DELETE /spaces/:spaceId/invites/:inviteId
+
+GET    /invites/:inviteId
+POST   /invites/:inviteId/accept
+POST   /invites/:inviteId/reject
+```
+
+Space配下のInvite APIはSpace ownerのみ実行できる。
+
+Inviteのaccept/rejectは招待されたUser側の操作であり、参加前のUserはまだSpace Memberではないため、Space配下には置かない。
+
+MVPでは招待Roleは `member` のみとし、ClientからRoleを指定させない。
 
 ---
 
