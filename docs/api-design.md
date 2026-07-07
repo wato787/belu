@@ -62,10 +62,10 @@ apps/web/src/queries/{resource}.ts
 
 ```ts
 export const meQueries = {
-  all: () => ["me"] as const,
+  all: ["me"] as const,
   current: () =>
     queryOptions({
-      queryKey: meQueries.all(),
+      queryKey: meQueries.all,
       queryFn: async () => {
         const response = await apiClient.me.$get();
         return parseApiResponse(response);
