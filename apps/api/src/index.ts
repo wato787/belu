@@ -77,4 +77,4 @@ app.onError((error, c) => {
 
 export type AppType = typeof appWithRoutes;
 
-export default app;
+export default appWithRoutes;

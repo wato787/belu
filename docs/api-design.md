@@ -16,6 +16,24 @@
 
 ---
 
+## Web API Client
+
+WebからAPIを呼び出す場合は、Hono RPC clientを利用する。
+
+```text
+apps/web/src/lib/api-client.ts
+```
+
+Clientは `hc<AppType>()` で作成し、APIの `AppType` を型として参照する。
+
+Local devではVite proxyにより `/api/*` をAPI Workerへ転送するため、RPC clientのbase URLは `/api` とする。
+
+Cookie sessionを利用するため、client fetchでは `credentials: "include"` を指定する。
+
+Hono RPCの型共有を効かせるため、API側のRouteは可能な範囲で `createRoute().get(...)` や `createRoute().route(...)` のように型が積み上がる形で定義する。
+
+---
+
 ## Validation
 
 - Zod
