@@ -35,9 +35,7 @@ app.on(["GET", "POST"], "/api/auth/*", (c) => {
 
 app.use(authMiddleware);
 
-app.route("/", routes);
-
-app.get("/health", (c) => {
+const appWithRoutes = app.route("/", routes).get("/health", (c) => {
   const config = getConfig(c.env);
 
   return c.json({ environment: config.app.env, status: "ok" });
@@ -77,6 +75,6 @@ app.onError((error, c) => {
   return c.json({ message: internalServerError.message }, internalServerError.status);
 });
 
-export type AppType = typeof app;
+export type AppType = typeof appWithRoutes;
 
 export default app;

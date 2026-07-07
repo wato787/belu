@@ -1,3 +1,4 @@
+import type { D1Database, R2Bucket } from "@cloudflare/workers-types";
 import type { AuthSessionData, AuthSpace, AuthSpaceMember, AuthUser } from "./lib/better-auth";
 
 export type AppEnvironment = "development" | "staging" | "production";
