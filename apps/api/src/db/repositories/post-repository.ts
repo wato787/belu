@@ -37,7 +37,7 @@ export type PostRepository = {
   create: (input: CreatePostInput) => Promise<PostWithPets | undefined>;
   findByIdAndSpaceId: (input: PostIdentity) => Promise<PostWithPets | undefined>;
   updateByIdAndSpaceId: (input: UpdatePostInput) => Promise<PostWithPets | undefined>;
-  deleteByIdAndSpaceId: (input: PostIdentity) => Promise<Post | undefined>;
+  deleteByIdAndSpaceId: (input: PostIdentity) => Promise<PostWithPets | undefined>;
   countPetsBySpaceId: (input: PostPetInput) => Promise<number>;
 };
 
@@ -166,7 +166,13 @@ export const createPostRepository = (db: Db): PostRepository => ({
   },
 
   deleteByIdAndSpaceId: async (input) => {
-    const [post] = await db
+    const post = await createPostRepository(db).findByIdAndSpaceId(input);
+
+    if (!post) {
+      return undefined;
+    }
+
+    await db
       .delete(posts)
       .where(and(eq(posts.id, input.id), eq(posts.organizationId, input.organizationId)))
       .returning();
