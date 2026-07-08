@@ -24,13 +24,13 @@ export const Button = ({
   ...props
 }: ButtonProps) => (
   <BaseButton
-    className={cx(styles.button, className)}
+    className={cx(styles.root, className)}
     data-full-width={fullWidth}
     disabled={disabled || isLoading}
     nativeButton
     type={type}
     {...props}
   >
-    {isLoading ? <span className={styles.spinner} /> : children}
+    {isLoading ? <span className={styles.loadingIndicator} /> : children}
   </BaseButton>
 );

@@ -17,13 +17,13 @@ type FieldErrorProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Error>, "c
 };
 
 export const Field = ({ children, className, ...props }: FieldProps) => (
-  <BaseField.Root className={cx(styles.root, className)} {...props}>
+  <BaseField.Root className={cx(styles.field, className)} {...props}>
     {children}
   </BaseField.Root>
 );
 
 export const FieldLabel = ({ children, className, ...props }: FieldLabelProps) => (
-  <BaseField.Label className={cx(styles.label, className)} {...props}>
+  <BaseField.Label className={cx(styles.fieldLabel, className)} {...props}>
     {children}
   </BaseField.Label>
 );
@@ -33,13 +33,13 @@ export const FieldControl = ({
   className,
   ...props
 }: HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cx(styles.control, className)} {...props}>
+  <span className={cx(styles.fieldControl, className)} {...props}>
     {children}
   </span>
 );
 
 export const FieldIcon = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <span className={cx(styles.icon, className)}>{children}</span>
+  <span className={cx(styles.fieldIcon, className)}>{children}</span>
 );
 
 export const FieldAction = ({
@@ -48,13 +48,13 @@ export const FieldAction = ({
   type = "button",
   ...props
 }: ComponentPropsWithoutRef<"button">) => (
-  <button className={cx(styles.action, className)} type={type} {...props}>
+  <button className={cx(styles.fieldAction, className)} type={type} {...props}>
     {children}
   </button>
 );
 
 export const FieldError = ({ children, className, ...props }: FieldErrorProps) => (
-  <BaseField.Error className={cx(styles.error, className)} {...props}>
+  <BaseField.Error className={cx(styles.fieldError, className)} {...props}>
     {children}
   </BaseField.Error>
 );

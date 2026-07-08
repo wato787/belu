@@ -1,4 +1,4 @@
-.textarea {
+.control {
   box-sizing: border-box;
   width: 100%;
   min-height: 104px;
@@ -20,22 +20,22 @@
     background-color 180ms ease;
 }
 
-.textarea::placeholder {
+.control::placeholder {
   color: color-mix(in srgb, var(--color-text-subtle) 72%, transparent);
 }
 
-.textarea:hover {
+.control:hover {
   border-color: var(--color-border-strong);
 }
 
-.textarea:focus {
+.control:focus {
   border-color: var(--color-primary);
   box-shadow:
     var(--shadow-xs),
     0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
-.textarea:disabled {
+.control:disabled {
   cursor: not-allowed;
   background: var(--color-bg);
   color: var(--color-text-subtle);

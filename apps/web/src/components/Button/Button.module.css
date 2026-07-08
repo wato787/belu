@@ -1,4 +1,4 @@
-.button {
+.root {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20,25 +20,25 @@
     transform 120ms ease;
 }
 
-.button:hover {
+.root:hover {
   background: var(--color-primary-hover);
 }
 
-.button:active {
+.root:active {
   transform: scale(0.98);
 }
 
-.button:disabled {
+.root:disabled {
   cursor: not-allowed;
   opacity: 0.56;
   transform: none;
 }
 
-.button[data-full-width="true"] {
+.root[data-full-width="true"] {
   width: 100%;
 }
 
-.spinner {
+.loadingIndicator {
   width: 18px;
   height: 18px;
   border: 2px solid currentColor;

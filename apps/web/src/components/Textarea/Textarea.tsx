@@ -6,5 +6,5 @@ import styles from "./Textarea.module.css";
 type TextareaProps = ComponentPropsWithoutRef<"textarea">;
 
 export const Textarea = ({ className, ...props }: TextareaProps) => (
-  <textarea className={cx(styles.textarea, className)} {...props} />
+  <textarea className={cx(styles.control, className)} {...props} />
 );

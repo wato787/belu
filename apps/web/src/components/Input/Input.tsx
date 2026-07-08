@@ -9,5 +9,5 @@ type InputProps = Omit<ComponentPropsWithoutRef<typeof BaseInput>, "className"> 
 };
 
 export const Input = ({ className, ...props }: InputProps) => (
-  <BaseInput className={cx(styles.input, className)} {...props} />
+  <BaseInput className={cx(styles.control, className)} {...props} />
 );
