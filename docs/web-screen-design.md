@@ -63,6 +63,13 @@ MVP scope:
 Authenticated routeは `_authenticated` pathless layout配下に置く。
 ログイン判定は `authClient.getSession()` を直接呼び、TanStack Queryには乗せない。
 
+MVPでは、ログイン直後の遷移先は `/spaces` とする。
+Spaceは頻繁に切り替えるものではないため、Space switcherを常時表示しない。
+ユーザーは `/spaces` でSpaceを選び、その後は選択中Spaceの画面内で過ごす。
+
+Space内の主要導線は、選択中Space配下の画面でのみ表示する。
+常時グローバルナビではなく、最小限のSpace内ナビとして扱う。
+
 ---
 
 ### `/spaces`
@@ -71,6 +78,7 @@ Space選択画面。
 
 ユーザーが所属しているSpaceの一覧を表示し、利用するSpaceを選ぶ。
 ログイン後の最初のアプリ画面として扱う。
+Space切り替えが必要な場合も、この画面に戻って選び直す。
 
 Primary feature:
 
@@ -81,11 +89,13 @@ MVP scope:
 - 所属Space一覧
 - Space詳細への導線
 - Spaceがない場合の空状態
+- Space作成への最小導線
 
 Deferred:
 
 - 詳細なオンボーディング
 - 高度な並び替えや検索
+- 常時表示のSpace switcher
 
 ---
 
@@ -95,6 +105,7 @@ Spaceホーム。
 
 選択中Spaceの概要と、主要domainへの入口を表示する。
 Space配下画面の起点として扱う。
+MVPでは、Space選択後の実質的なホーム画面とする。
 
 Primary feature:
 
@@ -111,11 +122,13 @@ MVP scope:
 
 - Space名などの基本情報
 - Posts / Pets / Members / Invites への導線
+- `/spaces` へ戻る導線
 
 Deferred:
 
 - ダッシュボード集計
 - 最近のアクティビティ
+- 常時表示のSpace switcher
 
 ---
 
@@ -299,6 +312,9 @@ Deferred:
 ---
 
 ## First Implementation Order
+
+MVPでは、最初から全画面を作り込まない。
+まずはログイン後にSpaceを選び、Space内でPostを閲覧、作成できる流れを優先する。
 
 UI詳細を決める前に、以下の順で画面責務とデータ接続を薄く通す。
 

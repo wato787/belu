@@ -4,6 +4,8 @@
 
 Belu Webのデザインシステム方針を定義する。
 
+デザイナー向けの依頼内容は `docs/web-design-brief.md` で定義する。
+
 このドキュメントでは、実装前に以下を固定する。
 
 - Styling strategy
