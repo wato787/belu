@@ -1,18 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-function PostDetail() {
+import { PostDetail } from "../../features/posts";
+
+const PostDetailRoute = () => {
   const { postId, spaceId } = Route.useParams();
 
-  return (
-    <main>
-      <h1>Post</h1>
-      <p>
-        {spaceId} / {postId}
-      </p>
-    </main>
-  );
-}
+  return <PostDetail postId={postId} spaceId={spaceId} />;
+};
 
 export const Route = createFileRoute("/_authenticated/spaces/$spaceId/posts/$postId")({
-  component: PostDetail,
+  component: PostDetailRoute,
 });

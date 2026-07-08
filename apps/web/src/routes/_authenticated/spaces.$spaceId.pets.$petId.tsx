@@ -1,18 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-function PetDetail() {
+import { PetDetail } from "../../features/pets";
+
+const PetDetailRoute = () => {
   const { petId, spaceId } = Route.useParams();
 
-  return (
-    <main>
-      <h1>Pet</h1>
-      <p>
-        {spaceId} / {petId}
-      </p>
-    </main>
-  );
-}
+  return <PetDetail petId={petId} spaceId={spaceId} />;
+};
 
 export const Route = createFileRoute("/_authenticated/spaces/$spaceId/pets/$petId")({
-  component: PetDetail,
+  component: PetDetailRoute,
 });

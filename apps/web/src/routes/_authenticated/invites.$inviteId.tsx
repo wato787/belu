@@ -1,16 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-function InviteDetail() {
+import { InviteDetail } from "../../features/invites";
+
+const InviteDetailRoute = () => {
   const { inviteId } = Route.useParams();
 
-  return (
-    <main>
-      <h1>Invite</h1>
-      <p>{inviteId}</p>
-    </main>
-  );
-}
+  return <InviteDetail inviteId={inviteId} />;
+};
 
 export const Route = createFileRoute("/_authenticated/invites/$inviteId")({
-  component: InviteDetail,
+  component: InviteDetailRoute,
 });

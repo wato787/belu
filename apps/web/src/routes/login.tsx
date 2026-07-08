@@ -5,7 +5,7 @@ import { authClient } from "../lib/authClient";
 
 type AuthMode = "sign-in" | "sign-up";
 
-function Login() {
+const Login = () => {
   const router = useRouter();
   const search = Route.useSearch();
   const [mode, setMode] = useState<AuthMode>("sign-in");
@@ -111,7 +111,7 @@ function Login() {
       </form>
     </main>
   );
-}
+};
 
 export const Route = createFileRoute("/login")({
   validateSearch: (search) => ({

@@ -1,16 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-function SpaceInvites() {
+import { SpaceInvites } from "../../features/spaces";
+
+const SpaceInvitesRoute = () => {
   const { spaceId } = Route.useParams();
 
-  return (
-    <main>
-      <h1>Invites</h1>
-      <p>{spaceId}</p>
-    </main>
-  );
-}
+  return <SpaceInvites spaceId={spaceId} />;
+};
 
 export const Route = createFileRoute("/_authenticated/spaces/$spaceId/invites")({
-  component: SpaceInvites,
+  component: SpaceInvitesRoute,
 });
