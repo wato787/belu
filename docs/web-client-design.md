@@ -50,14 +50,15 @@ QueryClientは `apps/web/src/lib/queryClient.ts` で作成し、`QueryClientProv
 
 Queryの再利用単位は `queryOptions` helperで定義する。
 
-Query keyとqueryOptionsは、Route単位ではなくView domain単位で定義する。
+Query keyとqueryOptionsは、Route単位ではなくfeature domain単位で定義する。
 
 ```text
-apps/web/src/views/{domain}/keys.ts
-apps/web/src/views/{domain}/queries.ts
+apps/web/src/features/{domain}/keys.ts
+apps/web/src/features/{domain}/queries.ts
 ```
 
-`views/` はRouteを定義しない。URLを持つものは `routes/` に置き、`views/` にはRouteから呼ばれる画面単位の部品とserver-state定義を置く。
+`routes/` はURL、loader、画面の組み立てを担当する。
+`features/` はdomainごとのquery/mutation/key factoryと、そのdomain専用componentを置く。
 
 Key factoryは `keys.ts` に置き、queryOptions factoryは `queries.ts` に置く。
 mutationOptions factoryは `mutations.ts` に置く。
@@ -86,7 +87,7 @@ ComponentやRoute loaderではcustom hookを経由せず、`useQuery(meQueries.c
 Mutationのinvalidateでは `keys.ts` のkey factoryを直接参照する。
 
 ```text
-apps/web/src/views/{domain}/mutations.ts
+apps/web/src/features/{domain}/mutations.ts
 ```
 
 Mutationはcustom hookにせず、`mutationOptions` helperで定義する。
