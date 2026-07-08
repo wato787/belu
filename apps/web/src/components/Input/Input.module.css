@@ -33,6 +33,17 @@
     0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
+.control[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.control[aria-invalid="true"]:focus {
+  border-color: var(--color-danger);
+  box-shadow:
+    var(--shadow-xs),
+    0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+}
+
 .control:disabled {
   cursor: not-allowed;
   background: var(--color-bg);
