@@ -1,40 +1,7 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { LoginPage } from "../features/auth";
+import { Login } from "../features/auth";
 import { authClient } from "../lib/authClient";
-
-const Login = () => {
-  const router = useRouter();
-  const search = Route.useSearch();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async ({ email, password }: { email: string; password: string }) => {
-    setErrorMessage(null);
-    setIsSubmitting(true);
-
-    try {
-      const result = await authClient.signIn.email({
-        email,
-        password,
-      });
-
-      if (result.error) {
-        setErrorMessage(result.error.message ?? "Authentication failed");
-        return;
-      }
-
-      router.history.push(search.redirect ?? "/spaces");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <LoginPage errorMessage={errorMessage} isSubmitting={isSubmitting} onSubmit={handleSubmit} />
-  );
-};
 
 export const Route = createFileRoute("/login")({
   validateSearch: (search) => ({

@@ -1,27 +1,27 @@
+import { useRouter, useSearch } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Eye, EyeOff, Heart, Lock, Mail } from "lucide-react";
 
-import { Logo } from "../../../../components/Logo/Logo";
-import styles from "./LoginPage.module.css";
+import { Logo } from "../../components/Logo/Logo";
+import { authClient } from "../../lib/authClient";
+import styles from "./Login.module.css";
 
 const heroImage = "/assets/images/belu-hero-pets.jpg";
-
-type LoginPageProps = {
-  errorMessage: string | null;
-  isSubmitting: boolean;
-  onSubmit: (input: { email: string; password: string }) => Promise<void>;
-};
 
 type FormErrors = {
   email?: string;
   password?: string;
 };
 
-export const LoginPage = ({ errorMessage, isSubmitting, onSubmit }: LoginPageProps) => {
+export const Login = () => {
+  const router = useRouter();
+  const search = useSearch({ from: "/login" });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const clearError = (field: keyof FormErrors) => {
     setErrors((current) => {
@@ -58,7 +58,24 @@ export const LoginPage = ({ errorMessage, isSubmitting, onSubmit }: LoginPagePro
       return;
     }
 
-    await onSubmit({ email, password });
+    setErrorMessage(null);
+    setIsSubmitting(true);
+
+    try {
+      const result = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (result.error) {
+        setErrorMessage(result.error.message ?? "Authentication failed");
+        return;
+      }
+
+      router.history.push(search.redirect ?? "/spaces");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
