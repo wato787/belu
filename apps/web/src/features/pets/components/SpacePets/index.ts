@@ -1,1 +1,0 @@
-export { SpacePets } from "./SpacePets";

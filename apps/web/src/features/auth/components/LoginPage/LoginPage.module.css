@@ -291,38 +291,6 @@
   animation: spin 800ms linear infinite;
 }
 
-.modeSwitch {
-  padding-top: var(--space-5);
-  margin-top: var(--space-6);
-  border-top: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-  text-align: center;
-}
-
-.modeSwitch p {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
-}
-
-.modeSwitch button {
-  border: 0;
-  background: transparent;
-  color: var(--color-primary);
-  cursor: pointer;
-  font: inherit;
-  font-weight: var(--font-weight-semibold);
-  margin-left: var(--space-2);
-  padding: 0;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 160ms ease;
-}
-
-.modeSwitch button:hover {
-  color: var(--color-primary-hover);
-}
-
 .footer {
   display: flex;
   flex-direction: column;

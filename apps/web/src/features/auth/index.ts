@@ -1,1 +1,1 @@
-export { LoginPage, type AuthMode } from "./components";
+export { LoginPage } from "./components/LoginPage/LoginPage";

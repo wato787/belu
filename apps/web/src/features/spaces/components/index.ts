@@ -1,3 +1,3 @@
-export { SpaceDetail } from "./SpaceDetail";
-export { SpaceInvites } from "./SpaceInvites";
-export { Spaces } from "./Spaces";
+export { SpaceDetail } from "./SpaceDetail/SpaceDetail";
+export { SpaceInvites } from "./SpaceInvites/SpaceInvites";
+export { Spaces } from "./Spaces/Spaces";

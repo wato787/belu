@@ -1,1 +1,1 @@
-export { InviteDetail } from "./InviteDetail";
+export { InviteDetail } from "./InviteDetail/InviteDetail";

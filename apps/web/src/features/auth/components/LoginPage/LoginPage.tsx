@@ -1,54 +1,27 @@
 import { useState, type FormEvent } from "react";
+import { ArrowRight, Eye, EyeOff, Heart, Lock, Mail } from "lucide-react";
 
-import {
-  ArrowRightIcon,
-  EyeIcon,
-  EyeOffIcon,
-  HeartIcon,
-  LockIcon,
-  MailIcon,
-  Logo,
-  UserIcon,
-} from "../../../../components";
+import { Logo } from "../../../../components/Logo/Logo";
 import styles from "./LoginPage.module.css";
 
 const heroImage = "/assets/images/belu-hero-pets.jpg";
 
-export type AuthMode = "sign-in" | "sign-up";
-
 type LoginPageProps = {
   errorMessage: string | null;
   isSubmitting: boolean;
-  mode: AuthMode;
-  onModeChange: (mode: AuthMode) => void;
-  onSubmit: (input: {
-    email: string;
-    mode: AuthMode;
-    name: string;
-    password: string;
-  }) => Promise<void>;
+  onSubmit: (input: { email: string; password: string }) => Promise<void>;
 };
 
 type FormErrors = {
   email?: string;
-  name?: string;
   password?: string;
 };
 
-export const LoginPage = ({
-  errorMessage,
-  isSubmitting,
-  mode,
-  onModeChange,
-  onSubmit,
-}: LoginPageProps) => {
+export const LoginPage = ({ errorMessage, isSubmitting, onSubmit }: LoginPageProps) => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
-
-  const isSignUp = mode === "sign-up";
 
   const clearError = (field: keyof FormErrors) => {
     setErrors((current) => {
@@ -74,10 +47,6 @@ export const LoginPage = ({
       nextErrors.password = "パスワードは8文字以上で入力してください。";
     }
 
-    if (isSignUp && !name.trim()) {
-      nextErrors.name = "お名前を入力してください。";
-    }
-
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
@@ -89,12 +58,7 @@ export const LoginPage = ({
       return;
     }
 
-    await onSubmit({ email, mode, name, password });
-  };
-
-  const switchMode = () => {
-    setErrors({});
-    onModeChange(isSignUp ? "sign-in" : "sign-up");
+    await onSubmit({ email, password });
   };
 
   return (
@@ -118,45 +82,21 @@ export const LoginPage = ({
 
           <div className={styles.formShell}>
             <div className={styles.formHeader}>
-              <h1>{isSignUp ? "新規登録" : "ログイン"}</h1>
+              <h1>ログイン</h1>
             </div>
 
             {errorMessage ? (
               <div className={styles.message} role="alert">
-                <HeartIcon className={styles.messageIcon} size={18} />
+                <Heart className={styles.messageIcon} size={18} />
                 <span>{errorMessage}</span>
               </div>
             ) : null}
 
             <form className={styles.form} onSubmit={handleSubmit}>
-              {isSignUp ? (
-                <label className={styles.field}>
-                  <span>お名前</span>
-                  <span className={styles.inputWrap}>
-                    <UserIcon className={styles.inputIcon} size={18} />
-                    <input
-                      autoComplete="name"
-                      disabled={isSubmitting}
-                      name="name"
-                      onChange={(event) => {
-                        setName(event.currentTarget.value);
-                        if (errors.name) {
-                          clearError("name");
-                        }
-                      }}
-                      placeholder="うちの パパ"
-                      type="text"
-                      value={name}
-                    />
-                  </span>
-                  {errors.name ? <span className={styles.errorText}>{errors.name}</span> : null}
-                </label>
-              ) : null}
-
               <label className={styles.field}>
                 <span>メールアドレス</span>
                 <span className={styles.inputWrap}>
-                  <MailIcon className={styles.inputIcon} size={18} />
+                  <Mail className={styles.inputIcon} size={18} />
                   <input
                     autoComplete="email"
                     disabled={isSubmitting}
@@ -178,9 +118,9 @@ export const LoginPage = ({
               <label className={styles.field}>
                 <span>パスワード</span>
                 <span className={styles.inputWrap}>
-                  <LockIcon className={styles.inputIcon} size={18} />
+                  <Lock className={styles.inputIcon} size={18} />
                   <input
-                    autoComplete={isSignUp ? "new-password" : "current-password"}
+                    autoComplete="current-password"
                     disabled={isSubmitting}
                     name="password"
                     onChange={(event) => {
@@ -199,7 +139,7 @@ export const LoginPage = ({
                     tabIndex={-1}
                     type="button"
                   >
-                    {showPassword ? <EyeOffIcon size={18} /> : <EyeIcon size={18} />}
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </span>
                 {errors.password ? (
@@ -207,32 +147,21 @@ export const LoginPage = ({
                 ) : null}
               </label>
 
-              {!isSignUp ? (
-                <div className={styles.forgotPassword}>
-                  <button type="button">パスワードをお忘れですか？</button>
-                </div>
-              ) : null}
+              <div className={styles.forgotPassword}>
+                <button type="button">パスワードをお忘れですか？</button>
+              </div>
 
               <button className={styles.submitButton} disabled={isSubmitting} type="submit">
                 {isSubmitting ? (
                   <span className={styles.spinner} />
                 ) : (
                   <>
-                    <span>{isSignUp ? "アカウントを作成する" : "ログインする"}</span>
-                    <ArrowRightIcon size={16} />
+                    <span>ログインする</span>
+                    <ArrowRight size={16} />
                   </>
                 )}
               </button>
             </form>
-
-            <div className={styles.modeSwitch}>
-              <p>
-                {isSignUp ? "既にアカウントをお持ちですか？" : "アカウントをお持ちでないですか？"}
-                <button onClick={switchMode} type="button">
-                  {isSignUp ? "ログインはこちら" : "新規登録はこちら"}
-                </button>
-              </p>
-            </div>
           </div>
         </div>
 

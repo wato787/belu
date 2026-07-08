@@ -1,1 +1,1 @@
-export { SpaceMembers } from "./SpaceMembers";
+export { SpaceMembers } from "./SpaceMembers/SpaceMembers";

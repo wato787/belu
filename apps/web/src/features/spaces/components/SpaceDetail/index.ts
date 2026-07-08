@@ -1,1 +1,0 @@
-export { SpaceDetail } from "./SpaceDetail";

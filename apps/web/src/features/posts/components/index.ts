@@ -1,2 +1,2 @@
-export { PostDetail } from "./PostDetail";
-export { SpacePosts } from "./SpacePosts";
+export { PostDetail } from "./PostDetail/PostDetail";
+export { SpacePosts } from "./SpacePosts/SpacePosts";
