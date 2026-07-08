@@ -8,333 +8,351 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as LoginRouteImport } from "./routes/login";
-import { Route as AuthenticatedRouteImport } from "./routes/_authenticated";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as AuthenticatedSpacesRouteImport } from "./routes/_authenticated/spaces";
-import { Route as AuthenticatedSpacesSpaceIdRouteImport } from "./routes/_authenticated/spaces.$spaceId";
-import { Route as AuthenticatedInvitesInviteIdRouteImport } from "./routes/_authenticated/invites.$inviteId";
-import { Route as AuthenticatedSpacesSpaceIdPostsRouteImport } from "./routes/_authenticated/spaces.$spaceId.posts";
-import { Route as AuthenticatedSpacesSpaceIdPetsRouteImport } from "./routes/_authenticated/spaces.$spaceId.pets";
-import { Route as AuthenticatedSpacesSpaceIdMembersRouteImport } from "./routes/_authenticated/spaces.$spaceId.members";
-import { Route as AuthenticatedSpacesSpaceIdInvitesRouteImport } from "./routes/_authenticated/spaces.$spaceId.invites";
-import { Route as AuthenticatedSpacesSpaceIdPostsPostIdRouteImport } from "./routes/_authenticated/spaces.$spaceId.posts.$postId";
-import { Route as AuthenticatedSpacesSpaceIdPetsPetIdRouteImport } from "./routes/_authenticated/spaces.$spaceId.pets.$petId";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedSpacesRouteImport } from './routes/_authenticated/spaces'
+import { Route as AuthenticatedSpacesSpaceIdRouteImport } from './routes/_authenticated/spaces.$spaceId'
+import { Route as AuthenticatedInvitesInviteIdRouteImport } from './routes/_authenticated/invites.$inviteId'
+import { Route as AuthenticatedSpacesSpaceIdPostsRouteImport } from './routes/_authenticated/spaces.$spaceId.posts'
+import { Route as AuthenticatedSpacesSpaceIdPetsRouteImport } from './routes/_authenticated/spaces.$spaceId.pets'
+import { Route as AuthenticatedSpacesSpaceIdMembersRouteImport } from './routes/_authenticated/spaces.$spaceId.members'
+import { Route as AuthenticatedSpacesSpaceIdInvitesRouteImport } from './routes/_authenticated/spaces.$spaceId.invites'
+import { Route as AuthenticatedSpacesSpaceIdPostsPostIdRouteImport } from './routes/_authenticated/spaces.$spaceId.posts.$postId'
+import { Route as AuthenticatedSpacesSpaceIdPetsPetIdRouteImport } from './routes/_authenticated/spaces.$spaceId.pets.$petId'
 
 const LoginRoute = LoginRouteImport.update({
-  id: "/login",
-  path: "/login",
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: "/_authenticated",
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedSpacesRoute = AuthenticatedSpacesRouteImport.update({
-  id: "/spaces",
-  path: "/spaces",
+  id: '/spaces',
+  path: '/spaces',
   getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedSpacesSpaceIdRoute = AuthenticatedSpacesSpaceIdRouteImport.update({
-  id: "/$spaceId",
-  path: "/$spaceId",
-  getParentRoute: () => AuthenticatedSpacesRoute,
-} as any);
-const AuthenticatedInvitesInviteIdRoute = AuthenticatedInvitesInviteIdRouteImport.update({
-  id: "/invites/$inviteId",
-  path: "/invites/$inviteId",
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedSpacesSpaceIdPostsRoute = AuthenticatedSpacesSpaceIdPostsRouteImport.update({
-  id: "/posts",
-  path: "/posts",
-  getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
-} as any);
-const AuthenticatedSpacesSpaceIdPetsRoute = AuthenticatedSpacesSpaceIdPetsRouteImport.update({
-  id: "/pets",
-  path: "/pets",
-  getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
-} as any);
-const AuthenticatedSpacesSpaceIdMembersRoute = AuthenticatedSpacesSpaceIdMembersRouteImport.update({
-  id: "/members",
-  path: "/members",
-  getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
-} as any);
-const AuthenticatedSpacesSpaceIdInvitesRoute = AuthenticatedSpacesSpaceIdInvitesRouteImport.update({
-  id: "/invites",
-  path: "/invites",
-  getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
-} as any);
+} as any)
+const AuthenticatedSpacesSpaceIdRoute =
+  AuthenticatedSpacesSpaceIdRouteImport.update({
+    id: '/$spaceId',
+    path: '/$spaceId',
+    getParentRoute: () => AuthenticatedSpacesRoute,
+  } as any)
+const AuthenticatedInvitesInviteIdRoute =
+  AuthenticatedInvitesInviteIdRouteImport.update({
+    id: '/invites/$inviteId',
+    path: '/invites/$inviteId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSpacesSpaceIdPostsRoute =
+  AuthenticatedSpacesSpaceIdPostsRouteImport.update({
+    id: '/posts',
+    path: '/posts',
+    getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
+  } as any)
+const AuthenticatedSpacesSpaceIdPetsRoute =
+  AuthenticatedSpacesSpaceIdPetsRouteImport.update({
+    id: '/pets',
+    path: '/pets',
+    getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
+  } as any)
+const AuthenticatedSpacesSpaceIdMembersRoute =
+  AuthenticatedSpacesSpaceIdMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
+  } as any)
+const AuthenticatedSpacesSpaceIdInvitesRoute =
+  AuthenticatedSpacesSpaceIdInvitesRouteImport.update({
+    id: '/invites',
+    path: '/invites',
+    getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
+  } as any)
 const AuthenticatedSpacesSpaceIdPostsPostIdRoute =
   AuthenticatedSpacesSpaceIdPostsPostIdRouteImport.update({
-    id: "/$postId",
-    path: "/$postId",
+    id: '/$postId',
+    path: '/$postId',
     getParentRoute: () => AuthenticatedSpacesSpaceIdPostsRoute,
-  } as any);
+  } as any)
 const AuthenticatedSpacesSpaceIdPetsPetIdRoute =
   AuthenticatedSpacesSpaceIdPetsPetIdRouteImport.update({
-    id: "/$petId",
-    path: "/$petId",
+    id: '/$petId',
+    path: '/$petId',
     getParentRoute: () => AuthenticatedSpacesSpaceIdPetsRoute,
-  } as any);
+  } as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/login": typeof LoginRoute;
-  "/spaces": typeof AuthenticatedSpacesRouteWithChildren;
-  "/invites/$inviteId": typeof AuthenticatedInvitesInviteIdRoute;
-  "/spaces/$spaceId": typeof AuthenticatedSpacesSpaceIdRouteWithChildren;
-  "/spaces/$spaceId/invites": typeof AuthenticatedSpacesSpaceIdInvitesRoute;
-  "/spaces/$spaceId/members": typeof AuthenticatedSpacesSpaceIdMembersRoute;
-  "/spaces/$spaceId/pets": typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren;
-  "/spaces/$spaceId/posts": typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren;
-  "/spaces/$spaceId/pets/$petId": typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute;
-  "/spaces/$spaceId/posts/$postId": typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/spaces': typeof AuthenticatedSpacesRouteWithChildren
+  '/invites/$inviteId': typeof AuthenticatedInvitesInviteIdRoute
+  '/spaces/$spaceId': typeof AuthenticatedSpacesSpaceIdRouteWithChildren
+  '/spaces/$spaceId/invites': typeof AuthenticatedSpacesSpaceIdInvitesRoute
+  '/spaces/$spaceId/members': typeof AuthenticatedSpacesSpaceIdMembersRoute
+  '/spaces/$spaceId/pets': typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren
+  '/spaces/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren
+  '/spaces/$spaceId/pets/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
+  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/login": typeof LoginRoute;
-  "/spaces": typeof AuthenticatedSpacesRouteWithChildren;
-  "/invites/$inviteId": typeof AuthenticatedInvitesInviteIdRoute;
-  "/spaces/$spaceId": typeof AuthenticatedSpacesSpaceIdRouteWithChildren;
-  "/spaces/$spaceId/invites": typeof AuthenticatedSpacesSpaceIdInvitesRoute;
-  "/spaces/$spaceId/members": typeof AuthenticatedSpacesSpaceIdMembersRoute;
-  "/spaces/$spaceId/pets": typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren;
-  "/spaces/$spaceId/posts": typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren;
-  "/spaces/$spaceId/pets/$petId": typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute;
-  "/spaces/$spaceId/posts/$postId": typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute;
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/spaces': typeof AuthenticatedSpacesRouteWithChildren
+  '/invites/$inviteId': typeof AuthenticatedInvitesInviteIdRoute
+  '/spaces/$spaceId': typeof AuthenticatedSpacesSpaceIdRouteWithChildren
+  '/spaces/$spaceId/invites': typeof AuthenticatedSpacesSpaceIdInvitesRoute
+  '/spaces/$spaceId/members': typeof AuthenticatedSpacesSpaceIdMembersRoute
+  '/spaces/$spaceId/pets': typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren
+  '/spaces/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren
+  '/spaces/$spaceId/pets/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
+  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/_authenticated": typeof AuthenticatedRouteWithChildren;
-  "/login": typeof LoginRoute;
-  "/_authenticated/spaces": typeof AuthenticatedSpacesRouteWithChildren;
-  "/_authenticated/invites/$inviteId": typeof AuthenticatedInvitesInviteIdRoute;
-  "/_authenticated/spaces/$spaceId": typeof AuthenticatedSpacesSpaceIdRouteWithChildren;
-  "/_authenticated/spaces/$spaceId/invites": typeof AuthenticatedSpacesSpaceIdInvitesRoute;
-  "/_authenticated/spaces/$spaceId/members": typeof AuthenticatedSpacesSpaceIdMembersRoute;
-  "/_authenticated/spaces/$spaceId/pets": typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren;
-  "/_authenticated/spaces/$spaceId/posts": typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren;
-  "/_authenticated/spaces/$spaceId/pets/$petId": typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute;
-  "/_authenticated/spaces/$spaceId/posts/$postId": typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/spaces': typeof AuthenticatedSpacesRouteWithChildren
+  '/_authenticated/invites/$inviteId': typeof AuthenticatedInvitesInviteIdRoute
+  '/_authenticated/spaces/$spaceId': typeof AuthenticatedSpacesSpaceIdRouteWithChildren
+  '/_authenticated/spaces/$spaceId/invites': typeof AuthenticatedSpacesSpaceIdInvitesRoute
+  '/_authenticated/spaces/$spaceId/members': typeof AuthenticatedSpacesSpaceIdMembersRoute
+  '/_authenticated/spaces/$spaceId/pets': typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren
+  '/_authenticated/spaces/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren
+  '/_authenticated/spaces/$spaceId/pets/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
+  '/_authenticated/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/"
-    | "/login"
-    | "/spaces"
-    | "/invites/$inviteId"
-    | "/spaces/$spaceId"
-    | "/spaces/$spaceId/invites"
-    | "/spaces/$spaceId/members"
-    | "/spaces/$spaceId/pets"
-    | "/spaces/$spaceId/posts"
-    | "/spaces/$spaceId/pets/$petId"
-    | "/spaces/$spaceId/posts/$postId";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/login'
+    | '/spaces'
+    | '/invites/$inviteId'
+    | '/spaces/$spaceId'
+    | '/spaces/$spaceId/invites'
+    | '/spaces/$spaceId/members'
+    | '/spaces/$spaceId/pets'
+    | '/spaces/$spaceId/posts'
+    | '/spaces/$spaceId/pets/$petId'
+    | '/spaces/$spaceId/posts/$postId'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/"
-    | "/login"
-    | "/spaces"
-    | "/invites/$inviteId"
-    | "/spaces/$spaceId"
-    | "/spaces/$spaceId/invites"
-    | "/spaces/$spaceId/members"
-    | "/spaces/$spaceId/pets"
-    | "/spaces/$spaceId/posts"
-    | "/spaces/$spaceId/pets/$petId"
-    | "/spaces/$spaceId/posts/$postId";
+    | '/'
+    | '/login'
+    | '/spaces'
+    | '/invites/$inviteId'
+    | '/spaces/$spaceId'
+    | '/spaces/$spaceId/invites'
+    | '/spaces/$spaceId/members'
+    | '/spaces/$spaceId/pets'
+    | '/spaces/$spaceId/posts'
+    | '/spaces/$spaceId/pets/$petId'
+    | '/spaces/$spaceId/posts/$postId'
   id:
-    | "__root__"
-    | "/"
-    | "/_authenticated"
-    | "/login"
-    | "/_authenticated/spaces"
-    | "/_authenticated/invites/$inviteId"
-    | "/_authenticated/spaces/$spaceId"
-    | "/_authenticated/spaces/$spaceId/invites"
-    | "/_authenticated/spaces/$spaceId/members"
-    | "/_authenticated/spaces/$spaceId/pets"
-    | "/_authenticated/spaces/$spaceId/posts"
-    | "/_authenticated/spaces/$spaceId/pets/$petId"
-    | "/_authenticated/spaces/$spaceId/posts/$postId";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/spaces'
+    | '/_authenticated/invites/$inviteId'
+    | '/_authenticated/spaces/$spaceId'
+    | '/_authenticated/spaces/$spaceId/invites'
+    | '/_authenticated/spaces/$spaceId/members'
+    | '/_authenticated/spaces/$spaceId/pets'
+    | '/_authenticated/spaces/$spaceId/posts'
+    | '/_authenticated/spaces/$spaceId/pets/$petId'
+    | '/_authenticated/spaces/$spaceId/posts/$postId'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren;
-  LoginRoute: typeof LoginRoute;
+  IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/login": {
-      id: "/login";
-      path: "/login";
-      fullPath: "/login";
-      preLoaderRoute: typeof LoginRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_authenticated": {
-      id: "/_authenticated";
-      path: "";
-      fullPath: "/";
-      preLoaderRoute: typeof AuthenticatedRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_authenticated/spaces": {
-      id: "/_authenticated/spaces";
-      path: "/spaces";
-      fullPath: "/spaces";
-      preLoaderRoute: typeof AuthenticatedSpacesRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    "/_authenticated/spaces/$spaceId": {
-      id: "/_authenticated/spaces/$spaceId";
-      path: "/$spaceId";
-      fullPath: "/spaces/$spaceId";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdRouteImport;
-      parentRoute: typeof AuthenticatedSpacesRoute;
-    };
-    "/_authenticated/invites/$inviteId": {
-      id: "/_authenticated/invites/$inviteId";
-      path: "/invites/$inviteId";
-      fullPath: "/invites/$inviteId";
-      preLoaderRoute: typeof AuthenticatedInvitesInviteIdRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    "/_authenticated/spaces/$spaceId/posts": {
-      id: "/_authenticated/spaces/$spaceId/posts";
-      path: "/posts";
-      fullPath: "/spaces/$spaceId/posts";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPostsRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute;
-    };
-    "/_authenticated/spaces/$spaceId/pets": {
-      id: "/_authenticated/spaces/$spaceId/pets";
-      path: "/pets";
-      fullPath: "/spaces/$spaceId/pets";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPetsRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute;
-    };
-    "/_authenticated/spaces/$spaceId/members": {
-      id: "/_authenticated/spaces/$spaceId/members";
-      path: "/members";
-      fullPath: "/spaces/$spaceId/members";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdMembersRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute;
-    };
-    "/_authenticated/spaces/$spaceId/invites": {
-      id: "/_authenticated/spaces/$spaceId/invites";
-      path: "/invites";
-      fullPath: "/spaces/$spaceId/invites";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdInvitesRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute;
-    };
-    "/_authenticated/spaces/$spaceId/posts/$postId": {
-      id: "/_authenticated/spaces/$spaceId/posts/$postId";
-      path: "/$postId";
-      fullPath: "/spaces/$spaceId/posts/$postId";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdPostsRoute;
-    };
-    "/_authenticated/spaces/$spaceId/pets/$petId": {
-      id: "/_authenticated/spaces/$spaceId/pets/$petId";
-      path: "/$petId";
-      fullPath: "/spaces/$spaceId/pets/$petId";
-      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRouteImport;
-      parentRoute: typeof AuthenticatedSpacesSpaceIdPetsRoute;
-    };
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/spaces': {
+      id: '/_authenticated/spaces'
+      path: '/spaces'
+      fullPath: '/spaces'
+      preLoaderRoute: typeof AuthenticatedSpacesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/spaces/$spaceId': {
+      id: '/_authenticated/spaces/$spaceId'
+      path: '/$spaceId'
+      fullPath: '/spaces/$spaceId'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdRouteImport
+      parentRoute: typeof AuthenticatedSpacesRoute
+    }
+    '/_authenticated/invites/$inviteId': {
+      id: '/_authenticated/invites/$inviteId'
+      path: '/invites/$inviteId'
+      fullPath: '/invites/$inviteId'
+      preLoaderRoute: typeof AuthenticatedInvitesInviteIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/spaces/$spaceId/posts': {
+      id: '/_authenticated/spaces/$spaceId/posts'
+      path: '/posts'
+      fullPath: '/spaces/$spaceId/posts'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPostsRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
+    }
+    '/_authenticated/spaces/$spaceId/pets': {
+      id: '/_authenticated/spaces/$spaceId/pets'
+      path: '/pets'
+      fullPath: '/spaces/$spaceId/pets'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPetsRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
+    }
+    '/_authenticated/spaces/$spaceId/members': {
+      id: '/_authenticated/spaces/$spaceId/members'
+      path: '/members'
+      fullPath: '/spaces/$spaceId/members'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdMembersRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
+    }
+    '/_authenticated/spaces/$spaceId/invites': {
+      id: '/_authenticated/spaces/$spaceId/invites'
+      path: '/invites'
+      fullPath: '/spaces/$spaceId/invites'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdInvitesRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
+    }
+    '/_authenticated/spaces/$spaceId/posts/$postId': {
+      id: '/_authenticated/spaces/$spaceId/posts/$postId'
+      path: '/$postId'
+      fullPath: '/spaces/$spaceId/posts/$postId'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdPostsRoute
+    }
+    '/_authenticated/spaces/$spaceId/pets/$petId': {
+      id: '/_authenticated/spaces/$spaceId/pets/$petId'
+      path: '/$petId'
+      fullPath: '/spaces/$spaceId/pets/$petId'
+      preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRouteImport
+      parentRoute: typeof AuthenticatedSpacesSpaceIdPetsRoute
+    }
   }
 }
 
 interface AuthenticatedSpacesSpaceIdPetsRouteChildren {
-  AuthenticatedSpacesSpaceIdPetsPetIdRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute;
+  AuthenticatedSpacesSpaceIdPetsPetIdRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
 }
 
-const AuthenticatedSpacesSpaceIdPetsRouteChildren: AuthenticatedSpacesSpaceIdPetsRouteChildren = {
-  AuthenticatedSpacesSpaceIdPetsPetIdRoute: AuthenticatedSpacesSpaceIdPetsPetIdRoute,
-};
+const AuthenticatedSpacesSpaceIdPetsRouteChildren: AuthenticatedSpacesSpaceIdPetsRouteChildren =
+  {
+    AuthenticatedSpacesSpaceIdPetsPetIdRoute:
+      AuthenticatedSpacesSpaceIdPetsPetIdRoute,
+  }
 
 const AuthenticatedSpacesSpaceIdPetsRouteWithChildren =
-  AuthenticatedSpacesSpaceIdPetsRoute._addFileChildren(AuthenticatedSpacesSpaceIdPetsRouteChildren);
+  AuthenticatedSpacesSpaceIdPetsRoute._addFileChildren(
+    AuthenticatedSpacesSpaceIdPetsRouteChildren,
+  )
 
 interface AuthenticatedSpacesSpaceIdPostsRouteChildren {
-  AuthenticatedSpacesSpaceIdPostsPostIdRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute;
+  AuthenticatedSpacesSpaceIdPostsPostIdRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
 }
 
-const AuthenticatedSpacesSpaceIdPostsRouteChildren: AuthenticatedSpacesSpaceIdPostsRouteChildren = {
-  AuthenticatedSpacesSpaceIdPostsPostIdRoute: AuthenticatedSpacesSpaceIdPostsPostIdRoute,
-};
+const AuthenticatedSpacesSpaceIdPostsRouteChildren: AuthenticatedSpacesSpaceIdPostsRouteChildren =
+  {
+    AuthenticatedSpacesSpaceIdPostsPostIdRoute:
+      AuthenticatedSpacesSpaceIdPostsPostIdRoute,
+  }
 
 const AuthenticatedSpacesSpaceIdPostsRouteWithChildren =
   AuthenticatedSpacesSpaceIdPostsRoute._addFileChildren(
     AuthenticatedSpacesSpaceIdPostsRouteChildren,
-  );
+  )
 
 interface AuthenticatedSpacesSpaceIdRouteChildren {
-  AuthenticatedSpacesSpaceIdInvitesRoute: typeof AuthenticatedSpacesSpaceIdInvitesRoute;
-  AuthenticatedSpacesSpaceIdMembersRoute: typeof AuthenticatedSpacesSpaceIdMembersRoute;
-  AuthenticatedSpacesSpaceIdPetsRoute: typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren;
-  AuthenticatedSpacesSpaceIdPostsRoute: typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren;
+  AuthenticatedSpacesSpaceIdInvitesRoute: typeof AuthenticatedSpacesSpaceIdInvitesRoute
+  AuthenticatedSpacesSpaceIdMembersRoute: typeof AuthenticatedSpacesSpaceIdMembersRoute
+  AuthenticatedSpacesSpaceIdPetsRoute: typeof AuthenticatedSpacesSpaceIdPetsRouteWithChildren
+  AuthenticatedSpacesSpaceIdPostsRoute: typeof AuthenticatedSpacesSpaceIdPostsRouteWithChildren
 }
 
-const AuthenticatedSpacesSpaceIdRouteChildren: AuthenticatedSpacesSpaceIdRouteChildren = {
-  AuthenticatedSpacesSpaceIdInvitesRoute: AuthenticatedSpacesSpaceIdInvitesRoute,
-  AuthenticatedSpacesSpaceIdMembersRoute: AuthenticatedSpacesSpaceIdMembersRoute,
-  AuthenticatedSpacesSpaceIdPetsRoute: AuthenticatedSpacesSpaceIdPetsRouteWithChildren,
-  AuthenticatedSpacesSpaceIdPostsRoute: AuthenticatedSpacesSpaceIdPostsRouteWithChildren,
-};
+const AuthenticatedSpacesSpaceIdRouteChildren: AuthenticatedSpacesSpaceIdRouteChildren =
+  {
+    AuthenticatedSpacesSpaceIdInvitesRoute:
+      AuthenticatedSpacesSpaceIdInvitesRoute,
+    AuthenticatedSpacesSpaceIdMembersRoute:
+      AuthenticatedSpacesSpaceIdMembersRoute,
+    AuthenticatedSpacesSpaceIdPetsRoute:
+      AuthenticatedSpacesSpaceIdPetsRouteWithChildren,
+    AuthenticatedSpacesSpaceIdPostsRoute:
+      AuthenticatedSpacesSpaceIdPostsRouteWithChildren,
+  }
 
 const AuthenticatedSpacesSpaceIdRouteWithChildren =
-  AuthenticatedSpacesSpaceIdRoute._addFileChildren(AuthenticatedSpacesSpaceIdRouteChildren);
+  AuthenticatedSpacesSpaceIdRoute._addFileChildren(
+    AuthenticatedSpacesSpaceIdRouteChildren,
+  )
 
 interface AuthenticatedSpacesRouteChildren {
-  AuthenticatedSpacesSpaceIdRoute: typeof AuthenticatedSpacesSpaceIdRouteWithChildren;
+  AuthenticatedSpacesSpaceIdRoute: typeof AuthenticatedSpacesSpaceIdRouteWithChildren
 }
 
 const AuthenticatedSpacesRouteChildren: AuthenticatedSpacesRouteChildren = {
   AuthenticatedSpacesSpaceIdRoute: AuthenticatedSpacesSpaceIdRouteWithChildren,
-};
+}
 
-const AuthenticatedSpacesRouteWithChildren = AuthenticatedSpacesRoute._addFileChildren(
-  AuthenticatedSpacesRouteChildren,
-);
+const AuthenticatedSpacesRouteWithChildren =
+  AuthenticatedSpacesRoute._addFileChildren(AuthenticatedSpacesRouteChildren)
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedSpacesRoute: typeof AuthenticatedSpacesRouteWithChildren;
-  AuthenticatedInvitesInviteIdRoute: typeof AuthenticatedInvitesInviteIdRoute;
+  AuthenticatedSpacesRoute: typeof AuthenticatedSpacesRouteWithChildren
+  AuthenticatedInvitesInviteIdRoute: typeof AuthenticatedInvitesInviteIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedSpacesRoute: AuthenticatedSpacesRouteWithChildren,
   AuthenticatedInvitesInviteIdRoute: AuthenticatedInvitesInviteIdRoute,
-};
+}
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
   AuthenticatedRouteChildren,
-);
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   LoginRoute: LoginRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
