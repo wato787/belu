@@ -65,14 +65,14 @@ Component foundation:
 Implementation structure:
 
 ```text
-apps/web/src/ui/
+apps/web/src/components/
 apps/web/src/features/{domain}/components/
 apps/web/src/routes/
 ```
 
 Design should respect:
 
-- `ui` はdomain知識を持たない汎用primitive
+- `components` はdomain知識を持たない汎用primitive
 - `features/*/components` はdomain固有UI
 - `routes` は画面の組み立てのみ
 

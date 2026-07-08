@@ -20,8 +20,8 @@ Belu Webのデザインシステム方針を定義する。
 Belu WebはCSS Modulesを基本のstyling手段とする。
 
 ```text
-apps/web/src/ui/button.tsx
-apps/web/src/ui/button.module.css
+apps/web/src/components/Button/Button.tsx
+apps/web/src/components/Button/Button.module.css
 ```
 
 Global CSSはreset、base typography、CSS variablesのみを担当する。
@@ -30,11 +30,11 @@ Global CSSはreset、base typography、CSS variablesのみを担当する。
 apps/web/src/styles.css
 ```
 
-Domain固有のcomponentは `features/{domain}/components` に置き、必要に応じて同じ階層にCSS Moduleを置く。
+Domain固有のcomponentは `features/{domain}/components` に置き、必要に応じてcomponent単位のディレクトリにCSS Moduleを置く。
 
 ```text
-apps/web/src/features/posts/components/post-card.tsx
-apps/web/src/features/posts/components/post-card.module.css
+apps/web/src/features/posts/components/PostCard/PostCard.tsx
+apps/web/src/features/posts/components/PostCard/PostCard.module.css
 ```
 
 ---
@@ -73,7 +73,7 @@ Base UIを使わなくてよいもの:
 ## Component Boundaries
 
 ```text
-apps/web/src/ui/
+apps/web/src/components/
 ```
 
 アプリ横断のprimitiveを置く。
@@ -95,7 +95,7 @@ apps/web/src/features/{domain}/components/
 ```
 
 Domain固有のcomponentを置く。
-`ui` のprimitiveを組み合わせる。
+`components` のprimitiveを組み合わせる。
 
 Examples:
 

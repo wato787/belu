@@ -1,2 +1,1 @@
 export { PostDetail } from "./PostDetail";
-export { SpacePosts } from "./SpacePosts";

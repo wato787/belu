@@ -1,2 +1,1 @@
 export { PetDetail } from "./PetDetail";
-export { SpacePets } from "./SpacePets";
