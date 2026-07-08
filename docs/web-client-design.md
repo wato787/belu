@@ -1,5 +1,7 @@
 # Web Client Design
 
+画面ごとの責務は `docs/web-screen-design.md` で定義する。
+
 ## API Client
 
 WebからAPIを呼び出す場合は、Hono RPC clientを利用する。
