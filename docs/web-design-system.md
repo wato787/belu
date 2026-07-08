@@ -48,6 +48,9 @@ Belu固有の見た目はCSS Modulesとdesign tokenで実装する。
 
 Base UIを使うもの:
 
+- Button
+- Field
+- Input
 - Dialog
 - Menu
 - Popover
@@ -57,16 +60,15 @@ Base UIを使うもの:
 - Checkbox
 - Switch
 
-Base UIを使わなくてよいもの:
+Base UIに該当するprimitiveがない場合のみ自前実装するもの:
 
-- Button
-- TextField
 - Page
 - Stack
 - EmptyState
 - VisuallyHidden
 
-これらはDOMとCSSだけで十分に扱えるため、まずは自前primitiveとして実装する。
+Base UIに存在するcomponentは積極的に利用し、Belu固有の見た目だけCSS Modulesとdesign tokenで実装する。
+ただし、app側から直接Base UIを広くimportするのではなく、基本は `apps/web/src/components` のBelu primitiveで薄く包む。
 
 ---
 
@@ -82,8 +84,9 @@ Domain知識を持たない。
 Examples:
 
 - `Button`
-- `TextField`
 - `Field`
+- `Input`
+- `Textarea`
 - `Page`
 - `EmptyState`
 - `Dialog`
@@ -266,8 +269,9 @@ Beluはペットと思い出を扱うため、温かさは持たせる。
 最初に作るprimitive:
 
 - `Button`
-- `TextField`
 - `Field`
+- `Input`
+- `Textarea`
 - `Page`
 - `EmptyState`
 

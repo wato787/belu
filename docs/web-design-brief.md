@@ -59,8 +59,9 @@ Styling:
 Component foundation:
 
 - Headless component libraryとしてBase UIを使う予定
-- Base UIはDialog、Menu、Select、Tabsなど挙動が難しいUIの土台として使う
-- Button、TextField、Page、EmptyStateなどは自前primitiveとして扱う
+- Base UIに存在するcomponentは積極的に土台として使う
+- Button、Field、Input、TextareaなどもBelu primitiveで薄く包み、見た目はCSS Modulesで実装する
+- Page、EmptyStateなどBase UIに該当するcomponentがないものは自前primitiveとして扱う
 
 Implementation structure:
 
@@ -373,7 +374,9 @@ MVP design proposal:
 Component design:
 
 - Button
-- TextField
+- Field
+- Input
+- Textarea
 - Field
 - Page layout
 - EmptyState
