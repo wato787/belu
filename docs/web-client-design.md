@@ -1,6 +1,7 @@
 # Web Client Design
 
 画面ごとの責務は `docs/web-screen-design.md` で定義する。
+デザインシステム方針は `docs/web-design-system.md` で定義する。
 
 ## API Client
 
