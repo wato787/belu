@@ -11,12 +11,9 @@ type InputProps = Omit<ComponentPropsWithoutRef<typeof BaseInput>, "className"> 
 
 export const Input = ({ className, ...props }: InputProps) => {
   const field = useFieldContext();
+  const isInvalid = Boolean(props["aria-invalid"] ?? field?.hasError);
 
   return (
-    <BaseInput
-      {...props}
-      aria-invalid={props["aria-invalid"] ?? field?.invalid}
-      className={cx(styles.control, className)}
-    />
+    <BaseInput {...props} aria-invalid={isInvalid} className={cx(styles.control, className)} />
   );
 };
