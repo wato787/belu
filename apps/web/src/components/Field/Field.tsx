@@ -19,15 +19,11 @@ const FieldContext = createContext<FieldContextValue | null>(null);
 
 type FieldProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Root>, "className"> & {
   className?: string;
+  error?: unknown;
 };
 
 type FieldLabelProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Label>, "className"> & {
   className?: string;
-};
-
-type FieldContentProps = {
-  children: ReactNode;
-  error?: unknown;
 };
 
 type FieldErrorProps = Omit<
@@ -62,18 +58,14 @@ const errorToMessage = (error: unknown) => {
 
 export const useFieldContext = () => useContext(FieldContext);
 
-export const Field = ({ children, className, ...props }: FieldProps) => (
-  <BaseField.Root className={cx(styles.field, className)} {...props}>
-    {children}
-  </BaseField.Root>
-);
-
-export const FieldContent = ({ children, error }: FieldContentProps) => {
+export const Field = ({ children, className, error, ...props }: FieldProps) => {
   const errorMessage = errorToMessage(error);
 
   return (
     <FieldContext value={{ errorMessage, hasError: Boolean(errorMessage) }}>
-      {children}
+      <BaseField.Root className={cx(styles.field, className)} {...props}>
+        {children}
+      </BaseField.Root>
     </FieldContext>
   );
 };
