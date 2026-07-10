@@ -1,0 +1,40 @@
+.signUpFormShell {
+  display: flex;
+  flex-direction: column;
+}
+
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.submitButton {
+  margin-top: var(--space-2);
+}
+
+.modeSwitch {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+  text-align: center;
+}
+
+.modeSwitch p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.modeSwitch a {
+  margin-left: var(--space-2);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.modeSwitch a:hover {
+  color: var(--color-primary-hover);
+}
