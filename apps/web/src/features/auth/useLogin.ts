@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { authClient } from "../../lib/authClient";
 
 const loginRouteApi = getRouteApi("/login");
+const loginFailedMessage = "メールアドレスまたはパスワードが正しくありません。";
 
 type LoginCredentials = {
   email: string;
@@ -20,7 +21,7 @@ export const useLogin = () => {
       const { error } = await authClient.signIn.email({ email, password });
 
       if (error) {
-        throw new Error(error.message ?? "ログインに失敗しました。");
+        throw new Error(loginFailedMessage);
       }
     },
     onSuccess: async () => {
@@ -29,8 +30,8 @@ export const useLogin = () => {
         replace: true,
       });
     },
-    onError: (error) => {
-      toast.error(error instanceof Error ? error.message : "ログインに失敗しました。");
+    onError: () => {
+      toast.error(loginFailedMessage);
     },
   });
 
