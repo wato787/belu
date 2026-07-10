@@ -37,6 +37,5 @@ export const useLogin = () => {
   return {
     login: mutation.mutate,
     isPending: mutation.isPending,
-    reset: mutation.reset,
   };
 };
