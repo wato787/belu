@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { getRouteApi, useRouter } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 import { authClient } from "../../lib/authClient";
 
@@ -28,11 +29,14 @@ export const useLogin = () => {
         replace: true,
       });
     },
+    onError: (error) => {
+      toast.error(error instanceof Error ? error.message : "ログインに失敗しました。");
+    },
   });
 
   return {
     login: mutation.mutate,
     isPending: mutation.isPending,
-    error: mutation.error,
+    reset: mutation.reset,
   };
 };
