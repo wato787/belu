@@ -25,6 +25,9 @@
   --color-danger: #d96c6c;
   --color-danger-bg: #fff0f0;
 
+  --color-success: #5f8f68;
+  --color-success-bg: #eef8ef;
+
   /* radius */
   --radius-xs: 6px;
   --radius-sm: 8px;
@@ -92,6 +95,37 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+[data-sonner-toaster][data-sonner-theme="light"] {
+  --normal-bg: var(--color-surface);
+  --normal-border: var(--color-border);
+  --normal-text: var(--color-text);
+  --success-bg: var(--color-success-bg);
+  --success-border: color-mix(in srgb, var(--color-success) 32%, var(--color-success-bg));
+  --success-text: color-mix(in srgb, var(--color-success) 86%, var(--color-text));
+  --error-bg: var(--color-danger-bg);
+  --error-border: color-mix(in srgb, var(--color-danger) 32%, var(--color-danger-bg));
+  --error-text: color-mix(in srgb, var(--color-danger) 86%, var(--color-text));
+  --border-radius: var(--radius-sm);
+  --width: 360px;
+  z-index: var(--z-toast);
+  font-family: var(--font-sans);
+}
+
+[data-sonner-toast][data-styled="true"] {
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+}
+
+[data-sonner-toast][data-styled="true"] [data-title] {
+  font-weight: var(--font-weight-semibold);
+}
+
+[data-sonner-toast][data-styled="true"] [data-close-button] {
+  border-color: currentColor;
 }
 
 h1,

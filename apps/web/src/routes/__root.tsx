@@ -10,7 +10,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <Outlet />
-      <Toaster position="top-right" />
+      <Toaster closeButton position="top-right" richColors />
     </>
   ),
 });
