@@ -1,11 +1,5 @@
 import { Field as BaseField } from "@base-ui-components/react/field";
-import {
-  createContext,
-  useContext,
-  type ComponentPropsWithoutRef,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from "react";
 
 import { cx } from "../../utils/cx";
 import styles from "./Field.module.css";
@@ -24,15 +18,6 @@ type FieldProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Root>, "classNa
 
 type FieldLabelProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Label>, "className"> & {
   className?: string;
-};
-
-type FieldErrorProps = Omit<
-  ComponentPropsWithoutRef<typeof BaseField.Error>,
-  "children" | "className"
-> & {
-  className?: string;
-  error?: unknown;
-  children?: ReactNode;
 };
 
 const errorToMessage = (error: unknown) => {
@@ -65,6 +50,7 @@ export const Field = ({ children, className, error, ...props }: FieldProps) => {
     <FieldContext value={{ errorMessage, hasError: Boolean(errorMessage) }}>
       <BaseField.Root className={cx(styles.field, className)} {...props}>
         {children}
+        <FieldError />
       </BaseField.Root>
     </FieldContext>
   );
@@ -76,51 +62,16 @@ export const FieldLabel = ({ children, className, ...props }: FieldLabelProps) =
   </BaseField.Label>
 );
 
-export const FieldControl = ({
-  children,
-  className,
-  ...props
-}: HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cx(styles.fieldControl, className)} {...props}>
-    {children}
-  </span>
-);
-
-export const FieldIcon = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <span className={cx(styles.fieldIcon, className)}>{children}</span>
-);
-
-export const FieldAction = ({
-  children,
-  className,
-  type = "button",
-  ...props
-}: ComponentPropsWithoutRef<"button">) => (
-  <button className={cx(styles.fieldAction, className)} type={type} {...props}>
-    {children}
-  </button>
-);
-
-export const FieldError = ({ children, className, error, match, ...props }: FieldErrorProps) => {
+const FieldError = () => {
   const field = useFieldContext();
-  const message = errorToMessage(error) ?? field?.errorMessage;
-  const content = message ?? children;
-  const errorMatch = message ? true : match;
+  const content = field?.errorMessage;
 
   if (!content) {
     return null;
   }
 
-  if (errorMatch === undefined) {
-    return (
-      <BaseField.Error className={cx(styles.fieldError, className)} {...props}>
-        {content}
-      </BaseField.Error>
-    );
-  }
-
   return (
-    <BaseField.Error className={cx(styles.fieldError, className)} match={errorMatch} {...props}>
+    <BaseField.Error className={cx(styles.fieldError)} match={true}>
       {content}
     </BaseField.Error>
   );

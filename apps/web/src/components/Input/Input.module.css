@@ -1,3 +1,10 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .control {
   box-sizing: border-box;
   width: 100%;
@@ -48,4 +55,44 @@
   cursor: not-allowed;
   background: var(--color-bg);
   color: var(--color-text-subtle);
+}
+
+.leftIcon {
+  position: absolute;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-subtle);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.rightIcon {
+  position: absolute;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.rightIcon button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+  padding: 0;
+  transition: color 160ms ease;
+}
+
+.rightIcon button:hover {
+  color: var(--color-text);
 }

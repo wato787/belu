@@ -12,40 +12,6 @@
   color: inherit;
 }
 
-.fieldControl {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.fieldIcon {
-  position: absolute;
-  left: 14px;
-  color: var(--color-text-subtle);
-  pointer-events: none;
-}
-
-.fieldAction {
-  position: absolute;
-  right: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-subtle);
-  cursor: pointer;
-  padding: 0;
-  transition: color 160ms ease;
-}
-
-.fieldAction:hover {
-  color: var(--color-text);
-}
-
 .fieldError {
   color: var(--color-danger);
   font-size: var(--font-size-xs);
