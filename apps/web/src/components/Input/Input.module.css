@@ -18,11 +18,19 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
   outline: none;
-  padding: 10px 40px;
+  padding: 10px 14px;
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
     background-color 180ms ease;
+}
+
+.control[data-has-left-icon="true"] {
+  padding-left: 40px;
+}
+
+.control[data-has-right-icon="true"] {
+  padding-right: 40px;
 }
 
 .control::placeholder {

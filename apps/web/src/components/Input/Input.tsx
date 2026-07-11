@@ -18,7 +18,13 @@ export const Input = ({ className, leftIcon, rightIcon, ...props }: InputProps) 
   return (
     <span className={styles.root}>
       {leftIcon ? <span className={styles.leftIcon}>{leftIcon}</span> : null}
-      <BaseInput {...props} aria-invalid={isInvalid} className={cx(styles.control, className)} />
+      <BaseInput
+        {...props}
+        aria-invalid={isInvalid}
+        className={cx(styles.control, className)}
+        data-has-left-icon={Boolean(leftIcon)}
+        data-has-right-icon={Boolean(rightIcon)}
+      />
       {rightIcon ? <span className={styles.rightIcon}>{rightIcon}</span> : null}
     </span>
   );
