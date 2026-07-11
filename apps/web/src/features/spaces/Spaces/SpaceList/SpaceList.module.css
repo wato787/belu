@@ -1,0 +1,217 @@
+.listPage {
+  width: min(100%, 672px);
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-4);
+  animation: fadeIn 220ms ease-out;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+  padding-bottom: var(--space-5);
+}
+
+.listTitle {
+  color: var(--color-text);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+  line-height: var(--line-height-tight);
+}
+
+.listDescription {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+}
+
+.createButton {
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding-inline: 20px;
+}
+
+.stateCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+  padding: 80px var(--space-7);
+  text-align: center;
+}
+
+.stateIcon {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+  margin-bottom: var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 10%, transparent);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-primary) 5%, transparent);
+  color: var(--color-primary);
+}
+
+.stateTitle {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.stateDescription {
+  max-width: 450px;
+  margin: var(--space-3) auto 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+}
+
+.emptyCreateButton {
+  height: 50px;
+  margin-top: var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  padding-inline: var(--space-5);
+}
+
+.spaceList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.spaceCard {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: 0 1px 2px rgb(31 31 31 / 0.03);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 22px var(--space-5);
+  text-align: left;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.spaceCard:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-surface-muted) 20%, var(--color-surface));
+  box-shadow: var(--shadow-xs);
+}
+
+.spaceName {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  text-overflow: ellipsis;
+  transition: color 180ms ease;
+  white-space: nowrap;
+}
+
+.spaceCard:hover .spaceName {
+  color: var(--color-primary);
+}
+
+.spaceAction {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  transition: color 180ms ease;
+}
+
+.spaceAction span {
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.spaceAction svg {
+  transition: transform 180ms ease;
+}
+
+.spaceCard:hover .spaceAction {
+  color: var(--color-primary);
+}
+
+.spaceCard:hover .spaceAction span {
+  opacity: 1;
+}
+
+.spaceCard:hover .spaceAction svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .listPage {
+    padding-top: var(--space-6);
+  }
+
+  .listHeader {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: var(--space-6);
+  }
+
+  .listTitle {
+    font-size: var(--font-size-xl);
+  }
+
+  .listDescription {
+    font-size: var(--font-size-sm);
+  }
+
+  .stateCard {
+    padding: var(--space-7) var(--space-5);
+  }
+
+  .spaceCard {
+    padding: var(--space-5);
+  }
+
+  .spaceName {
+    font-size: var(--font-size-lg);
+  }
+
+  .spaceAction span {
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
