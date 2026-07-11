@@ -1,4 +1,6 @@
-export { SpaceDetail, SpaceInvites, Spaces } from "./components";
 export { spacesKeys } from "./keys";
-export { spacesMutations } from "./mutations";
 export { spacesQueries } from "./queries";
+export { SpaceDetail } from "./SpaceDetail/SpaceDetail";
+export { SpaceInvites } from "./SpaceInvites/SpaceInvites";
+export { Spaces } from "./Spaces/Spaces";
+export { useCreateSpace } from "./Spaces/useCreateSpace";
