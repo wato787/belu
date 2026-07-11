@@ -8,7 +8,7 @@ import styles from "./Button.module.css";
 type NativeButtonType = ButtonHTMLAttributes<HTMLButtonElement>["type"];
 
 type ButtonProps = Omit<BaseButtonProps, "className" | "nativeButton" | "type"> & {
-  className?: string;
+  className?: string | undefined;
   fullWidth?: boolean;
   isLoading?: boolean;
   type?: NativeButtonType;
