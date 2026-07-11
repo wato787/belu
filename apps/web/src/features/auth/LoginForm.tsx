@@ -1,4 +1,4 @@
-import { useState, type ComponentPropsWithoutRef } from "react";
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 
@@ -6,13 +6,12 @@ import { Button } from "../../components/Button/Button";
 import { Field, FieldLabel } from "../../components/Field/Field";
 import { Input } from "../../components/Input/Input";
 import { useInputText } from "../../hooks/useInputText";
+import type { FormSubmitHandler } from "../../types/form";
 import { cx } from "../../utils/cx";
 import { validateEmail } from "../../validations/validateEmail";
 import { validatePassword } from "../../validations/validatePassword";
 import { useLogin } from "./useLogin";
 import styles from "./LoginForm.module.css";
-
-type FormSubmitHandler = NonNullable<ComponentPropsWithoutRef<"form">["onSubmit"]>;
 
 export const LoginForm = () => {
   const { login, isPending } = useLogin();
