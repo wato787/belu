@@ -8,8 +8,8 @@ import { Input } from "../../components/Input/Input";
 import { useInputText } from "../../hooks/useInputText";
 import { cx } from "../../utils/cx";
 import { validateEmail } from "../../validations/validateEmail";
-import { validateName } from "../../validations/validateName";
 import { validatePassword } from "../../validations/validatePassword";
+import { validateText } from "../../validations/validateText";
 import { useSignUp } from "./useSignUp";
 import styles from "./SignUpForm.module.css";
 
@@ -17,7 +17,7 @@ type FormSubmitHandler = NonNullable<ComponentPropsWithoutRef<"form">["onSubmit"
 
 export const SignUpForm = () => {
   const { isPending, signUp } = useSignUp();
-  const name = useInputText({ validator: validateName });
+  const name = useInputText({ validator: validateText });
   const email = useInputText({ validator: validateEmail });
   const password = useInputText({ validator: validatePassword });
 
