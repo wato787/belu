@@ -38,7 +38,7 @@ app.use(authMiddleware);
 const appWithRoutes = app.route("/", routes).get("/health", (c) => {
   const config = getConfig(c.env);
 
-  return c.json({ environment: config.app.env, status: "ok" });
+  return c.json({ environment: config.app.env, status: "ok" }, 200);
 });
 
 app.notFound((c) => {

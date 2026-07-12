@@ -20,10 +20,13 @@ const acceptInviteRoute = createRoute().post(
       headers: c.req.raw.headers,
     });
 
-    return c.json({
-      invite: formatInvite(result.invitation),
-      member: formatInviteMember(result.member),
-    });
+    return c.json(
+      {
+        invite: formatInvite(result.invitation),
+        member: formatInviteMember(result.member),
+      },
+      200,
+    );
   },
 );
 

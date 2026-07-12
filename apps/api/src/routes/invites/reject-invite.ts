@@ -20,10 +20,13 @@ const rejectInviteRoute = createRoute().post(
       headers: c.req.raw.headers,
     });
 
-    return c.json({
-      invite: result.invitation ? formatInvite(result.invitation) : null,
-      member: result.member,
-    });
+    return c.json(
+      {
+        invite: result.invitation ? formatInvite(result.invitation) : null,
+        member: result.member,
+      },
+      200,
+    );
   },
 );
 

@@ -42,7 +42,7 @@ const deleteMemberRoute = createRoute().delete(
       headers: c.req.raw.headers,
     });
 
-    return c.json({ member: formatSpaceMember(member) });
+    return c.json({ member: formatSpaceMember(member) }, 200);
   },
 );
 

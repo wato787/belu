@@ -40,7 +40,7 @@ const deleteInviteRoute = createRoute().delete(
       throw new NotFoundException("Invite Not Found");
     }
 
-    return c.json({ invite: formatInvite(invite) });
+    return c.json({ invite: formatInvite(invite) }, 200);
   },
 );
 

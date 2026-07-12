@@ -42,7 +42,7 @@ const createPostUploadUrlRoute = createRoute().post(
       }),
     );
 
-    return c.json({ uploads });
+    return c.json({ uploads }, 200);
   },
 );
 

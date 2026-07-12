@@ -35,13 +35,16 @@ const deleteReactionRoute = createRoute().delete(
       type,
     });
 
-    return c.json({
-      reaction: {
-        postId,
-        reacted: false,
-        type,
+    return c.json(
+      {
+        reaction: {
+          postId,
+          reacted: false,
+          type,
+        },
       },
-    });
+      200,
+    );
   },
 );
 

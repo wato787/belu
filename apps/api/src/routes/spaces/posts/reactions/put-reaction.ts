@@ -35,13 +35,16 @@ const putReactionRoute = createRoute().put(
       type,
     });
 
-    return c.json({
-      reaction: {
-        postId,
-        reacted: true,
-        type,
+    return c.json(
+      {
+        reaction: {
+          postId,
+          reacted: true,
+          type,
+        },
       },
-    });
+      200,
+    );
   },
 );
 

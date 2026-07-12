@@ -29,14 +29,17 @@ const updatePetRoute = createRoute().patch(
       throw new NotFoundException("Pet Not Found");
     }
 
-    return c.json({
-      pet: {
-        id: pet.id,
-        name: pet.name,
-        createdAt: pet.createdAt,
-        updatedAt: pet.updatedAt,
+    return c.json(
+      {
+        pet: {
+          id: pet.id,
+          name: pet.name,
+          createdAt: pet.createdAt,
+          updatedAt: pet.updatedAt,
+        },
       },
-    });
+      200,
+    );
   },
 );
 
