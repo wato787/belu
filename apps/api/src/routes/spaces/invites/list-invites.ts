@@ -15,9 +15,12 @@ const listInvitesRoute = createRoute().get("/", requireUser, requireSpaceOwner, 
     },
   });
 
-  return c.json({
-    invites: invites.map((invite) => formatInvite(invite)),
-  });
+  return c.json(
+    {
+      invites: invites.map((invite) => formatInvite(invite)),
+    },
+    200,
+  );
 });
 
 export { listInvitesRoute };

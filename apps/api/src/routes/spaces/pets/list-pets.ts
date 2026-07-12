@@ -17,14 +17,17 @@ const listPetsRoute = createRoute().get(
     const petRepository = createPetRepository(db);
     const spacePets = await petRepository.listBySpaceId({ organizationId: spaceId });
 
-    return c.json({
-      pets: spacePets.map((pet) => ({
-        id: pet.id,
-        name: pet.name,
-        createdAt: pet.createdAt,
-        updatedAt: pet.updatedAt,
-      })),
-    });
+    return c.json(
+      {
+        pets: spacePets.map((pet) => ({
+          id: pet.id,
+          name: pet.name,
+          createdAt: pet.createdAt,
+          updatedAt: pet.updatedAt,
+        })),
+      },
+      200,
+    );
   },
 );
 

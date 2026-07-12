@@ -1,7 +1,17 @@
 import { queryOptions } from "@tanstack/react-query";
+import type { InferResponseType } from "hono/client";
 
 import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { postsKeys } from "./keys";
+
+type ListPostsResponse = InferResponseType<
+  (typeof apiClient.spaces)[":spaceId"]["posts"]["$get"],
+  200
+>;
+type GetPostResponse = InferResponseType<
+  (typeof apiClient.spaces)[":spaceId"]["posts"][":postId"]["$get"],
+  200
+>;
 
 export const postsQueries = {
   list: (spaceId: string) =>
@@ -11,7 +21,8 @@ export const postsQueries = {
         const response = await apiClient.spaces[":spaceId"].posts.$get({
           param: { spaceId },
         });
-        return parseApiResponse(response);
+        const data = await parseApiResponse<ListPostsResponse>(response);
+        return data.posts;
       },
     }),
   detail: (spaceId: string, postId: string) =>
@@ -21,7 +32,8 @@ export const postsQueries = {
         const response = await apiClient.spaces[":spaceId"].posts[":postId"].$get({
           param: { postId, spaceId },
         });
-        return parseApiResponse(response);
+        const data = await parseApiResponse<GetPostResponse>(response);
+        return data.post;
       },
     }),
 };

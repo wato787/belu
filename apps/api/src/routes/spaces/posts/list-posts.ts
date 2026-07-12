@@ -22,9 +22,12 @@ const listPostsRoute = createRoute().get(
       viewerMemberId: spaceMember.id,
     });
 
-    return c.json({
-      posts: spacePosts.map(toPostResponse),
-    });
+    return c.json(
+      {
+        posts: spacePosts.map(toPostResponse),
+      },
+      200,
+    );
   },
 );
 

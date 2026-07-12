@@ -20,7 +20,7 @@ const getInviteRoute = createRoute().get(
       },
     });
 
-    return c.json({ invite: formatInvite(invite) });
+    return c.json({ invite: formatInvite(invite) }, 200);
   },
 );
 

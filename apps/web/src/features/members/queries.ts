@@ -1,7 +1,13 @@
 import { queryOptions } from "@tanstack/react-query";
+import type { InferResponseType } from "hono/client";
 
 import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { membersKeys } from "./keys";
+
+type ListMembersResponse = InferResponseType<
+  (typeof apiClient.spaces)[":spaceId"]["members"]["$get"],
+  200
+>;
 
 export const membersQueries = {
   list: (spaceId: string) =>
@@ -11,7 +17,8 @@ export const membersQueries = {
         const response = await apiClient.spaces[":spaceId"].members.$get({
           param: { spaceId },
         });
-        return parseApiResponse(response);
+        const data = await parseApiResponse<ListMembersResponse>(response);
+        return data.members;
       },
     }),
 };

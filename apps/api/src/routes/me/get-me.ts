@@ -11,10 +11,13 @@ const getMeRoute = createRoute().get("/", requireUser, async (c) => {
     headers: c.req.raw.headers,
   });
 
-  return c.json({
-    user: formatMeUser(user),
-    spaces: spaces.map((space) => formatMeSpace(space)),
-  });
+  return c.json(
+    {
+      user: formatMeUser(user),
+      spaces: spaces.map((space) => formatMeSpace(space)),
+    },
+    200,
+  );
 });
 
 export { getMeRoute };

@@ -29,7 +29,7 @@ const getPostRoute = createRoute().get(
       throw new NotFoundException("Post Not Found");
     }
 
-    return c.json({ post: toPostResponse(post) });
+    return c.json({ post: toPostResponse(post) }, 200);
   },
 );
 

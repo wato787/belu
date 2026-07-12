@@ -15,10 +15,13 @@ const listMembersRoute = createRoute().get("/", requireUser, requireSpaceOwner, 
     },
   });
 
-  return c.json({
-    members: result.members.map((member) => formatSpaceMember(member)),
-    total: result.total,
-  });
+  return c.json(
+    {
+      members: result.members.map((member) => formatSpaceMember(member)),
+      total: result.total,
+    },
+    200,
+  );
 });
 
 export { listMembersRoute };
