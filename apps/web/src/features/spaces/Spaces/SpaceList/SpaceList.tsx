@@ -13,8 +13,7 @@ type SpaceListProps = {
 
 export const SpaceList = ({ onCreateClick }: SpaceListProps) => {
   const navigate = useNavigate();
-  const { data: spacesData } = useSuspenseQuery(spacesQueries.list());
-  const spaces = spacesData?.spaces ?? [];
+  const { data: spaces } = useSuspenseQuery(spacesQueries.list());
 
   if (spaces.length === 0) {
     return (

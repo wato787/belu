@@ -13,7 +13,8 @@ export const spacesQueries = {
       queryKey: spacesKeys.lists(),
       queryFn: async () => {
         const response = await apiClient.spaces.$get();
-        return parseApiResponse<ListSpacesResponse>(response);
+        const data = await parseApiResponse<ListSpacesResponse>(response);
+        return data.spaces;
       },
     }),
   detail: (spaceId: string) =>
@@ -23,7 +24,8 @@ export const spacesQueries = {
         const response = await apiClient.spaces[":spaceId"].$get({
           param: { spaceId },
         });
-        return parseApiResponse<GetSpaceResponse>(response);
+        const data = await parseApiResponse<GetSpaceResponse>(response);
+        return data.space;
       },
     }),
 };
