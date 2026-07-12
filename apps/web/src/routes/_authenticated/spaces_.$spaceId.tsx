@@ -1,11 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { meQueries, SpaceDetail, spacesQueries } from "../../features";
+import { meQueries, SpaceLayout, spacesQueries } from "../../features";
 
-const SpaceDetailRoute = () => {
+const SpaceLayoutRoute = () => {
   const { spaceId } = Route.useParams();
 
-  return <SpaceDetail spaceId={spaceId} />;
+  return (
+    <SpaceLayout spaceId={spaceId}>
+      <Outlet />
+    </SpaceLayout>
+  );
 };
 
 export const Route = createFileRoute("/_authenticated/spaces_/$spaceId")({
@@ -14,5 +18,5 @@ export const Route = createFileRoute("/_authenticated/spaces_/$spaceId")({
       context.queryClient.ensureQueryData(spacesQueries.detail(params.spaceId)),
       context.queryClient.ensureQueryData(meQueries.current()),
     ]),
-  component: SpaceDetailRoute,
+  component: SpaceLayoutRoute,
 });
