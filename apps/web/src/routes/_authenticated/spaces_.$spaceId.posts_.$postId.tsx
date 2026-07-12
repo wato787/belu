@@ -8,6 +8,6 @@ const PostDetailRoute = () => {
   return <PostDetail postId={postId} spaceId={spaceId} />;
 };
 
-export const Route = createFileRoute("/_authenticated/spaces/$spaceId/posts/$postId")({
+export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/posts_/$postId")({
   component: PostDetailRoute,
 });

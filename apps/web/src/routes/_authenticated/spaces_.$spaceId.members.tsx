@@ -8,6 +8,6 @@ const SpaceMembersRoute = () => {
   return <SpaceMembers spaceId={spaceId} />;
 };
 
-export const Route = createFileRoute("/_authenticated/spaces/$spaceId/members")({
+export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/members")({
   component: SpaceMembersRoute,
 });
