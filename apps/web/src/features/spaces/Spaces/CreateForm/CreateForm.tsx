@@ -5,13 +5,13 @@ import { useInputText } from "../../../../hooks/useInputText";
 import type { FormSubmitHandler } from "../../../../types/form";
 import { validateText } from "../../../../validations/validateText";
 import { useCreateSpace } from "../useCreateSpace";
-import styles from "./SpaceCreateForm.module.css";
+import styles from "./CreateForm.module.css";
 
-type SpaceCreateFormProps = {
+type CreateFormProps = {
   onBack: () => void;
 };
 
-export const SpaceCreateForm = ({ onBack }: SpaceCreateFormProps) => {
+export const CreateForm = ({ onBack }: CreateFormProps) => {
   const { createSpace, isPending } = useCreateSpace();
   const name = useInputText({ validator: validateText });
 

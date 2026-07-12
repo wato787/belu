@@ -1,0 +1,298 @@
+.sidebar {
+  position: relative;
+  display: flex;
+  width: 288px;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.sidebarBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.spaceIdentity {
+  min-width: 0;
+}
+
+.spaceName {
+  overflow: hidden;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+  line-height: var(--line-height-tight);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.divider,
+.menuDivider {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.panelTitle {
+  margin: 0;
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  line-height: var(--line-height-tight);
+}
+
+.petEmptyItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-muted) 30%, transparent);
+  padding: 10px;
+}
+
+.petAvatar,
+.profileAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+}
+
+.petAvatar {
+  width: 32px;
+  height: 32px;
+  background: var(--color-accent-muted);
+  font-size: var(--font-size-sm);
+}
+
+.petEmptyText {
+  min-width: 0;
+}
+
+.petEmptyText p {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.petEmptyText span {
+  display: block;
+  overflow: hidden;
+  color: var(--color-text-subtle);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.textAction {
+  align-self: flex-start;
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 0 var(--space-1);
+  transition: color 160ms ease;
+}
+
+.textAction:hover {
+  color: var(--color-primary-hover);
+}
+
+.navButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: 10px var(--space-3);
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.navButton svg {
+  color: var(--color-text-subtle);
+}
+
+.navButton:hover {
+  background: color-mix(in srgb, var(--color-surface-muted) 50%, transparent);
+  color: var(--color-text);
+}
+
+.profileArea {
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+  background: color-mix(in srgb, var(--color-surface-muted) 10%, transparent);
+  padding: var(--space-4);
+}
+
+.profileTrigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: var(--space-2);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.profileTrigger:hover {
+  border-color: color-mix(in srgb, var(--color-border) 40%, transparent);
+  background: color-mix(in srgb, var(--color-surface-muted) 50%, transparent);
+}
+
+.profileSummary {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileAvatar {
+  width: 32px;
+  height: 32px;
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+}
+
+.profileText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  text-align: left;
+}
+
+.profileText span,
+.profileText small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileText span {
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.profileText small {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.profileChevron {
+  flex-shrink: 0;
+  color: var(--color-text-subtle);
+  transition: transform 180ms ease;
+}
+
+.profileChevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.profileMenuPositioner {
+  z-index: var(--z-modal);
+  width: min(256px, calc(100vw - 32px));
+}
+
+.profileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2);
+}
+
+.profileMenuItem,
+.profileMenuItemDanger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: 10px var(--space-3);
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.profileMenuItem {
+  color: var(--color-text);
+}
+
+.profileMenuItem svg {
+  color: var(--color-text-muted);
+}
+
+.profileMenuItem:hover {
+  background: color-mix(in srgb, var(--color-surface-muted) 50%, transparent);
+  color: var(--color-primary);
+}
+
+.profileMenuItemDanger {
+  color: var(--color-danger);
+}
+
+.profileMenuItemDanger:hover {
+  background: var(--color-danger-bg);
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sidebarBody {
+    padding: var(--space-5);
+  }
+}

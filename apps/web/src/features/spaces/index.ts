@@ -1,6 +1,6 @@
 export { spacesKeys } from "./keys";
 export { spacesQueries } from "./queries";
+export { Invites } from "./Invites/Invites";
 export { SpaceDetail } from "./SpaceDetail/SpaceDetail";
-export { SpaceInvites } from "./SpaceInvites/SpaceInvites";
 export { Spaces } from "./Spaces/Spaces";
 export { useCreateSpace } from "./Spaces/useCreateSpace";

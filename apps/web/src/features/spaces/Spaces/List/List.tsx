@@ -5,20 +5,20 @@ import { ArrowRight, FolderHeart, Plus } from "lucide-react";
 
 import { Button } from "../../../../components/Button/Button";
 import { spacesQueries } from "../../queries";
-import styles from "./SpaceList.module.css";
+import styles from "./List.module.css";
 
-type SpaceListProps = {
+type ListProps = {
   onCreateClick: () => void;
 };
 
-export const SpaceList = ({ onCreateClick }: SpaceListProps) => {
+export const List = ({ onCreateClick }: ListProps) => {
   const navigate = useNavigate();
   const { data: spaces } = useSuspenseQuery(spacesQueries.list());
 
   if (spaces.length === 0) {
     return (
       <main className={styles.listPage}>
-        <SpaceListHeader />
+        <ListHeader />
 
         <div className={styles.stateCard}>
           <div className={styles.stateIcon}>
@@ -39,7 +39,7 @@ export const SpaceList = ({ onCreateClick }: SpaceListProps) => {
 
   return (
     <main className={styles.listPage}>
-      <SpaceListHeader action={<CreateSpaceButton onClick={onCreateClick} />} />
+      <ListHeader action={<CreateSpaceButton onClick={onCreateClick} />} />
 
       <div className={styles.spaceList}>
         {spaces.map((space) => (
@@ -66,11 +66,11 @@ export const SpaceList = ({ onCreateClick }: SpaceListProps) => {
   );
 };
 
-type SpaceListHeaderProps = {
+type ListHeaderProps = {
   action?: ReactNode;
 };
 
-const SpaceListHeader = ({ action }: SpaceListHeaderProps) => (
+const ListHeader = ({ action }: ListHeaderProps) => (
   <header className={styles.listHeader}>
     <div>
       <h1 className={styles.listTitle}>スペースを選択</h1>
