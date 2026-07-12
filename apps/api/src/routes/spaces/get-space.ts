@@ -12,15 +12,18 @@ const getSpaceRoute = createRoute().get(
   async (c) => {
     const space = c.get("space");
 
-    return c.json({
-      space: {
-        id: space.id,
-        name: space.name,
-        slug: space.slug,
-        createdAt: space.createdAt,
-        logo: space.logo ?? null,
+    return c.json(
+      {
+        space: {
+          id: space.id,
+          name: space.name,
+          slug: space.slug,
+          createdAt: space.createdAt,
+          logo: space.logo ?? null,
+        },
       },
-    });
+      200,
+    );
   },
 );
 

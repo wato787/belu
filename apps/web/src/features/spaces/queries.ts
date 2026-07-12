@@ -1,7 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
+import type { InferResponseType } from "hono/client";
 
 import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { spacesKeys } from "./keys";
+
+type ListSpacesResponse = InferResponseType<typeof apiClient.spaces.$get, 200>;
+type GetSpaceResponse = InferResponseType<(typeof apiClient.spaces)[":spaceId"]["$get"], 200>;
 
 export const spacesQueries = {
   list: () =>
@@ -9,7 +13,7 @@ export const spacesQueries = {
       queryKey: spacesKeys.lists(),
       queryFn: async () => {
         const response = await apiClient.spaces.$get();
-        return parseApiResponse(response);
+        return parseApiResponse<ListSpacesResponse>(response);
       },
     }),
   detail: (spaceId: string) =>
@@ -19,7 +23,7 @@ export const spacesQueries = {
         const response = await apiClient.spaces[":spaceId"].$get({
           param: { spaceId },
         });
-        return parseApiResponse(response);
+        return parseApiResponse<GetSpaceResponse>(response);
       },
     }),
 };

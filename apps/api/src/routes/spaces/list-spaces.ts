@@ -8,15 +8,18 @@ const listSpacesRoute = createRoute().get("/", requireUser, async (c) => {
     headers: c.req.raw.headers,
   });
 
-  return c.json({
-    spaces: spaces.map((space) => ({
-      id: space.id,
-      name: space.name,
-      slug: space.slug,
-      createdAt: space.createdAt,
-      logo: space.logo ?? null,
-    })),
-  });
+  return c.json(
+    {
+      spaces: spaces.map((space) => ({
+        id: space.id,
+        name: space.name,
+        slug: space.slug,
+        createdAt: space.createdAt,
+        logo: space.logo ?? null,
+      })),
+    },
+    200,
+  );
 });
 
 export { listSpacesRoute };
