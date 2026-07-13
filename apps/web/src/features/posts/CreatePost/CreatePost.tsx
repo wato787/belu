@@ -2,121 +2,33 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { AlertCircle, Check, Loader2 } from "lucide-react";
 import { useState } from "react";
-import type { FileRejection } from "react-dropzone";
 
 import { Button } from "../../../components/Button/Button";
 import { Field, FieldLabel } from "../../../components/Field/Field";
 import { Textarea } from "../../../components/Textarea/Textarea";
 import { petsQueries } from "../../pets";
 import { useSubmitPost } from "../useSubmitPost";
-import {
-  allowedPhotoContentTypes,
-  maxPostPhotoCount,
-  maxPostPhotoFileSize,
-  type AllowedPhotoContentType,
-} from "./constants";
-import { PhotoPicker, type PhotoFile } from "./PhotoPicker/PhotoPicker";
+import { PhotoPicker } from "./PhotoPicker/PhotoPicker";
 import styles from "./CreatePost.module.css";
+import { usePostPhotos } from "./usePostPhotos";
 
 type CreatePostProps = {
   spaceId: string;
-};
-
-const createPhotoId = () => `photo-${Date.now()}-${crypto.randomUUID()}`;
-
-const isAllowedContentType = (value: string): value is AllowedPhotoContentType =>
-  allowedPhotoContentTypes.some((contentType) => contentType === value);
-
-const getFileContentType = (file: File): AllowedPhotoContentType | null => {
-  if (isAllowedContentType(file.type)) {
-    return file.type;
-  }
-
-  if (file.name.toLowerCase().endsWith(".heic")) {
-    return "image/heic";
-  }
-
-  return null;
 };
 
 export const CreatePost = ({ spaceId }: CreatePostProps) => {
   const navigate = useNavigate();
   const { data: pets } = useSuspenseQuery(petsQueries.list(spaceId));
   const { isPending, submitPost, submitStep, uploadedPhotoCount } = useSubmitPost(spaceId);
+  const { addPhotos, clearPhotoError, photoErrorMessage, photos, rejectPhotos, removePhoto } =
+    usePostPhotos();
   const [body, setBody] = useState("");
   const [selectedPetIds, setSelectedPetIds] = useState<string[]>([]);
-  const [photos, setPhotos] = useState<PhotoFile[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [formErrorMessage, setFormErrorMessage] = useState<string | null>(null);
+  const errorMessage = formErrorMessage ?? photoErrorMessage;
 
   const handleBack = () => {
     navigate({ params: { spaceId }, to: "/spaces/$spaceId" });
-  };
-
-  const addFiles = (files: File[]) => {
-    setErrorMessage(null);
-
-    if (photos.length + files.length > maxPostPhotoCount) {
-      setErrorMessage("写真は最大20枚まで登録可能です。");
-      return;
-    }
-
-    const nextPhotos: PhotoFile[] = [];
-
-    for (const file of files) {
-      const contentType = getFileContentType(file);
-
-      if (!contentType) {
-        setErrorMessage(`対応していないファイル形式が含まれています: ${file.name}`);
-        continue;
-      }
-
-      if (file.size > maxPostPhotoFileSize) {
-        setErrorMessage(`ファイルサイズが大きすぎます (最大10MB): ${file.name}`);
-        continue;
-      }
-
-      nextPhotos.push({
-        contentType,
-        file,
-        fileSize: file.size,
-        id: createPhotoId(),
-        previewUrl: URL.createObjectURL(file),
-      });
-    }
-
-    setPhotos((currentPhotos) => [...currentPhotos, ...nextPhotos]);
-  };
-
-  const handleRejectedPhotos = (rejections: FileRejection[]) => {
-    const firstRejection = rejections[0];
-    const firstError = firstRejection?.errors[0];
-
-    if (!firstRejection || !firstError) {
-      return;
-    }
-
-    if (firstError.code === "file-too-large") {
-      setErrorMessage(`ファイルサイズが大きすぎます (最大10MB): ${firstRejection.file.name}`);
-      return;
-    }
-
-    if (firstError.code === "too-many-files") {
-      setErrorMessage("写真は最大20枚まで登録可能です。");
-      return;
-    }
-
-    setErrorMessage(`対応していないファイル形式が含まれています: ${firstRejection.file.name}`);
-  };
-
-  const handleRemovePhoto = (id: string) => {
-    const photo = photos.find((currentPhoto) => currentPhoto.id === id);
-
-    if (photo) {
-      URL.revokeObjectURL(photo.previewUrl);
-    }
-
-    setPhotos((currentPhotos) => currentPhotos.filter((currentPhoto) => currentPhoto.id !== id));
-    setErrorMessage(null);
   };
 
   const togglePetSelection = (petId: string) => {
@@ -129,18 +41,19 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
 
   const handleSubmit = () => {
     const trimmedBody = body.trim();
+    clearPhotoError();
 
     if (photos.length === 0) {
-      setErrorMessage("少なくとも1枚の写真をアップロードしてください。");
+      setFormErrorMessage("少なくとも1枚の写真をアップロードしてください。");
       return;
     }
 
     if (!trimmedBody) {
-      setErrorMessage("本文を入力してください。");
+      setFormErrorMessage("本文を入力してください。");
       return;
     }
 
-    setErrorMessage(null);
+    setFormErrorMessage(null);
     submitPost({
       body: trimmedBody,
       files: photos,
@@ -200,9 +113,9 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
           ) : (
             <div className={styles.form}>
               <PhotoPicker
-                onAdd={addFiles}
-                onReject={handleRejectedPhotos}
-                onRemove={handleRemovePhoto}
+                onAdd={addPhotos}
+                onReject={rejectPhotos}
+                onRemove={removePhoto}
                 photos={photos}
               />
 

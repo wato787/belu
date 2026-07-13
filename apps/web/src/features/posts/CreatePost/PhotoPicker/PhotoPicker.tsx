@@ -3,15 +3,8 @@ import { useDropzone, type FileRejection } from "react-dropzone";
 
 import { cx } from "../../../../utils/cx";
 import { maxPostPhotoCount, maxPostPhotoFileSize } from "../constants";
+import type { PhotoFile } from "../types";
 import styles from "./PhotoPicker.module.css";
-
-export type PhotoFile = {
-  contentType: "image/heic" | "image/jpeg" | "image/png" | "image/webp";
-  file: File;
-  fileSize: number;
-  id: string;
-  previewUrl: string;
-};
 
 type PhotoPickerProps = {
   onAdd: (files: File[]) => void;
