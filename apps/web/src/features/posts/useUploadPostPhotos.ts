@@ -4,7 +4,7 @@ import type { CreatePostPhotoFile, CreatePostUploadUrlResponse } from "./types";
 
 type UploadPostPhotosVariables = {
   files: CreatePostPhotoFile[];
-  onProgress: (progress: number) => void;
+  onUploadedPhotoCountChange: (count: number) => void;
   uploads: CreatePostUploadUrlResponse["uploads"];
 };
 
@@ -12,7 +12,11 @@ const uploadPostPhotoFailedMessage = "写真をアップロードできません
 
 export const useUploadPostPhotos = () => {
   const mutation = useMutation({
-    mutationFn: async ({ files, onProgress, uploads }: UploadPostPhotosVariables) => {
+    mutationFn: async ({
+      files,
+      onUploadedPhotoCountChange,
+      uploads,
+    }: UploadPostPhotosVariables) => {
       for (const [index, upload] of uploads.entries()) {
         const file = files[index];
 
@@ -32,7 +36,7 @@ export const useUploadPostPhotos = () => {
           throw new Error(uploadPostPhotoFailedMessage);
         }
 
-        onProgress(Math.round(((index + 1) / uploads.length) * 100));
+        onUploadedPhotoCountChange(index + 1);
       }
     },
   });

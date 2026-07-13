@@ -16,14 +16,14 @@ export const useSubmitPost = (spaceId: string) => {
     useCreatePostUploadUrls();
   const { isPending: isUploadPostPhotosPending, uploadPostPhotosAsync } = useUploadPostPhotos();
   const [submitStep, setSubmitStep] = useState<SubmitPostStep>("idle");
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadedPhotoCount, setUploadedPhotoCount] = useState(0);
   const isPending =
     isCreatePostPending || isCreatePostUploadUrlsPending || isUploadPostPhotosPending;
 
   const submitPost = async ({ body, files, petIds }: SubmitPostInput) => {
     try {
       setSubmitStep("upload-url");
-      setUploadProgress(0);
+      setUploadedPhotoCount(0);
 
       const { uploads } = await createPostUploadUrlsAsync({
         input: {
@@ -38,7 +38,7 @@ export const useSubmitPost = (spaceId: string) => {
       setSubmitStep("uploading");
       await uploadPostPhotosAsync({
         files,
-        onProgress: setUploadProgress,
+        onUploadedPhotoCountChange: setUploadedPhotoCount,
         uploads,
       });
 
@@ -61,7 +61,7 @@ export const useSubmitPost = (spaceId: string) => {
       toast.error(submitPostFailedMessage);
     } finally {
       setSubmitStep("idle");
-      setUploadProgress(0);
+      setUploadedPhotoCount(0);
     }
   };
 
@@ -69,6 +69,6 @@ export const useSubmitPost = (spaceId: string) => {
     isPending,
     submitPost,
     submitStep,
-    uploadProgress,
+    uploadedPhotoCount,
   };
 };
