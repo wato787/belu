@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,17 +12,18 @@ type TimelineProps = {
   spaceId: string;
 };
 
-const notifyCreatePostUnavailable = () => {
-  toast.info("投稿作成画面はまだ利用できません。");
-};
-
 const notifyEditPostUnavailable = () => {
   toast.info("投稿編集はまだ利用できません。");
 };
 
 export const Timeline = ({ spaceId }: TimelineProps) => {
+  const navigate = useNavigate();
   const { data: posts } = useSuspenseQuery(postsQueries.list(spaceId));
   const { deletePost } = useDeletePost(spaceId);
+
+  const handleCreatePostClick = () => {
+    navigate({ params: { spaceId }, to: "/spaces/$spaceId/posts/new" });
+  };
 
   const handleDeletePostClick = (postId: string) => {
     const confirmed = window.confirm("投稿を削除してもよろしいですか？");
@@ -41,7 +43,7 @@ export const Timeline = ({ spaceId }: TimelineProps) => {
             <span />
             <h2>投稿</h2>
           </div>
-          <Button className={styles.primaryAction} onClick={notifyCreatePostUnavailable}>
+          <Button className={styles.primaryAction} onClick={handleCreatePostClick}>
             <Plus size={16} />
             新規投稿
           </Button>
@@ -52,7 +54,7 @@ export const Timeline = ({ spaceId }: TimelineProps) => {
             <div className={styles.postEmptyIcon}>📭</div>
             <h3>投稿がまだありません</h3>
             <p>写真やお知らせを投稿して、メンバーと大切な思い出を共有しましょう。</p>
-            <Button className={styles.secondaryAction} onClick={notifyCreatePostUnavailable}>
+            <Button className={styles.secondaryAction} onClick={handleCreatePostClick}>
               <Plus size={16} />
               最初の投稿を作成する
             </Button>
