@@ -6,7 +6,7 @@ export const MAX_POST_PHOTO_FILE_SIZE = 10 * 1024 * 1024;
 export const MAX_POST_PHOTO_UPLOADS = 20;
 export const POST_PHOTO_UPLOAD_URL_EXPIRES_IN_SECONDS = 5 * 60;
 export const createPostSchema = z.object({
-  body: z.string().trim().min(1),
+  body: z.string().trim().optional().default(""),
   petIds: z.array(z.string().trim().min(1)).optional().default([]),
   photos: z
     .array(
@@ -16,14 +16,13 @@ export const createPostSchema = z.object({
         uploadId: z.string().trim().min(1),
       }),
     )
-    .max(MAX_POST_PHOTO_UPLOADS)
-    .optional()
-    .default([]),
+    .min(1)
+    .max(MAX_POST_PHOTO_UPLOADS),
 });
 
 export const updatePostSchema = z
   .object({
-    body: z.string().trim().min(1).optional(),
+    body: z.string().trim().optional(),
     petIds: z.array(z.string().trim().min(1)).optional(),
   })
   .refine((value) => value.body !== undefined || value.petIds !== undefined, {

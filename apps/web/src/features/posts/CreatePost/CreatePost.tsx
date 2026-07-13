@@ -48,11 +48,6 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
       return;
     }
 
-    if (!trimmedBody) {
-      setFormErrorMessage("本文を入力してください。");
-      return;
-    }
-
     setFormErrorMessage(null);
     submitPost({
       body: trimmedBody,
@@ -122,7 +117,7 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
               <Field className={styles.field}>
                 <div className={styles.fieldHeader}>
                   <FieldLabel>本文</FieldLabel>
-                  <span>必須</span>
+                  <span>任意</span>
                 </div>
                 <Textarea
                   className={styles.textarea}
@@ -180,7 +175,7 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
                 </Button>
                 <Button
                   className={styles.submitButton}
-                  disabled={photos.length === 0 || !body.trim()}
+                  disabled={photos.length === 0}
                   onClick={handleSubmit}
                 >
                   投稿する
