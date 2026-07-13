@@ -32,7 +32,7 @@ type PostCardProps = {
 
 export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const sortedPhotos = [...post.photos].sort((a, b) => a.sortOrder - b.sortOrder);
+  const sortedPhotos = sortPhotosByOrder(post.photos);
 
   return (
     <article className={styles.card}>
@@ -118,6 +118,19 @@ const Photo = ({ photo }: { photo: PostCardPhoto | undefined }) => {
     </div>
   );
 };
+
+const sortPhotosByOrder = (photos: PostCardPhoto[]) =>
+  photos.reduce<PostCardPhoto[]>((sortedPhotos, photo) => {
+    const insertIndex = sortedPhotos.findIndex(
+      (sortedPhoto) => photo.sortOrder < sortedPhoto.sortOrder,
+    );
+
+    if (insertIndex === -1) {
+      return [...sortedPhotos, photo];
+    }
+
+    return [...sortedPhotos.slice(0, insertIndex), photo, ...sortedPhotos.slice(insertIndex)];
+  }, []);
 
 const formatPostDate = (value: string) => {
   const date = new Date(value);

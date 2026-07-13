@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "../../../components/Button/Button";
 import { postsQueries, useDeletePost } from "../../posts";
@@ -10,10 +9,6 @@ import { PostCard } from "./PostCard/PostCard";
 
 type TimelineProps = {
   spaceId: string;
-};
-
-const notifyEditPostUnavailable = () => {
-  toast.info("投稿編集はまだ利用できません。");
 };
 
 export const Timeline = ({ spaceId }: TimelineProps) => {
@@ -33,6 +28,10 @@ export const Timeline = ({ spaceId }: TimelineProps) => {
     }
 
     deletePost(postId);
+  };
+
+  const handleEditPostClick = (postId: string) => {
+    navigate({ params: { postId, spaceId }, to: "/spaces/$spaceId/posts/$postId/edit" });
   };
 
   return (
@@ -63,7 +62,7 @@ export const Timeline = ({ spaceId }: TimelineProps) => {
               <PostCard
                 key={post.id}
                 onDelete={() => handleDeletePostClick(post.id)}
-                onEdit={notifyEditPostUnavailable}
+                onEdit={() => handleEditPostClick(post.id)}
                 post={post}
               />
             ))}

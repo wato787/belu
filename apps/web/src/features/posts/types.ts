@@ -6,6 +6,10 @@ export type CreatePostInput = InferRequestType<
   (typeof apiClient.spaces)[":spaceId"]["posts"]["$post"]
 >["json"];
 
+export type UpdatePostInput = InferRequestType<
+  (typeof apiClient.spaces)[":spaceId"]["posts"][":postId"]["$patch"]
+>["json"];
+
 export type CreatePostUploadUrlInput = InferRequestType<
   (typeof apiClient.spaces)[":spaceId"]["posts"]["upload-url"]["$post"]
 >["json"];
