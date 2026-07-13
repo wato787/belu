@@ -59,35 +59,12 @@
   text-align: center;
 }
 
-.postEmptyIcon {
-  display: inline-flex;
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  margin-inline: auto;
-  margin-bottom: var(--space-5);
-  border-radius: var(--radius-full);
-  background: var(--color-surface-muted);
-  color: color-mix(in srgb, var(--color-text-subtle) 80%, transparent);
-  font-size: 30px;
-}
-
 .postEmptyState h3 {
-  margin: 0;
+  margin: 0 0 var(--space-6);
   color: var(--color-text);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-}
-
-.postEmptyState p {
-  max-width: 360px;
-  margin: var(--space-2) auto var(--space-6);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
 }
 
 .secondaryAction {

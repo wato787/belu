@@ -51,9 +51,7 @@ export const Timeline = ({ spaceId }: TimelineProps) => {
 
         {posts.length === 0 ? (
           <section className={styles.postEmptyState}>
-            <div className={styles.postEmptyIcon}>📭</div>
             <h3>投稿がまだありません</h3>
-            <p>写真やお知らせを投稿して、メンバーと大切な思い出を共有しましょう。</p>
             <Button className={styles.secondaryAction} onClick={handleCreatePostClick}>
               <Plus size={16} />
               最初の投稿を作成する
