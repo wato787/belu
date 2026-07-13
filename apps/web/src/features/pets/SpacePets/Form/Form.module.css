@@ -1,0 +1,89 @@
+.main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-7);
+}
+
+.formShell {
+  width: min(100%, 672px);
+}
+
+.formCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-6);
+}
+
+.formCard h1 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: var(--line-height-tight);
+}
+
+.formCard p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.required {
+  color: var(--color-danger);
+}
+
+.fieldHint {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-subtle);
+  font-size: 11px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+  padding-top: var(--space-6);
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.secondaryButton:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-muted);
+}
+
+@media (max-width: 767px) {
+  .main {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .formCard {
+    padding: var(--space-5);
+  }
+
+  .formActions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+}
