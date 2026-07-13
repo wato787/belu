@@ -1,7 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SpaceDetail } from "../../features";
+import { postsQueries, Timeline } from "../../features";
+
+const TimelineRoute = () => {
+  const { spaceId } = Route.useParams();
+
+  return <Timeline spaceId={spaceId} />;
+};
 
 export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/")({
-  component: SpaceDetail,
+  loader: ({ context, params }) =>
+    context.queryClient.ensureQueryData(postsQueries.list(params.spaceId)),
+  component: TimelineRoute,
 });
