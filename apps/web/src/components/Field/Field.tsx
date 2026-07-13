@@ -12,12 +12,12 @@ type FieldContextValue = {
 const FieldContext = createContext<FieldContextValue | null>(null);
 
 type FieldProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Root>, "className"> & {
-  className?: string;
+  className?: string | undefined;
   error?: unknown;
 };
 
 type FieldLabelProps = Omit<ComponentPropsWithoutRef<typeof BaseField.Label>, "className"> & {
-  className?: string;
+  className?: string | undefined;
 };
 
 const errorToMessage = (error: unknown) => {
