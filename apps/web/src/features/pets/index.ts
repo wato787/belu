@@ -1,4 +1,7 @@
-export { PetDetail, SpacePets } from "./components";
+export { PetDetail } from "./components";
 export { petsKeys } from "./keys";
-export { petsMutations } from "./mutations";
 export { petsQueries } from "./queries";
+export { SpacePets } from "./SpacePets/SpacePets";
+export { useCreatePet } from "./useCreatePet";
+export { useDeletePet } from "./useDeletePet";
+export { useUpdatePet } from "./useUpdatePet";
