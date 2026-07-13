@@ -44,13 +44,21 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
       open();
     }
   };
-  const dropzoneProps = getRootProps({
+  const emptyDropzoneProps = getRootProps({
     className: cx(
-      photos.length === 0 ? styles.dropzone : styles.previewDropzone,
+      styles.dropzone,
       isDragActive && styles.dropzoneActive,
       isMaxImagesReached && styles.dropzoneDisabled,
     ),
-    onClick: photos.length === 0 ? handleOpen : undefined,
+    onClick: handleOpen,
+  });
+  const addMoreDropzoneProps = getRootProps({
+    className: cx(
+      styles.addMoreButton,
+      isDragActive && styles.addMoreButtonActive,
+      isMaxImagesReached && styles.dropzoneDisabled,
+    ),
+    onClick: handleOpen,
   });
 
   return (
@@ -67,7 +75,7 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
       </div>
 
       {photos.length === 0 ? (
-        <div {...dropzoneProps}>
+        <div {...emptyDropzoneProps}>
           <input {...getInputProps({ className: styles.fileInput })} />
           <div className={styles.dropzoneIcon}>
             <Image size={20} />
@@ -78,30 +86,28 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
           </div>
         </div>
       ) : (
-        <div {...dropzoneProps}>
-          <input {...getInputProps({ className: styles.fileInput })} />
-          <div className={styles.previewGrid}>
-            {photos.map((photo) => (
-              <div className={styles.preview} key={photo.id}>
-                <img alt="" src={photo.previewUrl} />
-                <button
-                  aria-label="写真を削除"
-                  className={styles.removeButton}
-                  onClick={() => onRemove(photo.id)}
-                  type="button"
-                >
-                  <X size={12} />
-                </button>
-              </div>
-            ))}
-
-            {!isMaxImagesReached && (
-              <button className={styles.addMoreButton} onClick={handleOpen} type="button">
-                <Plus size={18} />
-                <span>写真を追加</span>
+        <div className={styles.previewGrid}>
+          {photos.map((photo) => (
+            <div className={styles.preview} key={photo.id}>
+              <img alt="" src={photo.previewUrl} />
+              <button
+                aria-label="写真を削除"
+                className={styles.removeButton}
+                onClick={() => onRemove(photo.id)}
+                type="button"
+              >
+                <X size={12} />
               </button>
-            )}
-          </div>
+            </div>
+          ))}
+
+          {!isMaxImagesReached && (
+            <div {...addMoreDropzoneProps}>
+              <input {...getInputProps({ className: styles.fileInput })} />
+              <Plus size={18} />
+              <span>写真を追加</span>
+            </div>
+          )}
         </div>
       )}
     </section>
