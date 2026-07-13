@@ -101,7 +101,7 @@ const createPostRoute = createRoute().post(
       throw new InternalServerException();
     }
 
-    return c.json({ post: toPostResponse(post) }, 201);
+    return c.json({ post: toPostResponse(post, { storage }) }, 201);
   },
 );
 

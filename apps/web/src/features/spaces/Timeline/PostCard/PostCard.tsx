@@ -13,6 +13,7 @@ type PostCardPhoto = {
   id: string;
   objectKey: string;
   sortOrder: number;
+  url: string | null;
 };
 
 type PostCardPost = {
@@ -71,12 +72,12 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
       {sortedPhotos.length > 0 && (
         <div className={styles.photos}>
           {sortedPhotos.length === 1 ? (
-            <PhotoPlaceholder label={sortedPhotos[0]?.objectKey ?? ""} />
+            <Photo photo={sortedPhotos[0]} />
           ) : (
             <div className={styles.photoGrid}>
               {sortedPhotos.slice(0, 4).map((photo, index) => (
                 <div className={styles.photoGridItem} key={photo.id}>
-                  <PhotoPlaceholder label={photo.objectKey} />
+                  <Photo photo={photo} />
                   {index === 3 && sortedPhotos.length > 4 && (
                     <div className={styles.photoOverlay}>+{sortedPhotos.length - 4}</div>
                   )}
@@ -105,12 +106,18 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
   );
 };
 
-const PhotoPlaceholder = ({ label }: { label: string }) => (
-  <div className={styles.photoPlaceholder}>
-    <span>写真</span>
-    <small>{label}</small>
-  </div>
-);
+const Photo = ({ photo }: { photo: PostCardPhoto | undefined }) => {
+  if (photo?.url) {
+    return <img alt="投稿写真" className={styles.photo} src={photo.url} />;
+  }
+
+  return (
+    <div className={styles.photoPlaceholder}>
+      <span>写真</span>
+      <small>{photo?.objectKey ?? ""}</small>
+    </div>
+  );
+};
 
 const formatPostDate = (value: string) => {
   const date = new Date(value);

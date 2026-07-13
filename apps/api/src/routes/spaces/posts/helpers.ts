@@ -1,6 +1,11 @@
 import type { PostWithPets } from "../../../db/repositories";
+import type { Storage } from "../../../storage";
 
-export const toPostResponse = (post: PostWithPets) => ({
+type ToPostResponseOptions = {
+  storage: Storage;
+};
+
+export const toPostResponse = (post: PostWithPets, { storage }: ToPostResponseOptions) => ({
   id: post.id,
   body: post.body,
   createdAt: post.createdAt,
@@ -10,6 +15,7 @@ export const toPostResponse = (post: PostWithPets) => ({
     objectKey: photo.objectKey,
     sortOrder: photo.sortOrder,
     uploadId: photo.uploadId,
+    url: storage.getPublicUrl({ key: photo.objectKey }),
     createdAt: photo.createdAt,
     updatedAt: photo.updatedAt,
   })),

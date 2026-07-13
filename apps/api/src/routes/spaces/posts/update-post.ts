@@ -1,10 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
+import { getConfig } from "../../../config";
 import { createDb } from "../../../db/client";
 import { createPostRepository } from "../../../db/repositories";
 import { createRoute } from "../../../helpers/create-route";
 import { BadRequestException, NotFoundException } from "../../../helpers/exceptions";
 import { requireUser } from "../../../middleware/auth";
 import { requireSpaceMember } from "../../../middleware/space";
+import { createStorage } from "../../../storage";
 import { spaceIdParamSchema } from "../schema";
 import { toPostResponse, uniqueIds } from "./helpers";
 import { postIdParamSchema, updatePostSchema } from "./schema";
@@ -20,6 +22,8 @@ const updatePostRoute = createRoute().patch(
     const body = c.req.valid("json");
     const spaceMember = c.get("spaceMember");
     const petIds = body.petIds === undefined ? undefined : uniqueIds(body.petIds);
+    const config = getConfig(c.env);
+    const storage = createStorage(config.storage);
     const db = createDb(c.env.DB);
     const postRepository = createPostRepository(db);
 
@@ -46,7 +50,7 @@ const updatePostRoute = createRoute().patch(
       throw new NotFoundException("Post Not Found");
     }
 
-    return c.json({ post: toPostResponse(post) }, 200);
+    return c.json({ post: toPostResponse(post, { storage }) }, 200);
   },
 );
 
