@@ -8,7 +8,7 @@ const CreatePostRoute = () => {
   return <CreatePost spaceId={spaceId} />;
 };
 
-export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/posts/new")({
+export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/posts_/new")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(petsQueries.list(params.spaceId)),
   component: CreatePostRoute,
