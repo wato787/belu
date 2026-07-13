@@ -9,28 +9,6 @@
   margin: 0 auto;
 }
 
-.backButton {
-  border: 0;
-  background: transparent;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  font: inherit;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-5);
-  padding: 0;
-  transition: color 160ms ease;
-}
-
-.backButton:hover {
-  color: var(--color-text);
-}
-
-.backButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -48,13 +26,6 @@
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-}
-
-.header p {
-  margin: 8px 0 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
 }
 
 .errorBox {
@@ -161,7 +132,7 @@
 }
 
 .textarea {
-  min-height: 140px;
+  min-height: 104px;
   resize: vertical;
 }
 

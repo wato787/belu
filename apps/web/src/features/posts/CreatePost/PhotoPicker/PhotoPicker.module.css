@@ -69,6 +69,16 @@
   background: var(--color-bg);
 }
 
+.previewDropzone {
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
 .dropzoneActive {
   border-color: var(--color-primary);
   background: color-mix(in srgb, var(--color-primary) 6%, var(--color-surface));
@@ -117,7 +127,6 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
-  margin-top: var(--space-3);
 }
 
 .preview,

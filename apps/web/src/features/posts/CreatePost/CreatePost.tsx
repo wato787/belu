@@ -59,19 +59,9 @@ export const CreatePost = ({ spaceId }: CreatePostProps) => {
   return (
     <main className={styles.main}>
       <div className={styles.shell}>
-        <button
-          className={styles.backButton}
-          disabled={isPending}
-          onClick={handleBack}
-          type="button"
-        >
-          投稿一覧に戻る
-        </button>
-
         <section className={styles.card}>
           <header className={styles.header}>
-            <h1>新規投稿を作成</h1>
-            <p>大切なペットの写真とメッセージを記録して、家族やメンバーに共有しましょう。</p>
+            <h1>新規投稿</h1>
           </header>
 
           {errorMessage && (

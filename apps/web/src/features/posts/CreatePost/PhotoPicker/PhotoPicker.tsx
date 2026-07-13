@@ -44,6 +44,14 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
       open();
     }
   };
+  const dropzoneProps = getRootProps({
+    className: cx(
+      photos.length === 0 ? styles.dropzone : styles.previewDropzone,
+      isDragActive && styles.dropzoneActive,
+      isMaxImagesReached && styles.dropzoneDisabled,
+    ),
+    onClick: photos.length === 0 ? handleOpen : undefined,
+  });
 
   return (
     <section className={styles.section}>
@@ -58,52 +66,42 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
         <span className={styles.format}>JPEG, PNG, WEBP, HEIC</span>
       </div>
 
-      <div
-        {...getRootProps({
-          className: cx(
-            styles.dropzone,
-            isDragActive && styles.dropzoneActive,
-            isMaxImagesReached && styles.dropzoneDisabled,
-          ),
-          onClick: handleOpen,
-        })}
-      >
-        <input {...getInputProps({ className: styles.fileInput })} />
-        <div className={styles.dropzoneIcon}>
-          <Image size={20} />
+      {photos.length === 0 ? (
+        <div {...dropzoneProps}>
+          <input {...getInputProps({ className: styles.fileInput })} />
+          <div className={styles.dropzoneIcon}>
+            <Image size={20} />
+          </div>
+          <div className={styles.dropzoneText}>
+            <p>クリックして写真を選択、またはドラッグ＆ドロップ</p>
+            <span>1度に最大20枚までの写真をアップロードできます。</span>
+          </div>
         </div>
-        <div className={styles.dropzoneText}>
-          <p>
-            {isMaxImagesReached
-              ? "追加枚数の上限 (20枚) に達しました"
-              : "クリックして写真を選択、またはドラッグ＆ドロップ"}
-          </p>
-          <span>1度に最大20枚までの写真をアップロードできます。</span>
-        </div>
-      </div>
+      ) : (
+        <div {...dropzoneProps}>
+          <input {...getInputProps({ className: styles.fileInput })} />
+          <div className={styles.previewGrid}>
+            {photos.map((photo) => (
+              <div className={styles.preview} key={photo.id}>
+                <img alt="" src={photo.previewUrl} />
+                <button
+                  aria-label="写真を削除"
+                  className={styles.removeButton}
+                  onClick={() => onRemove(photo.id)}
+                  type="button"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            ))}
 
-      {photos.length > 0 && (
-        <div className={styles.previewGrid}>
-          {photos.map((photo) => (
-            <div className={styles.preview} key={photo.id}>
-              <img alt="" src={photo.previewUrl} />
-              <button
-                aria-label="写真を削除"
-                className={styles.removeButton}
-                onClick={() => onRemove(photo.id)}
-                type="button"
-              >
-                <X size={12} />
+            {!isMaxImagesReached && (
+              <button className={styles.addMoreButton} onClick={handleOpen} type="button">
+                <Plus size={18} />
+                <span>写真を追加</span>
               </button>
-            </div>
-          ))}
-
-          {!isMaxImagesReached && (
-            <button className={styles.addMoreButton} onClick={handleOpen} type="button">
-              <Plus size={18} />
-              <span>写真を追加</span>
-            </button>
-          )}
+            )}
+          </div>
         </div>
       )}
     </section>
