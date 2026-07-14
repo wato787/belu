@@ -3,6 +3,8 @@ import type { ClientResponse } from "hono/client";
 import type { AppType } from "../../../api/src";
 import { HTTP_STATUS } from "../constants";
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "/api";
+
 export class ApiRequestError extends Error {
   readonly status: number;
 
@@ -13,7 +15,7 @@ export class ApiRequestError extends Error {
   }
 }
 
-export const apiClient = hc<AppType>("/api", {
+export const apiClient = hc<AppType>(apiBaseUrl, {
   fetch: (input: RequestInfo | URL, init?: RequestInit) =>
     fetch(input, {
       ...init,

@@ -29,6 +29,8 @@ web_base_url          = "https://belu-web-dev.<workers-subdomain>.workers.dev"
 
 `CLOUDFLARE_API_TOKEN` は Cloudflare Terraform provider が環境変数から読み取る。`terraform.tfvars` には入れない。
 
+Terraform apply 後、Wrangler の `database_id` には `d1_database_id` output の値を設定する。
+
 ## Wrangler の対象
 
 Wrangler で扱うものは以下。

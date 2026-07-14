@@ -27,6 +27,19 @@ run = "bun --filter @belu/web build"
 description = "Build deploy artifacts"
 depends = ["build-api", "build-web"]
 
+[tasks.deploy-api-dev]
+description = "Deploy the API worker to dev"
+run = "bun --filter @belu/api deploy:dev"
+
+[tasks.deploy-web-dev]
+description = "Build and deploy the web worker to dev"
+depends = ["build-web"]
+run = "bun --filter @belu/web deploy:dev"
+
+[tasks.deploy-workers-dev]
+description = "Deploy API and web workers to dev"
+depends = ["deploy-api-dev", "deploy-web-dev"]
+
 [tasks.check]
 description = "Run lint, typecheck, and format check"
 depends = ["lint", "typecheck", "format-check"]

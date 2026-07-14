@@ -18,3 +18,22 @@ migrations_dir = "drizzle/migrations"
 [[r2_buckets]]
 binding = "PHOTOS_BUCKET"
 bucket_name = "belu-photos-local"
+
+[env.dev]
+name = "belu-api-dev"
+
+[env.dev.vars]
+APP_ENV = "development"
+AUTH_BASE_URL = "https://belu-api-dev.<workers-subdomain>.workers.dev"
+AUTH_TRUSTED_ORIGINS = "https://belu-web-dev.<workers-subdomain>.workers.dev"
+R2_BUCKET_NAME = "belu-photos-dev"
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "belu-dev"
+database_id = "replace-with-d1-database-id"
+migrations_dir = "drizzle/migrations"
+
+[[env.dev.r2_buckets]]
+binding = "PHOTOS_BUCKET"
+bucket_name = "belu-photos-dev"
