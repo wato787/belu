@@ -79,20 +79,23 @@ export type Storage = {
 };
 
 const getRequiredR2SigningConfig = (config: StorageConfig) => {
-  if (
-    !config.r2AccountId ||
-    !config.r2AccessKeyId ||
-    !config.r2BucketName ||
-    !config.r2SecretAccessKey
-  ) {
-    throw new Error("R2 signing configuration is missing");
+  const { r2AccessKeyId, r2AccountId, r2BucketName, r2SecretAccessKey } = config;
+  const missingKeys = [
+    !r2AccountId && "R2_ACCOUNT_ID",
+    !r2AccessKeyId && "R2_ACCESS_KEY_ID",
+    !r2BucketName && "R2_BUCKET_NAME",
+    !r2SecretAccessKey && "R2_SECRET_ACCESS_KEY",
+  ].filter((key) => typeof key === "string");
+
+  if (missingKeys.length > 0) {
+    throw new Error(`R2 signing configuration is missing: ${missingKeys.join(", ")}`);
   }
 
   return {
-    accountId: config.r2AccountId,
-    accessKeyId: config.r2AccessKeyId,
-    bucketName: config.r2BucketName,
-    secretAccessKey: config.r2SecretAccessKey,
+    accountId: r2AccountId as string,
+    accessKeyId: r2AccessKeyId as string,
+    bucketName: r2BucketName as string,
+    secretAccessKey: r2SecretAccessKey as string,
   };
 };
 
