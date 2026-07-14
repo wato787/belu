@@ -9,7 +9,7 @@
     "typecheck": "tsgo --project tsconfig.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply belu-local --local",
-    "db:migrate:dev": "wrangler d1 migrations apply belu-dev --remote",
+    "db:migrate:dev": "wrangler d1 migrations apply belu-dev --remote --env dev",
     "auth:generate-schema": "better-auth generate --config src/lib/better-auth/config.ts --output src/db/schema/auth.ts --yes"
   },
   "dependencies": {
