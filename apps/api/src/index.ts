@@ -11,6 +11,17 @@ import { routes } from "./routes";
 
 const app = new Hono<AppHonoEnv>();
 
+const corsMiddleware = cors({
+  allowHeaders: ["Content-Type"],
+  allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  credentials: true,
+  origin: (origin, c) => {
+    const config = getConfig(c.env);
+
+    return config.auth.trustedOrigins.includes(origin) ? origin : undefined;
+  },
+});
+
 app.use(async (c, next) => {
   const startedAt = performance.now();
   const requestId = c.req.header("x-request-id") ?? uuidv7();
@@ -28,19 +39,8 @@ app.use(async (c, next) => {
   });
 });
 
-app.use(
-  "*",
-  cors({
-    allowHeaders: ["Content-Type"],
-    allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true,
-    origin: (origin, c) => {
-      const config = getConfig(c.env);
-
-      return config.auth.trustedOrigins.includes(origin) ? origin : undefined;
-    },
-  }),
-);
+app.use(corsMiddleware);
+app.options("*", corsMiddleware);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
   const auth = createAuth(c.env);
