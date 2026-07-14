@@ -1,0 +1,4 @@
+cloudflare_account_id = "00000000000000000000000000000000"
+cloudflare_api_token  = "set-via-local-tfvars-or-env"
+cloudflare_zone_id    = "00000000000000000000000000000000"
+domain                = "dev.example.com"
