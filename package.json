@@ -5,6 +5,7 @@
     "apps/*"
   ],
   "scripts": {
+    "build:api": "mise run build-api",
     "dev": "mise run dev",
     "dev:web": "mise run dev-web",
     "dev:api": "mise run dev-api",

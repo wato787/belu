@@ -15,6 +15,10 @@ run = "bun --filter @belu/web dev"
 description = "Start the API worker"
 run = "bun --filter @belu/api dev"
 
+[tasks.build-api]
+description = "Build the API worker artifact"
+run = "bun --filter @belu/api build"
+
 [tasks.check]
 description = "Run lint, typecheck, and format check"
 depends = ["lint", "typecheck", "format-check"]
