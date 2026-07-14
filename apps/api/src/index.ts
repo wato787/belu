@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { v7 as uuidv7 } from "uuid";
 import { createAuth } from "./lib/better-auth";
@@ -26,6 +27,20 @@ app.use(async (c, next) => {
     duration: Math.round(performance.now() - startedAt),
   });
 });
+
+app.use(
+  "*",
+  cors({
+    allowHeaders: ["Content-Type"],
+    allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    credentials: true,
+    origin: (origin, c) => {
+      const config = getConfig(c.env);
+
+      return config.auth.trustedOrigins.includes(origin) ? origin : undefined;
+    },
+  }),
+);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
   const auth = createAuth(c.env);

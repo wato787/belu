@@ -46,6 +46,14 @@ Worker が実行時に使う secret は Worker Secrets として管理する。
 - `R2_ACCESS_KEY_ID`
 - `R2_SECRET_ACCESS_KEY`
 
+Secret ではない Worker runtime 設定は `wrangler.toml` の `[vars]` に置く。
+
+- `APP_ENV`
+- `AUTH_BASE_URL`
+- `AUTH_TRUSTED_ORIGINS`
+- `R2_ACCOUNT_ID`
+- `R2_BUCKET_NAME`
+
 ## dev 手順
 
 インフラ更新:

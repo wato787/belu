@@ -26,6 +26,7 @@ name = "belu-api-dev"
 APP_ENV = "development"
 AUTH_BASE_URL = "https://belu-api-dev.shantianlongxing20.workers.dev"
 AUTH_TRUSTED_ORIGINS = "https://belu-web-dev.shantianlongxing20.workers.dev"
+R2_ACCOUNT_ID = "4e53d433fc24972cc26967a37a439d62"
 R2_BUCKET_NAME = "belu-photos-dev"
 
 [[env.dev.d1_databases]]
