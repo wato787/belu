@@ -11,7 +11,6 @@
     "dev": "mise run dev",
     "dev:web": "mise run dev-web",
     "dev:api": "mise run dev-api",
-    "deploy:dev": "mise run deploy-dev",
     "check": "mise run check",
     "lint": "mise run lint",
     "format": "mise run format",

@@ -7,4 +7,11 @@ dist/
 *.log
 *.tfstate
 *.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 tmp/
