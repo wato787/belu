@@ -1,4 +1,6 @@
 cloudflare_account_id = "00000000000000000000000000000000"
-cloudflare_api_token  = "set-via-local-tfvars-or-env"
-cloudflare_zone_id    = "00000000000000000000000000000000"
-domain                = "dev.example.com"
+
+# The Cloudflare provider reads CLOUDFLARE_API_TOKEN from the environment.
+# Custom domains are deferred. Use the workers.dev URLs until DNS is decided.
+api_base_url = "https://belu-api-dev.<workers-subdomain>.workers.dev"
+web_base_url = "https://belu-web-dev.<workers-subdomain>.workers.dev"

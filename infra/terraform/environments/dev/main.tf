@@ -10,7 +10,7 @@ module "r2_bucket" {
 
   account_id      = var.cloudflare_account_id
   name            = local.r2_bucket_name
-  allowed_origins = ["https://${local.web_hostname}"]
+  allowed_origins = [var.web_base_url]
 }
 
 module "api_worker" {
@@ -23,8 +23,8 @@ module "api_worker" {
   compatibility_flags = ["nodejs_compat"]
 
   app_env                = "development"
-  auth_base_url          = "https://${local.api_hostname}"
-  auth_trusted_origins   = "https://${local.web_hostname}"
+  auth_base_url          = var.api_base_url
+  auth_trusted_origins   = var.web_base_url
   photos_public_base_url = null
   r2_bucket_name         = module.r2_bucket.name
 

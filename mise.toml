@@ -58,3 +58,31 @@ run = "bun --filter @belu/api db:generate"
 [tasks.db-migrate-local-api]
 description = "Apply API database migrations to local D1"
 run = "bun --filter @belu/api db:migrate:local"
+
+[tasks.db-migrate-dev-api]
+description = "Apply API database migrations to dev D1"
+run = "bun --filter @belu/api db:migrate:dev"
+
+[tasks.infra-init-dev]
+description = "Initialize dev Terraform"
+run = "terraform -chdir=infra/terraform/environments/dev init"
+
+[tasks.infra-plan-dev]
+description = "Plan dev infrastructure changes"
+depends = ["build", "infra-init-dev"]
+run = "terraform -chdir=infra/terraform/environments/dev plan"
+
+[tasks.infra-apply-dev]
+description = "Apply dev infrastructure changes"
+depends = ["build", "infra-init-dev"]
+run = "terraform -chdir=infra/terraform/environments/dev apply"
+
+[tasks.infra-apply-dev-auto]
+description = "Apply dev infrastructure changes without an interactive approval"
+depends = ["build", "infra-init-dev"]
+run = "terraform -chdir=infra/terraform/environments/dev apply -auto-approve"
+
+[tasks.deploy-dev]
+description = "Build, apply dev infrastructure, then run dev D1 migrations"
+depends = ["infra-apply-dev-auto"]
+run = "mise run db-migrate-dev-api"

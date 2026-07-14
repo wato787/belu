@@ -3,18 +3,12 @@ variable "cloudflare_account_id" {
   description = "Cloudflare account ID that owns Belu resources."
 }
 
-variable "cloudflare_api_token" {
+variable "api_base_url" {
   type        = string
-  description = "Cloudflare API token for Terraform. Do not commit this value."
-  sensitive   = true
+  description = "Public base URL for the API Worker."
 }
 
-variable "cloudflare_zone_id" {
+variable "web_base_url" {
   type        = string
-  description = "Cloudflare zone ID used for Worker routes."
-}
-
-variable "domain" {
-  type        = string
-  description = "Base domain for the dev environment."
+  description = "Public base URL for the web Worker."
 }
