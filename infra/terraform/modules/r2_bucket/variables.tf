@@ -12,3 +12,9 @@ variable "name" {
   type        = string
   description = "R2 bucket name."
 }
+
+variable "storage_class" {
+  type        = string
+  description = "Default R2 storage class for new objects."
+  default     = "Standard"
+}

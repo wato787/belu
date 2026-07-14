@@ -1,7 +1,10 @@
 node_modules/
 dist/
 .wrangler/
+.terraform/
 .dev.vars
 .DS_Store
 *.log
+*.tfstate
+*.tfstate.*
 tmp/
