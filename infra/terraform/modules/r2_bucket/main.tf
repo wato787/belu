@@ -10,13 +10,12 @@ resource "cloudflare_r2_bucket_cors" "this" {
 
   rules = [
     {
-      id = "direct-photo-upload"
       allowed = {
-        methods = ["PUT", "HEAD"]
+        methods = ["PUT"]
         origins = var.allowed_origins
-        headers = ["content-type"]
+        headers = ["Content-Type"]
       }
-      expose_headers  = ["etag"]
+      expose_headers  = ["ETag"]
       max_age_seconds = 3600
     },
   ]
