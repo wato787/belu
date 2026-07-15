@@ -7,7 +7,8 @@ compatibility_flags = ["nodejs_compat"]
 APP_ENV = "development"
 AUTH_BASE_URL = "http://localhost:8787"
 AUTH_TRUSTED_ORIGINS = "http://localhost:5173"
-R2_BUCKET_NAME = "belu-photos-local"
+R2_ACCOUNT_ID = "4e53d433fc24972cc26967a37a439d62"
+R2_BUCKET_NAME = "belu-photos-dev"
 
 [[d1_databases]]
 binding = "DB"
@@ -17,7 +18,7 @@ migrations_dir = "drizzle/migrations"
 
 [[r2_buckets]]
 binding = "PHOTOS_BUCKET"
-bucket_name = "belu-photos-local"
+bucket_name = "belu-photos-dev"
 
 [env.dev]
 name = "belu-api-dev"
