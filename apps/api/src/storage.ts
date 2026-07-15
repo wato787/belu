@@ -1,4 +1,9 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import type { R2Bucket } from "@cloudflare/workers-types";
 
@@ -176,9 +181,20 @@ export const createStorage = (config: StorageConfig): Storage => ({
   },
 
   hasPhoto: async ({ key }) => {
-    const object = await config.photosBucket.head(key);
+    const signingConfig = getRequiredR2SigningConfig(config);
 
-    return object !== null;
+    try {
+      await createR2S3Client(signingConfig).send(
+        new HeadObjectCommand({
+          Bucket: signingConfig.bucketName,
+          Key: key,
+        }),
+      );
+
+      return true;
+    } catch {
+      return false;
+    }
   },
 
   uploadPhoto: async ({ body, contentType, key }) => {

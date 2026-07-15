@@ -1,6 +1,6 @@
 import { Dialog } from "@base-ui-components/react/dialog";
 import { Popover } from "@base-ui-components/react/popover";
-import { Calendar, MoreVertical, Pencil, Trash2, X } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, MoreVertical, Pencil, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
 import styles from "./PostCard.module.css";
@@ -37,7 +37,42 @@ type PostCardProps = {
 
 export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
   const authorInitial = getAuthorInitial(post.author.name);
+  const viewablePhotos = post.photos.filter((photo) => photo.url);
+  const selectedPhoto =
+    selectedPhotoIndex === null ? undefined : viewablePhotos.at(selectedPhotoIndex);
+  const hasMultiplePhotos = viewablePhotos.length > 1;
+  const closePhotoViewer = () => setSelectedPhotoIndex(null);
+  const showPreviousPhoto = () => {
+    setSelectedPhotoIndex((currentIndex) => {
+      if (currentIndex === null) {
+        return currentIndex;
+      }
+
+      return (currentIndex + viewablePhotos.length - 1) % viewablePhotos.length;
+    });
+  };
+  const showNextPhoto = () => {
+    setSelectedPhotoIndex((currentIndex) => {
+      if (currentIndex === null) {
+        return currentIndex;
+      }
+
+      return (currentIndex + 1) % viewablePhotos.length;
+    });
+  };
+  const openPhotoViewer = (photo: PostCardPhoto | undefined) => {
+    if (!photo?.url) {
+      return;
+    }
+
+    const photoIndex = viewablePhotos.findIndex((viewablePhoto) => viewablePhoto.id === photo.id);
+
+    if (photoIndex >= 0) {
+      setSelectedPhotoIndex(photoIndex);
+    }
+  };
 
   return (
     <article className={styles.card}>
@@ -77,12 +112,12 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
       {post.photos.length > 0 && (
         <div className={styles.photos}>
           {post.photos.length === 1 ? (
-            <Photo photo={post.photos[0]} />
+            <Photo onClick={() => openPhotoViewer(post.photos[0])} photo={post.photos[0]} />
           ) : (
             <div className={styles.photoGrid}>
               {post.photos.slice(0, 4).map((photo, index) => (
                 <div className={styles.photoGridItem} key={photo.id}>
-                  <Photo photo={photo} />
+                  <Photo onClick={() => openPhotoViewer(photo)} photo={photo} />
                   {index === 3 && post.photos.length > 4 && (
                     <div className={styles.photoOverlay}>+{post.photos.length - 4}</div>
                   )}
@@ -107,28 +142,67 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
           </div>
         )}
       </div>
-    </article>
-  );
-};
 
-const Photo = ({ photo }: { photo: PostCardPhoto | undefined }) => {
-  if (photo?.url) {
-    return (
-      <Dialog.Root>
-        <Dialog.Trigger className={() => styles.photoTrigger} title="写真を拡大">
-          <img alt="投稿写真" className={styles.photo} src={photo.url} />
-        </Dialog.Trigger>
+      <Dialog.Root
+        onOpenChange={(open) => !open && closePhotoViewer()}
+        open={selectedPhotoIndex !== null}
+      >
         <Dialog.Portal>
           <Dialog.Backdrop className={() => styles.photoViewerBackdrop} />
           <Dialog.Popup className={() => styles.photoViewer}>
             <Dialog.Title className={() => styles.photoViewerTitle}>投稿写真</Dialog.Title>
             <Dialog.Close className={() => styles.photoViewerClose} title="閉じる">
-              <X size={20} />
+              <X size={22} />
             </Dialog.Close>
-            <img alt="投稿写真" className={styles.photoViewerImage} src={photo.url} />
+
+            {hasMultiplePhotos && (
+              <button
+                className={styles.photoViewerPrevious}
+                onClick={showPreviousPhoto}
+                title="前の写真"
+                type="button"
+              >
+                <ChevronLeft size={28} />
+              </button>
+            )}
+
+            {selectedPhoto?.url && (
+              <img
+                alt={`投稿写真 ${selectedPhotoIndex === null ? "" : selectedPhotoIndex + 1}`}
+                className={styles.photoViewerImage}
+                src={selectedPhoto.url}
+              />
+            )}
+
+            {hasMultiplePhotos && (
+              <button
+                className={styles.photoViewerNext}
+                onClick={showNextPhoto}
+                title="次の写真"
+                type="button"
+              >
+                <ChevronRight size={28} />
+              </button>
+            )}
+
+            {hasMultiplePhotos && selectedPhotoIndex !== null && (
+              <div className={styles.photoViewerCount}>
+                {selectedPhotoIndex + 1} / {viewablePhotos.length}
+              </div>
+            )}
           </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>
+    </article>
+  );
+};
+
+const Photo = ({ onClick, photo }: { onClick: () => void; photo: PostCardPhoto | undefined }) => {
+  if (photo?.url) {
+    return (
+      <button className={styles.photoTrigger} onClick={onClick} title="写真を拡大" type="button">
+        <img alt="投稿写真" className={styles.photo} src={photo.url} />
+      </button>
     );
   }
 

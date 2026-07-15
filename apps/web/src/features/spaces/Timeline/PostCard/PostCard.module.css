@@ -234,21 +234,18 @@
   position: fixed;
   z-index: var(--z-overlay);
   inset: 0;
-  background: rgb(31 31 31 / 0.76);
+  background: rgb(0 0 0 / 0.86);
 }
 
 .photoViewer {
   position: fixed;
   z-index: var(--z-modal);
-  top: 50%;
-  left: 50%;
+  inset: 0;
   display: flex;
-  max-width: min(92vw, 960px);
-  max-height: 88vh;
   align-items: center;
   justify-content: center;
+  padding: 64px 72px;
   outline: 0;
-  transform: translate(-50%, -50%);
 }
 
 .photoViewerTitle {
@@ -262,27 +259,71 @@
 
 .photoViewerClose {
   position: absolute;
-  top: -42px;
-  right: 0;
+  top: var(--space-4);
+  left: var(--space-4);
   display: inline-flex;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgb(255 255 255 / 0.18);
+  border: 0;
   border-radius: var(--radius-full);
-  background: rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.14);
   color: #fff;
   cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.photoViewerClose:hover,
+.photoViewerPrevious:hover,
+.photoViewerNext:hover {
+  background: rgb(255 255 255 / 0.24);
 }
 
 .photoViewerImage {
   display: block;
-  max-width: min(92vw, 960px);
-  max-height: 88vh;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-md);
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
+}
+
+.photoViewerPrevious,
+.photoViewerNext {
+  position: absolute;
+  top: 50%;
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: rgb(255 255 255 / 0.14);
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 160ms ease;
+}
+
+.photoViewerPrevious {
+  left: var(--space-4);
+}
+
+.photoViewerNext {
+  right: var(--space-4);
+}
+
+.photoViewerCount {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  border-radius: var(--radius-full);
+  background: rgb(0 0 0 / 0.42);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: 6px var(--space-3);
+  transform: translateX(-50%);
 }
 
 .content {
