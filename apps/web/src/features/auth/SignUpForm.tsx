@@ -18,14 +18,19 @@ export const SignUpForm = () => {
   const name = useInputText({ validator: validateText });
   const email = useInputText({ validator: validateEmail });
   const password = useInputText({ validator: validatePassword });
+  const canSubmit = Boolean(
+    name.value.trim() &&
+    email.value.trim() &&
+    password.value &&
+    !name.error &&
+    !email.error &&
+    !password.error,
+  );
 
   const handleSubmit: FormSubmitHandler = (event) => {
     event.preventDefault();
-    const nameError = name.validate();
-    const emailError = email.validate();
-    const passwordError = password.validate();
 
-    if (nameError || emailError || passwordError) {
+    if (!canSubmit) {
       return;
     }
 
@@ -76,7 +81,13 @@ export const SignUpForm = () => {
           />
         </Field>
 
-        <Button className={cx(styles.submitButton)} fullWidth isLoading={isPending} type="submit">
+        <Button
+          className={cx(styles.submitButton)}
+          disabled={!canSubmit}
+          fullWidth
+          isLoading={isPending}
+          type="submit"
+        >
           <span>アカウントを作成する</span>
           <ArrowRight size={16} />
         </Button>

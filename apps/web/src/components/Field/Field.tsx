@@ -6,7 +6,6 @@ import styles from "./Field.module.css";
 
 type FieldContextValue = {
   errorMessage: ReactNode | null;
-  hasError: boolean;
 };
 
 const FieldContext = createContext<FieldContextValue | null>(null);
@@ -47,7 +46,7 @@ export const Field = ({ children, className, error, ...props }: FieldProps) => {
   const errorMessage = errorToMessage(error);
 
   return (
-    <FieldContext value={{ errorMessage, hasError: Boolean(errorMessage) }}>
+    <FieldContext value={{ errorMessage }}>
       <BaseField.Root className={cx(styles.field, className)} {...props}>
         {children}
         <FieldError />

@@ -18,13 +18,14 @@ export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const email = useInputText({ validator: validateEmail });
   const password = useInputText({ validator: validatePassword });
+  const canSubmit = Boolean(
+    email.value.trim() && password.value && !email.error && !password.error,
+  );
 
   const handleSubmit: FormSubmitHandler = (event) => {
     event.preventDefault();
-    const emailError = email.validate();
-    const passwordError = password.validate();
 
-    if (emailError || passwordError) {
+    if (!canSubmit) {
       return;
     }
 
@@ -75,7 +76,13 @@ export const LoginForm = () => {
           パスワードをお忘れですか？
         </button>
 
-        <Button className={cx(styles.submitButton)} fullWidth isLoading={isPending} type="submit">
+        <Button
+          className={cx(styles.submitButton)}
+          disabled={!canSubmit}
+          fullWidth
+          isLoading={isPending}
+          type="submit"
+        >
           <span>ログインする</span>
           <ArrowRight size={16} />
         </Button>

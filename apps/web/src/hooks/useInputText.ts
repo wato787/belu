@@ -17,12 +17,6 @@ export const useInputText = ({
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState<string | null>(null);
 
-  const validate = (nextValue = value) => {
-    const nextError = validator?.(nextValue) ?? null;
-    setError(nextError);
-    return nextError;
-  };
-
   const handleChange: InputChangeHandler = (event) => {
     const nextValue = event.target.value;
 
@@ -34,8 +28,6 @@ export const useInputText = ({
   return {
     value,
     error,
-    hasError: Boolean(error),
     onChange: handleChange,
-    validate,
   };
 };

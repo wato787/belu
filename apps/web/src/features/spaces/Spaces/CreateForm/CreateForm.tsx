@@ -14,11 +14,12 @@ type CreateFormProps = {
 export const CreateForm = ({ onBack }: CreateFormProps) => {
   const { createSpace, isPending } = useCreateSpace();
   const name = useInputText({ validator: validateText });
+  const canSubmit = Boolean(name.value.trim() && !name.error);
 
   const handleSubmit: FormSubmitHandler = (event) => {
     event.preventDefault();
 
-    if (name.validate()) {
+    if (!canSubmit) {
       return;
     }
 
@@ -57,7 +58,7 @@ export const CreateForm = ({ onBack }: CreateFormProps) => {
             >
               キャンセル
             </Button>
-            <Button isLoading={isPending} type="submit">
+            <Button disabled={!canSubmit} isLoading={isPending} type="submit">
               スペースを作成
             </Button>
           </div>

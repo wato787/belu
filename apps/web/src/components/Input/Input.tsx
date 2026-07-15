@@ -13,7 +13,7 @@ type InputProps = Omit<ComponentPropsWithoutRef<typeof BaseInput>, "className"> 
 
 export const Input = ({ className, leftIcon, rightIcon, ...props }: InputProps) => {
   const field = useFieldContext();
-  const isInvalid = Boolean(props["aria-invalid"] ?? field?.hasError);
+  const isInvalid = Boolean(props["aria-invalid"] ?? field?.errorMessage);
 
   return (
     <span className={styles.root}>

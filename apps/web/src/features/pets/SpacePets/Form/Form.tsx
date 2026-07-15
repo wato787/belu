@@ -17,11 +17,12 @@ type FormProps = {
 export const Form = ({ initialName = "", isPending, mode, onBack, onSubmit }: FormProps) => {
   const name = useInputText({ initialValue: initialName, validator: validateText });
   const isEdit = mode === "edit";
+  const canSubmit = Boolean(name.value.trim() && !name.error);
 
   const handleSubmit: FormSubmitHandler = (event) => {
     event.preventDefault();
 
-    if (name.validate()) {
+    if (!canSubmit) {
       return;
     }
 
@@ -70,7 +71,7 @@ export const Form = ({ initialName = "", isPending, mode, onBack, onSubmit }: Fo
               >
                 キャンセル
               </Button>
-              <Button isLoading={isPending} type="submit">
+              <Button disabled={!canSubmit} isLoading={isPending} type="submit">
                 {isEdit ? "保存する" : "登録する"}
               </Button>
             </div>
