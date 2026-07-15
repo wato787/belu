@@ -6,6 +6,11 @@ export type CreatePostInput = InferRequestType<
   (typeof apiClient.spaces)[":spaceId"]["posts"]["$post"]
 >["json"];
 
+export type CreatePostResponse = InferResponseType<
+  (typeof apiClient.spaces)[":spaceId"]["posts"]["$post"],
+  201
+>;
+
 export type UpdatePostInput = InferRequestType<
   (typeof apiClient.spaces)[":spaceId"]["posts"][":postId"]["$patch"]
 >["json"];

@@ -33,7 +33,9 @@ const getPostRoute = createRoute().get(
       throw new NotFoundException("Post Not Found");
     }
 
-    return c.json({ post: toPostResponse(post, { storage }) }, 200);
+    const postResponse = await toPostResponse(post, { storage });
+
+    return c.json({ post: postResponse }, 200);
   },
 );
 

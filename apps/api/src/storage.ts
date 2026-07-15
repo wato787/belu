@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import type { R2Bucket } from "@cloudflare/workers-types";
 
@@ -68,6 +68,7 @@ type CreateSignedPhotoUploadUrlOutput = {
 };
 
 export type Storage = {
+  createSignedPhotoReadUrl: (input: GetPublicUrlInput) => Promise<string | null>;
   createSignedPhotoUploadUrl: (
     input: CreateSignedPhotoUploadUrlInput,
   ) => Promise<CreateSignedPhotoUploadUrlOutput>;
@@ -128,6 +129,19 @@ export const getPhotoUploadObjectKey = ({
 };
 
 export const createStorage = (config: StorageConfig): Storage => ({
+  createSignedPhotoReadUrl: async ({ key }) => {
+    const signingConfig = getRequiredR2SigningConfig(config);
+
+    return getSignedUrl(
+      createR2S3Client(signingConfig),
+      new GetObjectCommand({
+        Bucket: signingConfig.bucketName,
+        Key: key,
+      }),
+      { expiresIn: 60 * 15 },
+    );
+  },
+
   createSignedPhotoUploadUrl: async ({ contentType, expiresInSeconds, key, now = new Date() }) => {
     const signingConfig = getRequiredR2SigningConfig(config);
 

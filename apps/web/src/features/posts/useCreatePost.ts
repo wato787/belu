@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { postsKeys } from "./keys";
-import type { CreatePostInput } from "./types";
+import type { CreatePostInput, CreatePostResponse } from "./types";
 
 export const useCreatePost = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -14,9 +14,19 @@ export const useCreatePost = (spaceId: string) => {
         param: { spaceId },
       });
 
-      return parseApiResponse(createPostResponse);
+      return parseApiResponse<CreatePostResponse>(createPostResponse);
     },
-    onSuccess: async () => {
+    onSuccess: async ({ post }) => {
+      queryClient.setQueryData<CreatePostResponse["post"][]>(
+        postsKeys.lists(spaceId),
+        (currentPosts = []) => {
+          const postsWithoutCreatedPost = currentPosts.filter(
+            (currentPost) => currentPost.id !== post.id,
+          );
+
+          return [post, ...postsWithoutCreatedPost];
+        },
+      );
       await queryClient.invalidateQueries({ queryKey: postsKeys.lists(spaceId) });
     },
   });

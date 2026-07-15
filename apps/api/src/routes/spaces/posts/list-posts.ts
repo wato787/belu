@@ -28,7 +28,7 @@ const listPostsRoute = createRoute().get(
 
     return c.json(
       {
-        posts: spacePosts.map((post) => toPostResponse(post, { storage })),
+        posts: await Promise.all(spacePosts.map((post) => toPostResponse(post, { storage }))),
       },
       200,
     );

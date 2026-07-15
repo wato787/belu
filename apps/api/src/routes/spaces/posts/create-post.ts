@@ -101,7 +101,9 @@ const createPostRoute = createRoute().post(
       throw new InternalServerException();
     }
 
-    return c.json({ post: toPostResponse(post, { storage }) }, 201);
+    const postResponse = await toPostResponse(post, { storage });
+
+    return c.json({ post: postResponse }, 201);
   },
 );
 

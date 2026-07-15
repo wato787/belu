@@ -1,4 +1,4 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "../client";
 import {
   pets,
@@ -102,7 +102,8 @@ export const createPostRepository = (db: Db): PostRepository => ({
     const spacePosts = await db
       .select()
       .from(posts)
-      .where(eq(posts.organizationId, input.organizationId));
+      .where(eq(posts.organizationId, input.organizationId))
+      .orderBy(desc(posts.createdAt));
 
     return attachRelations(db, spacePosts, input.viewerMemberId);
   },
