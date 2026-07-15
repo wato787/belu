@@ -17,6 +17,10 @@ type PostCardPhoto = {
 };
 
 type PostCardPost = {
+  author: {
+    image: string | null;
+    name: string;
+  };
   body: string;
   createdAt: string;
   id: string;
@@ -32,15 +36,15 @@ type PostCardProps = {
 
 export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const sortedPhotos = sortPhotosByOrder(post.photos);
+  const authorInitial = getAuthorInitial(post.author.name);
 
   return (
     <article className={styles.card}>
       <header className={styles.header}>
         <div className={styles.author}>
-          <div className={styles.avatar}>投</div>
+          <div className={styles.avatar}>{authorInitial}</div>
           <div className={styles.authorText}>
-            <span>投稿</span>
+            <span>{post.author.name}</span>
             <small>
               <Calendar size={11} />
               {formatPostDate(post.createdAt)}
@@ -69,17 +73,17 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
         </Popover.Root>
       </header>
 
-      {sortedPhotos.length > 0 && (
+      {post.photos.length > 0 && (
         <div className={styles.photos}>
-          {sortedPhotos.length === 1 ? (
-            <Photo photo={sortedPhotos[0]} />
+          {post.photos.length === 1 ? (
+            <Photo photo={post.photos[0]} />
           ) : (
             <div className={styles.photoGrid}>
-              {sortedPhotos.slice(0, 4).map((photo, index) => (
+              {post.photos.slice(0, 4).map((photo, index) => (
                 <div className={styles.photoGridItem} key={photo.id}>
                   <Photo photo={photo} />
-                  {index === 3 && sortedPhotos.length > 4 && (
-                    <div className={styles.photoOverlay}>+{sortedPhotos.length - 4}</div>
+                  {index === 3 && post.photos.length > 4 && (
+                    <div className={styles.photoOverlay}>+{post.photos.length - 4}</div>
                   )}
                 </div>
               ))}
@@ -119,18 +123,7 @@ const Photo = ({ photo }: { photo: PostCardPhoto | undefined }) => {
   );
 };
 
-const sortPhotosByOrder = (photos: PostCardPhoto[]) =>
-  photos.reduce<PostCardPhoto[]>((sortedPhotos, photo) => {
-    const insertIndex = sortedPhotos.findIndex(
-      (sortedPhoto) => photo.sortOrder < sortedPhoto.sortOrder,
-    );
-
-    if (insertIndex === -1) {
-      return [...sortedPhotos, photo];
-    }
-
-    return [...sortedPhotos.slice(0, insertIndex), photo, ...sortedPhotos.slice(insertIndex)];
-  }, []);
+const getAuthorInitial = (name: string) => name.trim().charAt(0).toUpperCase() || "?";
 
 const formatPostDate = (value: string) => {
   const date = new Date(value);

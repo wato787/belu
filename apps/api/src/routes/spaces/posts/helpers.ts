@@ -17,6 +17,11 @@ type PostPhotoResponse = {
 
 type PostResponse = {
   id: string;
+  author: {
+    id: string;
+    image: string | null;
+    name: string;
+  };
   body: string;
   createdAt: string;
   updatedAt: string;
@@ -57,6 +62,7 @@ export const toPostResponse = async (
 
   return {
     id: post.id,
+    author: post.author,
     body: post.body,
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,

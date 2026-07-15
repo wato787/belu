@@ -6,6 +6,8 @@ import {
   postPets,
   posts,
   reactions,
+  member,
+  user,
   type NewPhoto,
   type NewPost,
   type Pet,
@@ -35,6 +37,11 @@ type PostPetInput = Pick<Post, "organizationId"> & {
 };
 
 export type PostWithPets = Post & {
+  author: {
+    id: string;
+    image: string | null;
+    name: string;
+  };
   photos: Photo[];
   pets: Pet[];
   reactionCounts: Record<ReactionType, number>;
@@ -60,6 +67,17 @@ const attachRelations = async (
   }
 
   const postIds = spacePosts.map((post) => post.id);
+  const memberIds = spacePosts.map((post) => post.memberId);
+  const authorRows = await db
+    .select({
+      id: user.id,
+      image: user.image,
+      memberId: member.id,
+      name: user.name,
+    })
+    .from(member)
+    .innerJoin(user, eq(user.id, member.userId))
+    .where(inArray(member.id, memberIds));
   const petRows = await db
     .select({
       pet: pets,
@@ -77,6 +95,11 @@ const attachRelations = async (
 
   return spacePosts.map((post) => ({
     ...post,
+    author: authorRows.find((row) => row.memberId === post.memberId) ?? {
+      id: post.memberId,
+      image: null,
+      name: "投稿者",
+    },
     photos: photoRows.filter((photo) => photo.postId === post.id),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
     reactionCounts: reactionRows
