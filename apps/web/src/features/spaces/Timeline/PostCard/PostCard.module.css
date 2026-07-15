@@ -157,6 +157,7 @@
   position: relative;
 }
 
+.photoTrigger,
 .photo,
 .photoPlaceholder {
   display: flex;
@@ -165,8 +166,21 @@
   width: 100%;
 }
 
+.photoTrigger {
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  padding: 0;
+}
+
 .photo {
   object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.photoTrigger:hover .photo {
+  transform: scale(1.02);
 }
 
 .photoPlaceholder {
@@ -180,6 +194,7 @@
   text-align: center;
 }
 
+.photoGridItem .photoTrigger,
 .photoGridItem .photo,
 .photoGridItem .photoPlaceholder {
   aspect-ratio: 1;
@@ -205,6 +220,7 @@
 .photoOverlay {
   position: absolute;
   inset: 0;
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,6 +228,61 @@
   color: #fff;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+}
+
+.photoViewerBackdrop {
+  position: fixed;
+  z-index: var(--z-overlay);
+  inset: 0;
+  background: rgb(31 31 31 / 0.76);
+}
+
+.photoViewer {
+  position: fixed;
+  z-index: var(--z-modal);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  max-width: min(92vw, 960px);
+  max-height: 88vh;
+  align-items: center;
+  justify-content: center;
+  outline: 0;
+  transform: translate(-50%, -50%);
+}
+
+.photoViewerTitle {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.photoViewerClose {
+  position: absolute;
+  top: -42px;
+  right: 0;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: var(--radius-full);
+  background: rgb(255 255 255 / 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+
+.photoViewerImage {
+  display: block;
+  max-width: min(92vw, 960px);
+  max-height: 88vh;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  object-fit: contain;
 }
 
 .content {

@@ -1,5 +1,6 @@
+import { Dialog } from "@base-ui-components/react/dialog";
 import { Popover } from "@base-ui-components/react/popover";
-import { Calendar, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { Calendar, MoreVertical, Pencil, Trash2, X } from "lucide-react";
 import { useState } from "react";
 
 import styles from "./PostCard.module.css";
@@ -112,7 +113,23 @@ export const PostCard = ({ onDelete, onEdit, post }: PostCardProps) => {
 
 const Photo = ({ photo }: { photo: PostCardPhoto | undefined }) => {
   if (photo?.url) {
-    return <img alt="投稿写真" className={styles.photo} src={photo.url} />;
+    return (
+      <Dialog.Root>
+        <Dialog.Trigger className={() => styles.photoTrigger} title="写真を拡大">
+          <img alt="投稿写真" className={styles.photo} src={photo.url} />
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Backdrop className={() => styles.photoViewerBackdrop} />
+          <Dialog.Popup className={() => styles.photoViewer}>
+            <Dialog.Title className={() => styles.photoViewerTitle}>投稿写真</Dialog.Title>
+            <Dialog.Close className={() => styles.photoViewerClose} title="閉じる">
+              <X size={20} />
+            </Dialog.Close>
+            <img alt="投稿写真" className={styles.photoViewerImage} src={photo.url} />
+          </Dialog.Popup>
+        </Dialog.Portal>
+      </Dialog.Root>
+    );
   }
 
   return (
