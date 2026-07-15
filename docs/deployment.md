@@ -46,6 +46,8 @@ Worker が実行時に使う secret は Worker Secrets として管理する。
 - `R2_ACCESS_KEY_ID`
 - `R2_SECRET_ACCESS_KEY`
 
+R2 S3 Credentialは、署名付きPUT URLと写真表示用の短命な署名付きGET URLの生成に利用する。
+
 Secret ではない Worker runtime 設定は `wrangler.toml` の `[vars]` に置く。
 
 - `APP_ENV`
@@ -53,6 +55,9 @@ Secret ではない Worker runtime 設定は `wrangler.toml` の `[vars]` に置
 - `AUTH_TRUSTED_ORIGINS`
 - `R2_ACCOUNT_ID`
 - `R2_BUCKET_NAME`
+
+`PHOTOS_PUBLIC_BASE_URL` はR2 Custom Domainなどで公開配信する場合のみ任意で設定する。
+MVPではR2 Bucketをpublicにせず、APIが写真表示用の署名付きGET URLを返す。
 
 ## dev 手順
 

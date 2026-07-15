@@ -91,7 +91,7 @@ Terraformで管理しないもの:
 - R2 S3 Credentialの生値
 - Worker secretの値
 
-R2 S3 CredentialはWorker Runtimeで署名付きUpload URLを生成するために利用する。
+R2 S3 CredentialはWorker Runtimeで署名付きUpload URLと写真表示用の短命な署名付きGET URLを生成するために利用する。
 MVPではCloudflareで発行し、WranglerまたはCloudflare DashboardからWorker secretとして登録する。
 環境が増えて手動登録が負担になった場合は、CI/CDまたはSecret ManagerからWorker secretへ同期する。
 

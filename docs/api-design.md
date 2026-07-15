@@ -318,7 +318,7 @@ spaces/{spaceId}/posts/uploads/{uploadId}.{ext}
 
 R2 Bucket BindingはR2 Objectの確認・削除などWorker内のObject操作に利用する。
 
-署名付きURL生成にはR2のS3互換Credentialを利用する。
+Clientへ渡す署名付きPUT URLと、写真表示用の短命な署名付きGET URLの生成にはR2のS3互換Credentialを利用する。
 これはCloudflare REST API Tokenではなく、対象Bucketへの最小権限を持つR2用Credentialとして管理する。
 
 Worker Runtimeに必要な設定:
@@ -337,10 +337,12 @@ R2_SECRET_ACCESS_KEY
 APP_ENV
 AUTH_BASE_URL
 AUTH_TRUSTED_ORIGINS
-PHOTOS_PUBLIC_BASE_URL
 R2_ACCOUNT_ID
 R2_BUCKET_NAME
 ```
+
+`PHOTOS_PUBLIC_BASE_URL` は、将来R2 Custom Domainなどで公開配信する場合のみ任意で利用する。
+MVPではR2 Bucketをpublicにせず、APIレスポンスで短命な署名付きGET URLを返す。
 
 Worker secretまたはローカル開発用の `.dev.vars` に置く設定:
 
@@ -350,7 +352,7 @@ R2_ACCESS_KEY_ID
 R2_SECRET_ACCESS_KEY
 ```
 
-Cloudflare Account IDやR2 S3 Credentialは署名付きURL生成にのみ利用し、Cloudflare REST APIはWorker Runtimeから呼び出さない。
+Cloudflare Account IDやR2 S3 CredentialはR2 S3互換APIの署名生成にのみ利用し、Cloudflare REST APIはWorker Runtimeから呼び出さない。
 
 ### Secret Management
 

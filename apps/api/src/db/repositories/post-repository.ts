@@ -75,7 +75,7 @@ const attachRelations = async (
     ...post,
     photos: photoRows
       .filter((photo) => photo.postId === post.id)
-      .sort((left, right) => left.sortOrder - right.sortOrder),
+      .toSorted((left, right) => left.sortOrder - right.sortOrder),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
     reactionCounts: reactionRows
       .filter((reaction) => reaction.postId === post.id)

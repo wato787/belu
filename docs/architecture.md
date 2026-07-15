@@ -109,13 +109,16 @@ Cloudflare R2
 ```
 
 R2 Bucket Bindingは、Worker内からR2 Objectを確認・削除する用途で利用する。
-Clientへ渡す署名付きPUT URLの生成にはR2のS3互換Credentialを利用する。
+Clientへ渡す署名付きPUT URLと、写真表示用の短命な署名付きGET URLの生成にはR2のS3互換Credentialを利用する。
 
 Worker RuntimeではCloudflare REST API Tokenを利用しない。
 署名付きURL生成に必要なCredentialは、対象Bucketへの最小権限を持つR2 S3 Credentialとして管理する。
 R2 S3 Credentialの生値はTerraform stateに保存しない。
 MVPでは、R2 S3 CredentialはCloudflareで発行し、Worker secretとして登録する。
 環境が増えて手動運用が負担になった場合は、TerraformではなくCI/CDやSecret Managerによるsecret syncを検討する。
+
+MVPではR2 Bucketをpublicにせず、投稿APIのレスポンスに写真表示用の短命な署名付きGET URLを含める。
+将来R2 Custom Domainなどで公開配信する場合は `PHOTOS_PUBLIC_BASE_URL` の利用を検討する。
 
 MVPでは未使用Objectのcleanupは実装しない。
 
