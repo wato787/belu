@@ -10,5 +10,5 @@ module "r2_bucket" {
 
   account_id      = var.cloudflare_account_id
   name            = local.r2_bucket_name
-  allowed_origins = [var.web_base_url]
+  allowed_origins = [var.web_base_url, "http://localhost:5173"]
 }
