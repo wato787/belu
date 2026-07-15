@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "../client";
 import {
   pets,
@@ -68,14 +68,16 @@ const attachRelations = async (
     .from(postPets)
     .innerJoin(pets, eq(pets.id, postPets.petId))
     .where(inArray(postPets.postId, postIds));
-  const photoRows = await db.select().from(photos).where(inArray(photos.postId, postIds));
+  const photoRows = await db
+    .select()
+    .from(photos)
+    .where(inArray(photos.postId, postIds))
+    .orderBy(asc(photos.postId), asc(photos.sortOrder));
   const reactionRows = await db.select().from(reactions).where(inArray(reactions.postId, postIds));
 
   return spacePosts.map((post) => ({
     ...post,
-    photos: photoRows
-      .filter((photo) => photo.postId === post.id)
-      .toSorted((left, right) => left.sortOrder - right.sortOrder),
+    photos: photoRows.filter((photo) => photo.postId === post.id),
     pets: petRows.filter((row) => row.postId === post.id).map((row) => row.pet),
     reactionCounts: reactionRows
       .filter((reaction) => reaction.postId === post.id)
