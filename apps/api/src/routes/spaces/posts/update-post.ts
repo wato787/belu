@@ -9,6 +9,7 @@ import { requireSpaceMember } from "../../../middleware/space";
 import { createStorage } from "../../../storage";
 import { spaceIdParamSchema } from "../schema";
 import { toPostResponse, uniqueIds } from "./helpers";
+import { validatePostPhotos } from "./photo-validation";
 import { postIdParamSchema, updatePostSchema } from "./schema";
 
 const updatePostRoute = createRoute().patch(
@@ -26,6 +27,18 @@ const updatePostRoute = createRoute().patch(
     const storage = createStorage(config.storage);
     const db = createDb(c.env.DB);
     const postRepository = createPostRepository(db);
+    const currentPost =
+      body.photos === undefined
+        ? undefined
+        : await postRepository.findByIdAndSpaceId({
+            id: postId,
+            organizationId: spaceId,
+            viewerMemberId: spaceMember.id,
+          });
+
+    if (body.photos !== undefined && !currentPost) {
+      throw new NotFoundException("Post Not Found");
+    }
 
     if (petIds !== undefined) {
       const petCount = await postRepository.countPetsBySpaceId({
@@ -38,16 +51,38 @@ const updatePostRoute = createRoute().patch(
       }
     }
 
+    if (body.photos !== undefined) {
+      validatePostPhotos(body.photos, spaceId);
+
+      const photoExists = await Promise.all(
+        body.photos.map((photo) => storage.hasPhoto({ key: photo.objectKey })),
+      );
+
+      if (photoExists.some((exists) => !exists)) {
+        throw new BadRequestException("Invalid Photos");
+      }
+    }
+
     const post = await postRepository.updateByIdAndSpaceId({
       id: postId,
       organizationId: spaceId,
       viewerMemberId: spaceMember.id,
       ...(body.body === undefined ? {} : { body: body.body }),
       ...(petIds === undefined ? {} : { petIds }),
+      ...(body.photos === undefined ? {} : { photos: body.photos }),
     });
 
     if (!post) {
       throw new NotFoundException("Post Not Found");
+    }
+
+    if (currentPost && body.photos !== undefined) {
+      const nextObjectKeys = new Set(body.photos.map((photo) => photo.objectKey));
+      const removedObjectKeys = currentPost.photos
+        .map((photo) => photo.objectKey)
+        .filter((objectKey) => !nextObjectKeys.has(objectKey));
+
+      await Promise.allSettled(removedObjectKeys.map((key) => storage.deletePhoto({ key })));
     }
 
     const postResponse = await toPostResponse(post, { storage });

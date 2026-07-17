@@ -36,4 +36,16 @@ export type SubmitPostInput = {
   petIds: string[];
 };
 
+export type SubmitPostPhotoInput = {
+  objectKey: string;
+  uploadId: string;
+};
+
+export type SubmitPostUpdateInput = {
+  body: string;
+  files: CreatePostPhotoFile[];
+  petIds: string[];
+  photos: SubmitPostPhotoInput[];
+};
+
 export type SubmitPostStep = "idle" | "upload-url" | "uploading" | "creating";

@@ -20,13 +20,20 @@ export const createPostSchema = z.object({
     .max(MAX_POST_PHOTO_UPLOADS),
 });
 
+const postPhotoSchema = z.object({
+  objectKey: z.string().trim().min(1),
+  sortOrder: z.number().int().nonnegative(),
+  uploadId: z.string().trim().min(1),
+});
+
 export const updatePostSchema = z
   .object({
     body: z.string().trim().optional(),
     petIds: z.array(z.string().trim().min(1)).optional(),
+    photos: z.array(postPhotoSchema).min(1).max(MAX_POST_PHOTO_UPLOADS).optional(),
   })
-  .refine((value) => value.body !== undefined || value.petIds !== undefined, {
-    message: "body or petIds is required",
+  .refine((value) => value.body !== undefined || value.petIds !== undefined || value.photos, {
+    message: "body, petIds or photos is required",
   });
 
 export const postIdParamSchema = z.object({

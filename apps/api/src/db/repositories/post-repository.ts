@@ -31,6 +31,7 @@ type UpdatePostInput = Pick<Post, "id" | "organizationId"> &
   ViewerKey & {
     body?: Post["body"];
     petIds?: Pet["id"][];
+    photos?: CreatePostPhotoInput[];
   };
 type PostPetInput = Pick<Post, "organizationId"> & {
   petIds: Pet["id"][];
@@ -212,6 +213,21 @@ export const createPostRepository = (db: Db): PostRepository => ({
           input.petIds.map((petId) => ({
             petId,
             postId: post.id,
+          })),
+        );
+      }
+    }
+
+    if (input.photos !== undefined) {
+      await db.delete(photos).where(eq(photos.postId, post.id));
+
+      if (input.photos.length > 0) {
+        await db.insert(photos).values(
+          input.photos.map((photo) => ({
+            objectKey: photo.objectKey,
+            postId: post.id,
+            sortOrder: photo.sortOrder,
+            uploadId: photo.uploadId,
           })),
         );
       }
