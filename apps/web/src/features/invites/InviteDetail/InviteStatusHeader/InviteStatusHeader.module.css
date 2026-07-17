@@ -1,0 +1,45 @@
+.header {
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+.primaryIcon,
+.successIcon,
+.dangerIcon {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.primaryIcon {
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  color: var(--color-primary);
+}
+
+.successIcon {
+  background: #edf8ef;
+  color: #4f9f63;
+}
+
+.dangerIcon {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.description {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
