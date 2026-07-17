@@ -30,7 +30,11 @@ const revokePhotoPreviewUrl = (photo: PhotoFile) => {
   URL.revokeObjectURL(photo.previewUrl);
 };
 
-export const usePostPhotos = () => {
+type UsePostPhotosOptions = {
+  maxPhotoCount?: number;
+};
+
+export const usePostPhotos = ({ maxPhotoCount = maxPostPhotoCount }: UsePostPhotosOptions = {}) => {
   const photosRef = useRef<PhotoFile[]>([]);
   const [photos, setPhotos] = useState<PhotoFile[]>([]);
   const [photoErrorMessage, setPhotoErrorMessage] = useState<string | null>(null);
@@ -49,7 +53,7 @@ export const usePostPhotos = () => {
   const addPhotos = (files: File[]) => {
     setPhotoErrorMessage(null);
 
-    if (photosRef.current.length + files.length > maxPostPhotoCount) {
+    if (photosRef.current.length + files.length > maxPhotoCount) {
       setPhotoErrorMessage("写真は最大20枚まで登録可能です。");
       return;
     }
