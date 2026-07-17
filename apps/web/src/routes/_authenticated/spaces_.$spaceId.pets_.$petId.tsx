@@ -1,15 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { PetEdit, petsQueries } from "../../features/pets";
-
-const PetEditRoute = () => {
-  const { petId, spaceId } = Route.useParams();
-
-  return <PetEdit petId={petId} spaceId={spaceId} />;
-};
+import { petsQueries } from "../../features/pets";
 
 export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/pets_/$petId")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(petsQueries.detail(params.spaceId, params.petId)),
-  component: PetEditRoute,
+  beforeLoad: ({ params }) => {
+    throw redirect({
+      params,
+      to: "/spaces/$spaceId/pets/$petId/edit",
+    });
+  },
 });

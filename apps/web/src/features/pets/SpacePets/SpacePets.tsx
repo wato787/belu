@@ -28,7 +28,7 @@ export const SpacePets = ({ spaceId }: SpacePetsProps) => {
   const handleEditClick = (pet: Pet) => {
     void navigate({
       params: { petId: pet.id, spaceId },
-      to: "/spaces/$spaceId/pets/$petId",
+      to: "/spaces/$spaceId/pets/$petId/edit",
     });
   };
 
