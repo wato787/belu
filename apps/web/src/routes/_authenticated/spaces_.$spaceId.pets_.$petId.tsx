@@ -1,13 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PetDetail } from "../../features/pets";
+import { PetEdit, petsQueries } from "../../features/pets";
 
-const PetDetailRoute = () => {
+const PetEditRoute = () => {
   const { petId, spaceId } = Route.useParams();
 
-  return <PetDetail petId={petId} spaceId={spaceId} />;
+  return <PetEdit petId={petId} spaceId={spaceId} />;
 };
 
 export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/pets_/$petId")({
-  component: PetDetailRoute,
+  loader: ({ context, params }) =>
+    context.queryClient.ensureQueryData(petsQueries.detail(params.spaceId, params.petId)),
+  component: PetEditRoute,
 });

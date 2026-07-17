@@ -5,4 +5,4 @@ export type Pet = {
   updatedAt: string;
 };
 
-export type SpacePetsViewMode = "list" | "add" | "edit";
+export type SpacePetsViewMode = "list" | "add";

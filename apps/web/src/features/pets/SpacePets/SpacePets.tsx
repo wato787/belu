@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 import { useCreatePet } from "../useCreatePet";
 import { useDeletePet } from "../useDeletePet";
-import { useUpdatePet } from "../useUpdatePet";
 import { Form } from "./Form/Form";
 import { List } from "./List/List";
 import type { Pet, SpacePetsViewMode } from "./types";
@@ -12,25 +12,24 @@ type SpacePetsProps = {
 };
 
 export const SpacePets = ({ spaceId }: SpacePetsProps) => {
+  const navigate = useNavigate();
   const { createPet, isPending: isCreatePending } = useCreatePet(spaceId);
-  const { isPending: isUpdatePending, updatePet } = useUpdatePet(spaceId);
   const { deletePet } = useDeletePet(spaceId);
   const [viewMode, setViewMode] = useState<SpacePetsViewMode>("list");
-  const [editingPet, setEditingPet] = useState<Pet | null>(null);
 
   const handleAddClick = () => {
-    setEditingPet(null);
     setViewMode("add");
   };
 
   const handleBackToList = () => {
-    setEditingPet(null);
     setViewMode("list");
   };
 
   const handleEditClick = (pet: Pet) => {
-    setEditingPet(pet);
-    setViewMode("edit");
+    void navigate({
+      params: { petId: pet.id, spaceId },
+      to: "/spaces/$spaceId/pets/$petId",
+    });
   };
 
   const handleDeleteClick = (pet: Pet) => {
@@ -52,28 +51,6 @@ export const SpacePets = ({ spaceId }: SpacePetsProps) => {
         onSubmit={(name) => {
           createPet(
             { name },
-            {
-              onSuccess: handleBackToList,
-            },
-          );
-        }}
-      />
-    );
-  }
-
-  if (viewMode === "edit" && editingPet) {
-    return (
-      <Form
-        initialName={editingPet.name}
-        isPending={isUpdatePending}
-        mode="edit"
-        onBack={handleBackToList}
-        onSubmit={(name) => {
-          updatePet(
-            {
-              input: { name },
-              petId: editingPet.id,
-            },
             {
               onSuccess: handleBackToList,
             },
