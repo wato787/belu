@@ -8,7 +8,7 @@ const EditPostRoute = () => {
   return <EditPost postId={postId} spaceId={spaceId} />;
 };
 
-export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/posts_/$postId/edit")({
+export const Route = createFileRoute("/_authenticated/spaces_/$spaceId/posts_/$postId_/edit")({
   loader: ({ context, params }) =>
     Promise.all([
       context.queryClient.ensureQueryData(petsQueries.list(params.spaceId)),

@@ -24,7 +24,7 @@ import { Route as AuthenticatedSpacesSpaceIdInvitesRouteImport } from './routes/
 import { Route as AuthenticatedSpacesSpaceIdPostsNewRouteImport } from './routes/_authenticated/spaces_.$spaceId.posts_.new'
 import { Route as AuthenticatedSpacesSpaceIdPostsPostIdRouteImport } from './routes/_authenticated/spaces_.$spaceId.posts_.$postId'
 import { Route as AuthenticatedSpacesSpaceIdPetsPetIdRouteImport } from './routes/_authenticated/spaces_.$spaceId.pets_.$petId'
-import { Route as AuthenticatedSpacesSpaceIdPostsPostIdEditRouteImport } from './routes/_authenticated/spaces_.$spaceId.posts_.$postId.edit'
+import { Route as AuthenticatedSpacesSpaceIdPostsPostIdEditRouteImport } from './routes/_authenticated/spaces_.$spaceId.posts_.$postId_.edit'
 import { Route as AuthenticatedSpacesSpaceIdPetsPetIdEditRouteImport } from './routes/_authenticated/spaces_.$spaceId.pets_.$petId_.edit'
 
 const SignupRoute = SignupRouteImport.update({
@@ -113,9 +113,9 @@ const AuthenticatedSpacesSpaceIdPetsPetIdRoute =
   } as any)
 const AuthenticatedSpacesSpaceIdPostsPostIdEditRoute =
   AuthenticatedSpacesSpaceIdPostsPostIdEditRouteImport.update({
-    id: '/edit',
-    path: '/edit',
-    getParentRoute: () => AuthenticatedSpacesSpaceIdPostsPostIdRoute,
+    id: '/posts_/$postId_/edit',
+    path: '/posts/$postId/edit',
+    getParentRoute: () => AuthenticatedSpacesSpaceIdRoute,
   } as any)
 const AuthenticatedSpacesSpaceIdPetsPetIdEditRoute =
   AuthenticatedSpacesSpaceIdPetsPetIdEditRouteImport.update({
@@ -137,7 +137,7 @@ export interface FileRoutesByFullPath {
   '/spaces/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRoute
   '/spaces/$spaceId/': typeof AuthenticatedSpacesSpaceIdIndexRoute
   '/spaces/$spaceId/pets/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
-  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren
+  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
   '/spaces/$spaceId/posts/new': typeof AuthenticatedSpacesSpaceIdPostsNewRoute
   '/spaces/$spaceId/pets/$petId/edit': typeof AuthenticatedSpacesSpaceIdPetsPetIdEditRoute
   '/spaces/$spaceId/posts/$postId/edit': typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
@@ -154,7 +154,7 @@ export interface FileRoutesByTo {
   '/spaces/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRoute
   '/spaces/$spaceId': typeof AuthenticatedSpacesSpaceIdIndexRoute
   '/spaces/$spaceId/pets/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
-  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren
+  '/spaces/$spaceId/posts/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
   '/spaces/$spaceId/posts/new': typeof AuthenticatedSpacesSpaceIdPostsNewRoute
   '/spaces/$spaceId/pets/$petId/edit': typeof AuthenticatedSpacesSpaceIdPetsPetIdEditRoute
   '/spaces/$spaceId/posts/$postId/edit': typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
@@ -174,10 +174,10 @@ export interface FileRoutesById {
   '/_authenticated/spaces_/$spaceId/posts': typeof AuthenticatedSpacesSpaceIdPostsRoute
   '/_authenticated/spaces_/$spaceId/': typeof AuthenticatedSpacesSpaceIdIndexRoute
   '/_authenticated/spaces_/$spaceId/pets_/$petId': typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
-  '/_authenticated/spaces_/$spaceId/posts_/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren
+  '/_authenticated/spaces_/$spaceId/posts_/$postId': typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
   '/_authenticated/spaces_/$spaceId/posts_/new': typeof AuthenticatedSpacesSpaceIdPostsNewRoute
   '/_authenticated/spaces_/$spaceId/pets_/$petId_/edit': typeof AuthenticatedSpacesSpaceIdPetsPetIdEditRoute
-  '/_authenticated/spaces_/$spaceId/posts_/$postId/edit': typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
+  '/_authenticated/spaces_/$spaceId/posts_/$postId_/edit': typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -233,7 +233,7 @@ export interface FileRouteTypes {
     | '/_authenticated/spaces_/$spaceId/posts_/$postId'
     | '/_authenticated/spaces_/$spaceId/posts_/new'
     | '/_authenticated/spaces_/$spaceId/pets_/$petId_/edit'
-    | '/_authenticated/spaces_/$spaceId/posts_/$postId/edit'
+    | '/_authenticated/spaces_/$spaceId/posts_/$postId_/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -350,12 +350,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRouteImport
       parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
     }
-    '/_authenticated/spaces_/$spaceId/posts_/$postId/edit': {
-      id: '/_authenticated/spaces_/$spaceId/posts_/$postId/edit'
-      path: '/edit'
+    '/_authenticated/spaces_/$spaceId/posts_/$postId_/edit': {
+      id: '/_authenticated/spaces_/$spaceId/posts_/$postId_/edit'
+      path: '/posts/$postId/edit'
       fullPath: '/spaces/$spaceId/posts/$postId/edit'
       preLoaderRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRouteImport
-      parentRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
+      parentRoute: typeof AuthenticatedSpacesSpaceIdRoute
     }
     '/_authenticated/spaces_/$spaceId/pets_/$petId_/edit': {
       id: '/_authenticated/spaces_/$spaceId/pets_/$petId_/edit'
@@ -367,21 +367,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthenticatedSpacesSpaceIdPostsPostIdRouteChildren {
-  AuthenticatedSpacesSpaceIdPostsPostIdEditRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
-}
-
-const AuthenticatedSpacesSpaceIdPostsPostIdRouteChildren: AuthenticatedSpacesSpaceIdPostsPostIdRouteChildren =
-  {
-    AuthenticatedSpacesSpaceIdPostsPostIdEditRoute:
-      AuthenticatedSpacesSpaceIdPostsPostIdEditRoute,
-  }
-
-const AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren =
-  AuthenticatedSpacesSpaceIdPostsPostIdRoute._addFileChildren(
-    AuthenticatedSpacesSpaceIdPostsPostIdRouteChildren,
-  )
-
 interface AuthenticatedSpacesSpaceIdRouteChildren {
   AuthenticatedSpacesSpaceIdInvitesRoute: typeof AuthenticatedSpacesSpaceIdInvitesRoute
   AuthenticatedSpacesSpaceIdMembersRoute: typeof AuthenticatedSpacesSpaceIdMembersRoute
@@ -389,9 +374,10 @@ interface AuthenticatedSpacesSpaceIdRouteChildren {
   AuthenticatedSpacesSpaceIdPostsRoute: typeof AuthenticatedSpacesSpaceIdPostsRoute
   AuthenticatedSpacesSpaceIdIndexRoute: typeof AuthenticatedSpacesSpaceIdIndexRoute
   AuthenticatedSpacesSpaceIdPetsPetIdRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdRoute
-  AuthenticatedSpacesSpaceIdPostsPostIdRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren
+  AuthenticatedSpacesSpaceIdPostsPostIdRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdRoute
   AuthenticatedSpacesSpaceIdPostsNewRoute: typeof AuthenticatedSpacesSpaceIdPostsNewRoute
   AuthenticatedSpacesSpaceIdPetsPetIdEditRoute: typeof AuthenticatedSpacesSpaceIdPetsPetIdEditRoute
+  AuthenticatedSpacesSpaceIdPostsPostIdEditRoute: typeof AuthenticatedSpacesSpaceIdPostsPostIdEditRoute
 }
 
 const AuthenticatedSpacesSpaceIdRouteChildren: AuthenticatedSpacesSpaceIdRouteChildren =
@@ -406,11 +392,13 @@ const AuthenticatedSpacesSpaceIdRouteChildren: AuthenticatedSpacesSpaceIdRouteCh
     AuthenticatedSpacesSpaceIdPetsPetIdRoute:
       AuthenticatedSpacesSpaceIdPetsPetIdRoute,
     AuthenticatedSpacesSpaceIdPostsPostIdRoute:
-      AuthenticatedSpacesSpaceIdPostsPostIdRouteWithChildren,
+      AuthenticatedSpacesSpaceIdPostsPostIdRoute,
     AuthenticatedSpacesSpaceIdPostsNewRoute:
       AuthenticatedSpacesSpaceIdPostsNewRoute,
     AuthenticatedSpacesSpaceIdPetsPetIdEditRoute:
       AuthenticatedSpacesSpaceIdPetsPetIdEditRoute,
+    AuthenticatedSpacesSpaceIdPostsPostIdEditRoute:
+      AuthenticatedSpacesSpaceIdPostsPostIdEditRoute,
   }
 
 const AuthenticatedSpacesSpaceIdRouteWithChildren =
