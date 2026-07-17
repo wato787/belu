@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { cx } from "../../../../utils/cx";
+import { formatDate } from "../../../../utils/formatDate";
 import { useDeleteInvite } from "../../../invites";
 import type { SpaceInvite } from "../types";
 import { StatusBadge } from "../StatusBadge/StatusBadge";
@@ -50,7 +51,7 @@ export const InviteList = ({ invites, spaceId }: InviteListProps) => {
         <div className={styles.emptyState}>
           <Mail size={32} />
           <p>招待履歴はありません</p>
-          <span>上のフォームからご家族や仲間を招待してみましょう。</span>
+          <span>上のフォームからメンバーを招待できます。</span>
         </div>
       ) : (
         <div className={styles.list}>
@@ -70,7 +71,7 @@ export const InviteList = ({ invites, spaceId }: InviteListProps) => {
                     <span>•</span>
                     <span className={styles.dateMeta}>
                       <Clock size={11} />
-                      期限: {formatDate(invite.expiresAt)}
+                      期限: {formatDate(invite.expiresAt, dateFormatOptions)}
                     </span>
                   </div>
                 </div>
@@ -108,12 +109,8 @@ export const InviteList = ({ invites, spaceId }: InviteListProps) => {
   );
 };
 
-const formatDate = (value: Date | string) => {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return String(value);
-  }
-
-  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-};
+const dateFormatOptions = {
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+} satisfies Intl.DateTimeFormatOptions;
