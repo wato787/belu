@@ -2,6 +2,7 @@ import { Popover } from "@base-ui-components/react/popover";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 
+import { formatDate } from "../../../../utils/formatDate";
 import type { Pet } from "../types";
 import styles from "./Card.module.css";
 
@@ -20,7 +21,7 @@ export const Card = ({ onDelete, onEdit, pet }: CardProps) => {
         <div className={styles.petAvatar}>🐾</div>
         <div className={styles.petText}>
           <h2>{pet.name}</h2>
-          <p>作成日 {formatDate(pet.createdAt)}</p>
+          <p>作成日 {formatDate(pet.createdAt, dateFormatOptions)}</p>
         </div>
       </div>
 
@@ -47,16 +48,8 @@ export const Card = ({ onDelete, onEdit, pet }: CardProps) => {
   );
 };
 
-const formatDate = (value: string) => {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("ja-JP", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
-};
+const dateFormatOptions = {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+} satisfies Intl.DateTimeFormatOptions;
