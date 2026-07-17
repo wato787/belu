@@ -28,6 +28,13 @@
   line-height: var(--line-height-tight);
 }
 
+.header p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
 .errorBox {
   display: flex;
   align-items: flex-start;

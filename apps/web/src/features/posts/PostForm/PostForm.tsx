@@ -16,6 +16,7 @@ type PostFormPet = {
 type PostFormProps = {
   actionLabel: string;
   body: string;
+  description?: string | undefined;
   errorMessage: string | null;
   isPending: boolean;
   onBack: () => void;
@@ -34,6 +35,7 @@ type PostFormProps = {
 export const PostForm = ({
   actionLabel,
   body,
+  description,
   errorMessage,
   isPending,
   onBack,
@@ -53,6 +55,7 @@ export const PostForm = ({
       <section className={styles.card}>
         <header className={styles.header}>
           <h1>{title}</h1>
+          {description && <p>{description}</p>}
         </header>
 
         {errorMessage && (
