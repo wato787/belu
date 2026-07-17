@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { InviteDetail } from "../../features/invites";
+import { InviteDetail, invitesQueries, meQueries } from "../../features";
 
 const InviteDetailRoute = () => {
   const { inviteId } = Route.useParams();
@@ -9,5 +9,10 @@ const InviteDetailRoute = () => {
 };
 
 export const Route = createFileRoute("/_authenticated/invites/$inviteId")({
+  loader: ({ context, params }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData(invitesQueries.detail(params.inviteId)),
+      context.queryClient.ensureQueryData(meQueries.current()),
+    ]),
   component: InviteDetailRoute,
 });
