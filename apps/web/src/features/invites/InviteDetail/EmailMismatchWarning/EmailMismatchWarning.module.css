@@ -1,0 +1,28 @@
+.warning {
+  display: flex;
+  gap: var(--space-2);
+  border: 1px solid #e7c96e;
+  border-radius: var(--radius-md);
+  background: #fff8df;
+  color: #7a5a10;
+  margin-bottom: var(--space-5);
+  padding: var(--space-3);
+}
+
+.warning svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.warning p {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.warning span {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
