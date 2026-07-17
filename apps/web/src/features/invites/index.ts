@@ -1,4 +1,4 @@
-export { InviteDetail } from "./components";
+export { InviteDetail } from "./InviteDetail/InviteDetail";
 export { invitesKeys } from "./keys";
 export { invitesQueries } from "./queries";
 export { useAcceptInvite } from "./useAcceptInvite";

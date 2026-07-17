@@ -1,4 +1,5 @@
 export {
+  InviteDetail,
   invitesKeys,
   invitesQueries,
   useAcceptInvite,
