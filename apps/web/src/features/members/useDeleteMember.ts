@@ -5,6 +5,7 @@ import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { membersKeys } from "./keys";
 
 const deleteMemberFailedMessage = "メンバーを削除できませんでした。";
+const deleteMemberSucceededMessage = "メンバーを削除しました。";
 
 export const useDeleteMember = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -20,6 +21,7 @@ export const useDeleteMember = (spaceId: string) => {
       toast.error(deleteMemberFailedMessage);
     },
     onSuccess: async () => {
+      toast.success(deleteMemberSucceededMessage);
       await queryClient.invalidateQueries({ queryKey: membersKeys.list(spaceId) });
     },
   });

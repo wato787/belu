@@ -5,6 +5,7 @@ import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { invitesKeys } from "./keys";
 
 const deleteInviteFailedMessage = "招待をキャンセルできませんでした。";
+const deleteInviteSucceededMessage = "招待をキャンセルしました。";
 
 export const useDeleteInvite = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -19,7 +20,9 @@ export const useDeleteInvite = (spaceId: string) => {
     onError: () => {
       toast.error(deleteInviteFailedMessage);
     },
-    onSuccess: async () => {
+    onSuccess: async (_data, inviteId) => {
+      toast.success(deleteInviteSucceededMessage);
+      queryClient.removeQueries({ queryKey: invitesKeys.detail(inviteId) });
       await queryClient.invalidateQueries({ queryKey: invitesKeys.list(spaceId) });
     },
   });
