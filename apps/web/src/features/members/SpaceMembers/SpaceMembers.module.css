@@ -1,15 +1,20 @@
 .root {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--space-6);
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-7);
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: min(100%, 1024px);
   gap: var(--space-4);
   border-bottom: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+  margin-inline: auto;
   padding-bottom: var(--space-5);
 }
 
@@ -36,8 +41,10 @@
 .grid {
   display: grid;
   align-items: start;
+  width: min(100%, 1024px);
   gap: var(--space-6);
   grid-template-columns: minmax(0, 7fr) minmax(320px, 5fr);
+  margin-inline: auto;
 }
 
 .primaryColumn,
@@ -55,5 +62,15 @@
 
   .secondaryColumn {
     order: -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .root {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .header {
+    padding-bottom: var(--space-4);
   }
 }
