@@ -5,6 +5,7 @@ import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { postsKeys } from "./keys";
 
 const deletePostFailedMessage = "投稿を削除できませんでした。時間をおいてもう一度お試しください。";
+const deletePostSucceededMessage = "投稿を削除しました。";
 
 export const useDeletePost = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -19,7 +20,9 @@ export const useDeletePost = (spaceId: string) => {
     onError: () => {
       toast.error(deletePostFailedMessage);
     },
-    onSuccess: async () => {
+    onSuccess: async (_data, postId) => {
+      toast.success(deletePostSucceededMessage);
+      queryClient.removeQueries({ queryKey: postsKeys.detail(spaceId, postId) });
       await queryClient.invalidateQueries({ queryKey: postsKeys.bySpace(spaceId) });
     },
   });
