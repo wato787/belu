@@ -14,6 +14,7 @@ type AcceptInviteResponse = InferResponseType<
 >;
 
 const acceptInviteFailedMessage = "招待に参加できませんでした。";
+const acceptInviteSucceededMessage = "招待に参加しました。";
 
 export const useAcceptInvite = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export const useAcceptInvite = () => {
       toast.error(acceptInviteFailedMessage);
     },
     onSuccess: async (data, inviteId) => {
+      toast.success(acceptInviteSucceededMessage);
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: invitesKeys.detail(inviteId) }),
         queryClient.invalidateQueries({ queryKey: meKeys.all }),

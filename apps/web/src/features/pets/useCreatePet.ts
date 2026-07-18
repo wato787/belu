@@ -10,6 +10,7 @@ type CreatePetInput = InferRequestType<
 >["json"];
 
 const createPetFailedMessage = "ペットを登録できませんでした。時間をおいてもう一度お試しください。";
+const createPetSucceededMessage = "ペットを登録しました。";
 
 export const useCreatePet = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -26,6 +27,7 @@ export const useCreatePet = (spaceId: string) => {
       toast.error(createPetFailedMessage);
     },
     onSuccess: async () => {
+      toast.success(createPetSucceededMessage);
       await queryClient.invalidateQueries({ queryKey: petsKeys.lists(spaceId) });
     },
   });

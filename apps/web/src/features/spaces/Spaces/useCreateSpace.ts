@@ -17,6 +17,7 @@ type CreateSpaceResult = {
 
 const createSpaceFailedMessage =
   "スペースを作成できませんでした。時間をおいてもう一度お試しください。";
+const createSpaceSucceededMessage = "スペースを作成しました。";
 
 export const useCreateSpace = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export const useCreateSpace = () => {
       toast.error(createSpaceFailedMessage);
     },
     onSuccess: async (data) => {
+      toast.success(createSpaceSucceededMessage);
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: meKeys.all }),
         queryClient.invalidateQueries({ queryKey: spacesKeys.lists() }),

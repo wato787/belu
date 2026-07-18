@@ -1,5 +1,4 @@
 import { Mail, UserPlus } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "../../../../components/Button/Button";
 import { Field, FieldLabel } from "../../../../components/Field/Field";
@@ -26,14 +25,7 @@ export const InviteForm = ({ spaceId }: InviteFormProps) => {
       return;
     }
 
-    createInvite(
-      { email: email.value.trim().toLowerCase() },
-      {
-        onSuccess: () => {
-          toast.success("招待を作成しました。リンクをコピーして共有してください。");
-        },
-      },
-    );
+    createInvite({ email: email.value.trim().toLowerCase() });
   };
 
   return (

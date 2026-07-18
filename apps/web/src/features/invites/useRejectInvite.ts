@@ -5,6 +5,7 @@ import { apiClient, parseApiResponse } from "../../lib/apiClient";
 import { invitesKeys } from "./keys";
 
 const rejectInviteFailedMessage = "招待を辞退できませんでした。";
+const rejectInviteSucceededMessage = "招待を辞退しました。";
 
 export const useRejectInvite = () => {
   const queryClient = useQueryClient();
@@ -20,6 +21,7 @@ export const useRejectInvite = () => {
       toast.error(rejectInviteFailedMessage);
     },
     onSuccess: async (_data, inviteId) => {
+      toast.success(rejectInviteSucceededMessage);
       await queryClient.invalidateQueries({ queryKey: invitesKeys.detail(inviteId) });
     },
   });

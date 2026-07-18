@@ -10,6 +10,7 @@ type CreateInviteInput = InferRequestType<
 >["json"];
 
 const createInviteFailedMessage = "招待を作成できませんでした。";
+const createInviteSucceededMessage = "招待を作成しました。リンクをコピーして共有してください。";
 
 export const useCreateInvite = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -26,6 +27,7 @@ export const useCreateInvite = (spaceId: string) => {
       toast.error(createInviteFailedMessage);
     },
     onSuccess: async () => {
+      toast.success(createInviteSucceededMessage);
       await queryClient.invalidateQueries({ queryKey: invitesKeys.list(spaceId) });
     },
   });

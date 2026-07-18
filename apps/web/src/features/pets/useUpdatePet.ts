@@ -16,6 +16,7 @@ type UpdatePetVariables = {
 
 const updatePetFailedMessage =
   "ペット情報を保存できませんでした。時間をおいてもう一度お試しください。";
+const updatePetSucceededMessage = "ペット情報を保存しました。";
 
 export const useUpdatePet = (spaceId: string) => {
   const queryClient = useQueryClient();
@@ -32,6 +33,7 @@ export const useUpdatePet = (spaceId: string) => {
       toast.error(updatePetFailedMessage);
     },
     onSuccess: async (_data, variables) => {
+      toast.success(updatePetSucceededMessage);
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: petsKeys.lists(spaceId) }),
         queryClient.invalidateQueries({ queryKey: petsKeys.detail(spaceId, variables.petId) }),
