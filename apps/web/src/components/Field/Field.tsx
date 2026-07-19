@@ -1,5 +1,11 @@
 import { Field as BaseField } from "@base-ui-components/react/field";
-import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from "react";
 
 import { cx } from "../../utils/cx";
 import styles from "./Field.module.css";
@@ -44,9 +50,10 @@ export const useFieldContext = () => useContext(FieldContext);
 
 export const Field = ({ children, className, error, ...props }: FieldProps) => {
   const errorMessage = errorToMessage(error);
+  const fieldContextValue = useMemo(() => ({ errorMessage }), [errorMessage]);
 
   return (
-    <FieldContext value={{ errorMessage }}>
+    <FieldContext value={fieldContextValue}>
       <BaseField.Root className={cx(styles.field, className)} {...props}>
         {children}
         <FieldError />

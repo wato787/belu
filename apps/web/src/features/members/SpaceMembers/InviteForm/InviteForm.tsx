@@ -6,7 +6,7 @@ import { Input } from "../../../../components/Input/Input";
 import { useInputText } from "../../../../hooks/useInputText";
 import type { FormSubmitHandler } from "../../../../types/form";
 import { validateEmail } from "../../../../validations/validateEmail";
-import { useCreateInvite } from "../../../invites";
+import { useCreateInvite } from "../../../invites/useCreateInvite";
 import styles from "./InviteForm.module.css";
 
 type InviteFormProps = {

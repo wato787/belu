@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { invitesQueries } from "../../features/invites";
-import { SpaceMembers } from "../../features/members";
-import { membersQueries } from "../../features/members";
+import { invitesQueries } from "../../features/invites/queries";
+import { SpaceMembers } from "../../features/members/SpaceMembers/SpaceMembers";
+import { membersQueries } from "../../features/members/queries";
 
 const SpaceMembersRoute = () => {
   const { spaceId } = Route.useParams();

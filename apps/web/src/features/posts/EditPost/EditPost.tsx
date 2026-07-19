@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
 import type { FormSubmitHandler } from "../../../types/form";
-import { petsQueries } from "../../pets";
+import { petsQueries } from "../../pets/queries";
 import { maxPostPhotoCount } from "../CreatePost/constants";
 import { usePostPhotos } from "../CreatePost/usePostPhotos";
 import { PostForm } from "../PostForm/PostForm";

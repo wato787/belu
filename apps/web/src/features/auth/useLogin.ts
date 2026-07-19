@@ -16,6 +16,7 @@ export const useLogin = () => {
   const router = useRouter();
   const search = loginRouteApi.useSearch();
 
+  // react-doctor-disable-next-line react-doctor/query-mutation-missing-invalidation
   const mutation = useMutation({
     mutationFn: async ({ email, password }: LoginCredentials) => {
       const { error } = await authClient.signIn.email({ email, password });

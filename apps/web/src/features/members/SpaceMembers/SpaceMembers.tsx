@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Users } from "lucide-react";
 
-import { invitesQueries } from "../../invites";
-import { meQueries } from "../../me";
+import { invitesQueries } from "../../invites/queries";
+import { meQueries } from "../../me/queries";
 import { membersQueries } from "../queries";
 import { InviteForm } from "./InviteForm/InviteForm";
 import { InviteList } from "./InviteList/InviteList";

@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { SignUp } from "../features/auth";
+import { SignUp } from "../features/auth/SignUp";
 import { authClient } from "../lib/authClient";
 
 export const Route = createFileRoute("/signup")({

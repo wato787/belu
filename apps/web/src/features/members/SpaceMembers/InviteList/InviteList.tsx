@@ -3,8 +3,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { cx } from "../../../../utils/cx";
-import { formatDate } from "../../../../utils/formatDate";
-import { useDeleteInvite } from "../../../invites";
+import { formatNumericDate } from "../../../../utils/formatDate";
+import { useDeleteInvite } from "../../../invites/useDeleteInvite";
 import type { SpaceInvite } from "../types";
 import { StatusBadge } from "../StatusBadge/StatusBadge";
 import styles from "./InviteList.module.css";
@@ -71,7 +71,7 @@ export const InviteList = ({ invites, spaceId }: InviteListProps) => {
                     <span>•</span>
                     <span className={styles.dateMeta}>
                       <Clock size={11} />
-                      期限: {formatDate(invite.expiresAt, dateFormatOptions)}
+                      期限: {formatNumericDate(invite.expiresAt)}
                     </span>
                   </div>
                 </div>
@@ -108,9 +108,3 @@ export const InviteList = ({ invites, spaceId }: InviteListProps) => {
     </section>
   );
 };
-
-const dateFormatOptions = {
-  day: "numeric",
-  month: "numeric",
-  year: "numeric",
-} satisfies Intl.DateTimeFormatOptions;

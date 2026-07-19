@@ -4,8 +4,8 @@ import type { InferResponseType } from "hono/client";
 import { toast } from "sonner";
 
 import { apiClient, parseApiResponse } from "../../lib/apiClient";
-import { meKeys } from "../me";
-import { spacesKeys } from "../spaces";
+import { meKeys } from "../me/keys";
+import { spacesKeys } from "../spaces/keys";
 import { invitesKeys } from "./keys";
 
 type AcceptInviteResponse = InferResponseType<

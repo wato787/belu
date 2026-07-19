@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SpacePets } from "../../features/pets";
+import { SpacePets } from "../../features/pets/SpacePets/SpacePets";
 
 const SpacePetsRoute = () => {
   const { spaceId } = Route.useParams();

@@ -80,6 +80,7 @@ const savePushSubscription = async (subscription: PushSubscription) => {
 };
 
 export const useEnablePushNotifications = () => {
+  // react-doctor-disable-next-line react-doctor/query-mutation-missing-invalidation
   const mutation = useMutation({
     mutationFn: async () => {
       if (!isPushNotificationSupported()) {

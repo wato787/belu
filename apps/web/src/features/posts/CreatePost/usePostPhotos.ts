@@ -42,12 +42,11 @@ export const usePostPhotos = ({ maxPhotoCount = maxPostPhotoCount }: UsePostPhot
   const updatePhotos = (
     nextPhotos: PhotoFile[] | ((currentPhotos: PhotoFile[]) => PhotoFile[]),
   ) => {
-    setPhotos((currentPhotos) => {
-      const resolvedPhotos =
-        typeof nextPhotos === "function" ? nextPhotos(currentPhotos) : nextPhotos;
-      photosRef.current = resolvedPhotos;
-      return resolvedPhotos;
-    });
+    const resolvedPhotos =
+      typeof nextPhotos === "function" ? nextPhotos(photosRef.current) : nextPhotos;
+
+    photosRef.current = resolvedPhotos;
+    setPhotos(resolvedPhotos);
   };
 
   const addPhotos = (files: File[]) => {

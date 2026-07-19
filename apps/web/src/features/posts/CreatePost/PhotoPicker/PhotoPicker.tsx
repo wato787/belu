@@ -6,6 +6,8 @@ import { maxPostPhotoCount, maxPostPhotoFileSize } from "../constants";
 import type { PhotoFile } from "../types";
 import styles from "./PhotoPicker.module.css";
 
+const photoInputId = "create-post-photos";
+
 type PhotoPickerProps = {
   onAdd: (files: File[]) => void;
   onReject: (rejections: FileRejection[]) => void;
@@ -64,7 +66,7 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
   return (
     <section className={styles.section}>
       <div className={styles.labelRow}>
-        <label className={styles.label}>
+        <label className={styles.label} htmlFor={photoInputId}>
           <span>写真を追加</span>
           <span className={styles.required}>*</span>
           <span className={cx(styles.count, isMaxImagesReached && styles.countMax)}>
@@ -76,7 +78,7 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
 
       {photos.length === 0 ? (
         <div {...emptyDropzoneProps}>
-          <input {...getInputProps({ className: styles.fileInput })} />
+          <input {...getInputProps({ className: styles.fileInput, id: photoInputId })} />
           <div className={styles.dropzoneIcon}>
             <Image size={20} />
           </div>
@@ -103,7 +105,7 @@ export const PhotoPicker = ({ onAdd, onReject, onRemove, photos }: PhotoPickerPr
 
           {!isMaxImagesReached && (
             <div {...addMoreDropzoneProps}>
-              <input {...getInputProps({ className: styles.fileInput })} />
+              <input {...getInputProps({ className: styles.fileInput, id: photoInputId })} />
               <Plus size={18} />
               <span>写真を追加</span>
             </div>

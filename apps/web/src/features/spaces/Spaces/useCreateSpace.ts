@@ -4,7 +4,7 @@ import type { InferRequestType } from "hono/client";
 import { toast } from "sonner";
 
 import { apiClient, parseApiResponse } from "../../../lib/apiClient";
-import { meKeys } from "../../me";
+import { meKeys } from "../../me/keys";
 import { spacesKeys } from "../keys";
 
 type CreateSpaceInput = InferRequestType<typeof apiClient.spaces.$post>["json"];
