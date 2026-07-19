@@ -17,27 +17,32 @@ export const useUploadPostPhotos = () => {
       onUploadedPhotoCountChange,
       uploads,
     }: UploadPostPhotosVariables) => {
-      for (const [index, upload] of uploads.entries()) {
-        const file = files[index];
+      let uploadedPhotoCount = 0;
 
-        if (!file) {
-          throw new Error(uploadPostPhotoFailedMessage);
-        }
+      await Promise.all(
+        uploads.map(async (upload, index) => {
+          const file = files[index];
 
-        const response = await fetch(upload.uploadUrl, {
-          body: file.file,
-          headers: {
-            "content-type": file.contentType,
-          },
-          method: "PUT",
-        });
+          if (!file) {
+            throw new Error(uploadPostPhotoFailedMessage);
+          }
 
-        if (!response.ok) {
-          throw new Error(uploadPostPhotoFailedMessage);
-        }
+          const response = await fetch(upload.uploadUrl, {
+            body: file.file,
+            headers: {
+              "content-type": file.contentType,
+            },
+            method: "PUT",
+          });
 
-        onUploadedPhotoCountChange(index + 1);
-      }
+          if (!response.ok) {
+            throw new Error(uploadPostPhotoFailedMessage);
+          }
+
+          uploadedPhotoCount += 1;
+          onUploadedPhotoCountChange(uploadedPhotoCount);
+        }),
+      );
     },
   });
 

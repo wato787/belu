@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { InviteDetail, invitesQueries, meQueries } from "../../features";
+import { InviteDetail } from "../../features/invites/InviteDetail/InviteDetail";
+import { invitesQueries } from "../../features/invites/queries";
+import { meQueries } from "../../features/me/queries";
 
 const InviteDetailRoute = () => {
   const { inviteId } = Route.useParams();

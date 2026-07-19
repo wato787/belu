@@ -1,6 +1,9 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { meQueries, petsQueries, SpaceLayout, spacesQueries } from "../../features";
+import { meQueries } from "../../features/me/queries";
+import { petsQueries } from "../../features/pets/queries";
+import { SpaceLayout } from "../../features/spaces/SpaceLayout/SpaceLayout";
+import { spacesQueries } from "../../features/spaces/queries";
 
 const SpaceLayoutRoute = () => {
   const { spaceId } = Route.useParams();

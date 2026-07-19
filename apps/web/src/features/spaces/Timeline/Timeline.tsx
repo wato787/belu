@@ -3,7 +3,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
 import { Button } from "../../../components/Button/Button";
-import { postsQueries, useDeletePost } from "../../posts";
+import { postsQueries } from "../../posts/queries";
+import { useDeletePost } from "../../posts/useDeletePost";
 import styles from "./Timeline.module.css";
 import { PostCard } from "./PostCard/PostCard";
 

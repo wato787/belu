@@ -42,7 +42,11 @@ depends = ["deploy-api-dev", "deploy-web-dev"]
 
 [tasks.check]
 description = "Run lint, typecheck, and format check"
-depends = ["lint", "typecheck", "format-check"]
+depends = ["lint", "typecheck", "format-check", "react-doctor"]
+
+[tasks.react-doctor]
+description = "Run React Doctor"
+run = "bun react-doctor --no-telemetry"
 
 [tasks.lint]
 description = "Lint the repository"

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PetEdit, petsQueries } from "../../features/pets";
+import { PetEdit } from "../../features/pets/PetEdit/PetEdit";
+import { petsQueries } from "../../features/pets/queries";
 
 const PetEditRoute = () => {
   const { petId, spaceId } = Route.useParams();

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PostDetail } from "../../features/posts";
+import { PostDetail } from "../../features/posts/components/PostDetail/PostDetail";
 
 const PostDetailRoute = () => {
   const { postId, spaceId } = Route.useParams();

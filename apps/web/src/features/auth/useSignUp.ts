@@ -17,6 +17,7 @@ export const useSignUp = () => {
   const router = useRouter();
   const search = signUpRouteApi.useSearch();
 
+  // react-doctor-disable-next-line react-doctor/query-mutation-missing-invalidation
   const mutation = useMutation({
     mutationFn: async ({ email, name, password }: SignUpCredentials) => {
       const { error } = await authClient.signUp.email({

@@ -6,6 +6,8 @@ import { maxPostPhotoCount, maxPostPhotoFileSize } from "../../CreatePost/consta
 import type { PhotoFile } from "../../CreatePost/types";
 import styles from "./EditPhotos.module.css";
 
+const photoInputId = "edit-post-photos";
+
 export type ExistingEditablePhoto = {
   id: string;
   objectKey: string;
@@ -86,7 +88,7 @@ export const EditPhotos = ({
   return (
     <section className={styles.section}>
       <div className={styles.labelRow}>
-        <label className={styles.label}>
+        <label className={styles.label} htmlFor={photoInputId}>
           <span>写真</span>
           <span className={styles.required}>*</span>
           <span className={cx(styles.count, isMaxImagesReached && styles.countMax)}>
@@ -97,7 +99,7 @@ export const EditPhotos = ({
       </div>
 
       <div {...dropzoneProps}>
-        <input {...getInputProps({ className: styles.fileInput })} />
+        <input {...getInputProps({ className: styles.fileInput, id: photoInputId })} />
 
         {photoCount === 0 ? (
           <EmptyDropzoneContent />

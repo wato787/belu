@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { postsQueries, Timeline } from "../../features";
+import { postsQueries } from "../../features/posts/queries";
+import { Timeline } from "../../features/spaces/Timeline/Timeline";
 
 const TimelineRoute = () => {
   const { spaceId } = Route.useParams();

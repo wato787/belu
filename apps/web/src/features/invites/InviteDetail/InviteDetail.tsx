@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { Logo } from "../../../components/Logo/Logo";
-import { meQueries } from "../../me";
+import { meQueries } from "../../me/queries";
 import { invitesQueries } from "../queries";
 import { EmailMismatchWarning } from "./EmailMismatchWarning/EmailMismatchWarning";
 import { InviteActions } from "./InviteActions/InviteActions";

@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
-import { meQueries } from "../../me";
+import { meQueries } from "../../me/queries";
 import { spacesQueries } from "../queries";
 import { Sidebar } from "./Sidebar/Sidebar";
 import styles from "./SpaceLayout.module.css";

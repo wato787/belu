@@ -9,6 +9,7 @@ type CreatePostUploadUrlsVariables = {
 };
 
 export const useCreatePostUploadUrls = () => {
+  // react-doctor-disable-next-line react-doctor/query-mutation-missing-invalidation
   const mutation = useMutation({
     mutationFn: async ({ input, spaceId }: CreatePostUploadUrlsVariables) => {
       const response = await apiClient.spaces[":spaceId"].posts["upload-url"].$post({

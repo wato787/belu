@@ -11,6 +11,7 @@
     "dev": "mise run dev",
     "dev:web": "mise run dev-web",
     "dev:api": "mise run dev-api",
+    "doctor": "mise run react-doctor",
     "check": "mise run check",
     "lint": "mise run lint",
     "format": "mise run format",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260704.1",
     "oxfmt": "0.57.0",
-    "oxlint": "1.72.0"
+    "oxlint": "1.72.0",
+    "react-doctor": "^0.8.1"
   }
 }

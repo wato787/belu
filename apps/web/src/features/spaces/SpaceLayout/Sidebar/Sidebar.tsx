@@ -3,7 +3,7 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { Heart, Settings, Users } from "lucide-react";
 
 import { cx } from "../../../../utils/cx";
-import { petsQueries } from "../../../pets";
+import { petsQueries } from "../../../pets/queries";
 import { ProfileMenu } from "./ProfileMenu/ProfileMenu";
 import styles from "./Sidebar.module.css";
 

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CreatePost, petsQueries } from "../../features";
+import { petsQueries } from "../../features/pets/queries";
+import { CreatePost } from "../../features/posts/CreatePost/CreatePost";
 
 const CreatePostRoute = () => {
   const { spaceId } = Route.useParams();
