@@ -15,6 +15,9 @@ export type AppBindings = {
   R2_ACCESS_KEY_ID?: string;
   R2_BUCKET_NAME?: string;
   R2_SECRET_ACCESS_KEY?: string;
+  VAPID_PRIVATE_KEY?: string;
+  VAPID_PUBLIC_KEY?: string;
+  VAPID_SUBJECT?: string;
 };
 
 export type AppConfig = {
@@ -36,6 +39,11 @@ export type AppConfig = {
     r2AccessKeyId: string | undefined;
     r2BucketName: string | undefined;
     r2SecretAccessKey: string | undefined;
+  };
+  webPush: {
+    vapidPrivateKey: string | undefined;
+    vapidPublicKey: string | undefined;
+    vapidSubject: string | undefined;
   };
 };
 
@@ -79,6 +87,11 @@ export const getConfig = (bindings: AppBindings): AppConfig => {
       r2AccessKeyId: bindings.R2_ACCESS_KEY_ID,
       r2BucketName: bindings.R2_BUCKET_NAME,
       r2SecretAccessKey: bindings.R2_SECRET_ACCESS_KEY,
+    },
+    webPush: {
+      vapidPrivateKey: bindings.VAPID_PRIVATE_KEY,
+      vapidPublicKey: bindings.VAPID_PUBLIC_KEY,
+      vapidSubject: bindings.VAPID_SUBJECT,
     },
   };
 };
