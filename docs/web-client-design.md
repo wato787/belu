@@ -37,6 +37,27 @@ apps/web/src/routes/_authenticated.tsx
 
 ---
 
+## PWA And Push Notifications
+
+Web Push通知はService Workerを利用する。
+
+```text
+apps/web/public/push-sw.js
+```
+
+iOS / iPadOSでWeb Push通知を受け取るには、Safariの通常タブではなく、ホーム画面に追加されたWebアプリとして起動されている必要がある。
+
+WebはPWAとしてインストールできるように、manifestとiOS向けmeta tagを持つ。
+
+```text
+apps/web/public/manifest.webmanifest
+apps/web/public/assets/icons/icon.svg
+```
+
+通知有効化UIでは、iPhone / iPadかつstandalone表示ではない場合、通知許可へ進まずホーム画面への追加を案内する。
+
+---
+
 ## Router And Query
 
 WebはTanStack RouterとTanStack Queryを組み合わせる。

@@ -13,9 +13,21 @@ const pushNotificationFailedMessage =
 const pushNotificationDeniedMessage = "ブラウザで通知が拒否されています。";
 const pushNotificationUnsupportedMessage = "このブラウザでは通知を利用できません。";
 const pushNotificationNotConfiguredMessage = "通知設定がまだ完了していません。";
+const pushNotificationPwaRequiredMessage =
+  "iPhone/iPadで通知を使うには、共有メニューからホーム画面に追加して、追加したアプリから開いてください。";
+
+type NavigatorWithStandalone = Navigator & {
+  standalone?: boolean;
+};
 
 const isPushNotificationSupported = () =>
   "Notification" in window && "PushManager" in window && "serviceWorker" in navigator;
+
+const isAppleMobileDevice = () => /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const isStandalone = () =>
+  window.matchMedia("(display-mode: standalone)").matches ||
+  Boolean((navigator as NavigatorWithStandalone).standalone);
 
 const decodeBase64Url = (value: string) => {
   const normalized = value.replaceAll("-", "+").replaceAll("_", "/");
@@ -72,6 +84,10 @@ export const useEnablePushNotifications = () => {
     mutationFn: async () => {
       if (!isPushNotificationSupported()) {
         throw new Error(pushNotificationUnsupportedMessage);
+      }
+
+      if (isAppleMobileDevice() && !isStandalone()) {
+        throw new Error(pushNotificationPwaRequiredMessage);
       }
 
       if (Notification.permission === "denied") {
