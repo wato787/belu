@@ -138,6 +138,11 @@
   color: var(--color-primary);
 }
 
+.profileMenuItem:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .profileMenuItemDanger {
   color: var(--color-danger);
 }

@@ -1,10 +1,11 @@
 import { Popover } from "@base-ui-components/react/popover";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ChevronUp, LogOut, User } from "lucide-react";
+import { ArrowLeft, Bell, ChevronUp, LogOut, User } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { authClient } from "../../../../../lib/authClient";
+import { useEnablePushNotifications } from "../../../../notifications";
 import styles from "./ProfileMenu.module.css";
 
 type ProfileMenuProps = {
@@ -15,6 +16,8 @@ type ProfileMenuProps = {
 export const ProfileMenu = ({ email, name }: ProfileMenuProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const { enablePushNotifications, isPending: isEnablingPushNotifications } =
+    useEnablePushNotifications();
 
   const handleLogout = async () => {
     const { error } = await authClient.signOut();
@@ -63,6 +66,14 @@ export const ProfileMenu = ({ email, name }: ProfileMenuProps) => {
               >
                 <User size={15} />
                 <span>プロフィール設定</span>
+              </Popover.Close>
+              <Popover.Close
+                className={() => styles.profileMenuItem}
+                disabled={isEnablingPushNotifications}
+                onClick={() => enablePushNotifications()}
+              >
+                <Bell size={15} />
+                <span>通知を有効にする</span>
               </Popover.Close>
               <hr className={styles.menuDivider} />
               <Popover.Close
